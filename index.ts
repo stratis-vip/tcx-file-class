@@ -1,3 +1,3 @@
-import TcxFile from "../tcxRead/src/classes/tcxFile";
+import TcxFile from "../tcxRead/dist/classes/tcxFile";
 
 export default TcxFile;
