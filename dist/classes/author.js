@@ -4,7 +4,7 @@ class Author {
     constructor(obj) {
         if (Object.keys(obj).length !== 0) {
             this.name = obj.Name[0];
-            this.type = obj.$['xsi:type'];
+            this.typeOfAuthor = obj.$['xsi:type'];
             this.build = getBuildString(obj.Build[0].Version[0]);
             this.langId = obj.LangID[0];
             this.partNumber = obj.PartNumber[0];

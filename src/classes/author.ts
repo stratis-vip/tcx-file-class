@@ -3,14 +3,14 @@ import { iXsiType, iXmlBuild, iXmlAuthor } from "../classes/iFaces"
 
 class Author {
     name: string;
-    type: string | any;
+    typeOfAuthor: string | any;
     build: string;
     langId: string;
     partNumber: string;
     constructor(obj: iXmlAuthor|any) {
         if (Object.keys(obj).length !== 0 ) {
             this.name = obj.Name[0];
-            this.type = obj.$['xsi:type'];
+            this.typeOfAuthor = obj.$['xsi:type'];
             this.build = getBuildString(obj.Build[0].Version[0]);
             this.langId = obj.LangID[0];
             this.partNumber = obj.PartNumber[0];

@@ -5,7 +5,7 @@ class Creator {
         if (obj !== undefined) {
             this.name = obj.Name[0];
             if (!obj.isRuntastic) {
-                this.type = obj.$['xsi:type'];
+                this.typeOfCreator = obj.$['xsi:type'];
                 this.productId = Number(obj.ProductID[0]);
                 this.unitId = Number(obj.UnitId[0]);
                 this.version = getVersionString(obj.Version[0]);
