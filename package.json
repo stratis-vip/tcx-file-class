@@ -1,0 +1,22 @@
+{
+  "name": "tcx-file-class",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node dist/index",
+    "test": "jasmine"
+  },
+  "author": "Stratis Christodoulou",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jasmine": "^2.8.6",
+    "@types/node": "^9.6.4",
+    "@types/xml2js": "^0.4.2",
+    "jasmine": "^3.1.0",
+    "typescript": "^2.8.1"
+  },
+  "dependencies": {
+    "xml2js": "^0.4.19"
+  }
+}

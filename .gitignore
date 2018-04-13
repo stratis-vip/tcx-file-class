@@ -1,0 +1,4 @@
+src/spec/*.tcx
+output
+test
+node_modules
