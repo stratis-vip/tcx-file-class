@@ -19,7 +19,9 @@ class Point {
                 this.distanceMeters = Number(obj.DistanceMeters[0]);
             }
             if (obj.Extensions !== undefined && obj.Extensions[0]["ns3:TPX"] !== undefined) {
-                this.speed = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:Speed"][0]);
+                if (obj.Extensions[0]["ns3:TPX"][0]["ns3:Speed"] !== undefined) {
+                    this.speed = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:Speed"][0]);
+                }
                 if (obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"] !== undefined) {
                     this.runCandence = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"][0]);
                 }
