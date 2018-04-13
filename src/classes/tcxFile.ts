@@ -10,37 +10,27 @@ const pString = pstring.parseString;
 
 class TcxFile {
     data:iXmlData=null;
-    isError = true;
+    isError = consts.ERROR_STRING_VALUE;
+    isReady = false;
 
-    read(filename: string, callback:(err:string, data:iXmlData)=>any) {
-        let self = this;
-        fs.readFile(filename, 'utf8', (err, data) => {
-            if (!err) {
-                //το αρχείο υπάρχει τότε το string πάει για parsing
-                pString(data, function (err, result) {
-                    if (!err) {
-                        self.data = result;
-                        self.isError = false;
-                        callback(null, result);
-                    } else {
-                        self.isError = true;
-                        self.data = null;
-                        callback(err, null);
-                    }
-                });
-            } else {
-                //το αρχείο δεν υπάρχει
-                self.data = null;
-                self.isError = true;
-                callback(err.message, null);
+    constructor(filename:string, callback:(err:string)=>void){
+        read(this, filename,(err)=>{
+            if (err){
+                this.isError = err;
+                callback(err);
+            }else {
+                this.isReady = true;
+                callback(consts.ERROR_STRING_VALUE);
             }
         });
     }
 
+    
+
     getId ():string {
         let id:string = "";
         let self = this;
-        if (!self.isError) {
+        if (self.isReady) {
             id = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Id[0];
         }
         return id;
@@ -49,7 +39,7 @@ class TcxFile {
     getSport():string {
         let sport;
         let self = this;
-        if (!self.isError) {
+        if (self.isReady) {
             sport = self.data.TrainingCenterDatabase.Activities[0].Activity[0].$.Sport;
         }
         return sport;
@@ -59,7 +49,7 @@ class TcxFile {
         let author:Author= null;
         let self = this;
         //runtastic does not have author record
-        if (!self.isError && self.data.TrainingCenterDatabase.Author !== undefined) {
+        if (self.isReady && self.data.TrainingCenterDatabase.Author !== undefined) {
             author = new Author(self.data.TrainingCenterDatabase.Author[0]);
         }
         return author;
@@ -67,18 +57,18 @@ class TcxFile {
     
     hasCreator = function () {
         let self = this;
-        if (!self.isError) {
+        if (self.isReady) {
             return self.data.TrainingCenterDatabase.$.creator !== undefined || self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator !== undefined;
         }
         return false;
     };
 
     getCreator = function () {
-        let creator=new Creator();
-        creator.isRuntastic =  false;
+        let creator:Creator=null;
         let self = this;
-        if (!self.isError && self.hasCreator()) {
+        if (self.isReady && self.hasCreator()) {
             if (self.data.TrainingCenterDatabase.$.creator !== undefined) {
+                creator = new Creator();
                 creator.name = self.data.TrainingCenterDatabase.$.creator;
                 creator.isRuntastic = true;
             } else {
@@ -92,7 +82,7 @@ class TcxFile {
     getLaps = function () {
         let laps = [];
         let self = this;
-        if (!self.isError) {
+        if (self.isReady) {
             let lapCount = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap.length;
             for (let i = 0 ; i != lapCount; ++i){
                 laps.push(new Lap(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap[i]));
@@ -102,6 +92,32 @@ class TcxFile {
     };
 }
 
-
+function read(obj:any,filename: string, callback:(err:string, data:iXmlData)=>void) {
+    let self = obj;
+    fs.readFile(filename, 'utf8', (err, data) => {
+        if (!err) {
+            //το αρχείο υπάρχει τότε το string πάει για parsing
+            pString(data, function (err, result) {
+                if (!err) {
+                    self.data = result;
+                    self.isError = consts.ERROR_STRING_VALUE;
+                    self.isReady = true;
+                    callback(null, result);
+                } else {
+                    self.isError = err.message;
+                    self.data = null;
+                    self.isReady = false;
+                    callback(err, null);
+                }
+            });
+        } else {
+            //το αρχείο δεν υπάρχει
+            self.data = null;
+            self.isError = err.message;
+            self.isReady = false;
+            callback(err.message, null);
+        }
+    });
+}
 
 export default TcxFile;
