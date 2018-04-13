@@ -1,15 +1,15 @@
-interface xsiType {
+export interface xsiType {
     'xsi:type':string;  
 }
 
-interface xmlBuild {
+export interface xmlBuild {
     VersionMajor: [string];
     VersionMinor: [string];
     BuildMajor: [string];
     BuildMinor: [string];
 }
 
-interface xmlAuthor {
+export interface xmlAuthor {
     Name:[string];
     $: xsiType;
     Build: [any];
@@ -17,7 +17,7 @@ interface xmlAuthor {
     PartNumber: [string];
 }
 
-interface xmlCreator{
+export interface xmlCreator{
     Name:Array<string>;
     isRuntastic: Boolean;
     $: xsiType;
@@ -26,7 +26,7 @@ interface xmlCreator{
     Version:Array<xmlBuild>;
 }
 
-interface xmlActivity_{
+export interface xmlActivity_{
     $:{Sport:string}; //{Sport}
     Creator:Array<xmlCreator>;
     Id: Array<string>;
@@ -34,18 +34,18 @@ interface xmlActivity_{
 
 }
 
-interface xmlActivities{
+export interface xmlActivities{
     $: {};
     Creator:Array<xmlCreator>;
     Id: Array<string>;
     Lap: Array<{}>; 
     Activity: Array<xmlActivity_>;
 }
-interface xmlData{
+export interface xmlData{
     TrainingCenterDatabase:xmlTrainingCenterDatabase;
 }
 
-interface xmlTrainingCenterDatabase{
+export interface xmlTrainingCenterDatabase{
     $: {creator?:string};
     Activities: Array<xmlActivities>;
     Author: Array<xmlAuthor>;
