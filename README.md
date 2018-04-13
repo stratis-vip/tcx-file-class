@@ -70,7 +70,7 @@ class Lap {
 }
 ```
 
-### Point
+#### Point
 ```Typescript
 class Point {
     distanceMeters = consts.ERROR_NUMBER_VALUE;
@@ -87,7 +87,7 @@ class Point {
     time = consts.ERROR_STRING_VALUE;
 
 ```
-### Consts used
+#### Consts used
 ```Typescript
 const ERROR_NUMBER_VALUE = -1;
 const ERROR_STRING_VALUE = "";
