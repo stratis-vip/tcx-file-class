@@ -26,7 +26,7 @@ const tcxFile = new new TcxFile(fname, (err:string)=>{
     -   **getSport():string** gives a string with the Sport 
     -   **getAuthor():Author|null** give the Author class if any exists
     -   **getCreator():Creator|null** give the Creator class if any exists
-    -   **getLaps:Array<Lap> | Array<null>** give the Laps class
+    -   **getLaps:Array\<Lap> | Array\<null>** give the Laps class
 
 ### Helper classes
 These classes are created internally and is not recommended to create them by yourself. 
