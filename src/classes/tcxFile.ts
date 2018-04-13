@@ -45,7 +45,7 @@ class TcxFile {
         return sport;
     };
     
-    getAuthor = function () {
+    getAuthor():Author|null {
         let author:Author= null;
         let self = this;
         //runtastic does not have author record
@@ -55,7 +55,7 @@ class TcxFile {
         return author;
     };
     
-    hasCreator = function () {
+    hasCreator():boolean {
         let self = this;
         if (self.isReady) {
             return self.data.TrainingCenterDatabase.$.creator !== undefined || self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator !== undefined;
@@ -63,7 +63,7 @@ class TcxFile {
         return false;
     };
 
-    getCreator = function () {
+    getCreator():Creator |null {
         let creator:Creator=null;
         let self = this;
         if (self.isReady && self.hasCreator()) {
@@ -79,7 +79,7 @@ class TcxFile {
         return creator;
     };
     
-    getLaps = function () {
+    getLaps():Array<Lap> | Array<null> {
         let laps = [];
         let self = this;
         if (self.isReady) {

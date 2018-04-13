@@ -12,49 +12,6 @@ class TcxFile {
         this.data = null;
         this.isError = consts.ERROR_STRING_VALUE;
         this.isReady = false;
-        this.getAuthor = function () {
-            let author = null;
-            let self = this;
-            //runtastic does not have author record
-            if (self.isReady && self.data.TrainingCenterDatabase.Author !== undefined) {
-                author = new author_1.default(self.data.TrainingCenterDatabase.Author[0]);
-            }
-            return author;
-        };
-        this.hasCreator = function () {
-            let self = this;
-            if (self.isReady) {
-                return self.data.TrainingCenterDatabase.$.creator !== undefined || self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator !== undefined;
-            }
-            return false;
-        };
-        this.getCreator = function () {
-            let creator = null;
-            let self = this;
-            if (self.isReady && self.hasCreator()) {
-                if (self.data.TrainingCenterDatabase.$.creator !== undefined) {
-                    creator = new creator_1.default();
-                    creator.name = self.data.TrainingCenterDatabase.$.creator;
-                    creator.isRuntastic = true;
-                }
-                else {
-                    creator = new creator_1.default(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator[0]);
-                    creator.isRuntastic = false;
-                }
-            }
-            return creator;
-        };
-        this.getLaps = function () {
-            let laps = [];
-            let self = this;
-            if (self.isReady) {
-                let lapCount = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap.length;
-                for (let i = 0; i != lapCount; ++i) {
-                    laps.push(new lap_1.default(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap[i]));
-                }
-            }
-            return laps;
-        };
         read(this, filename, (err) => {
             if (err) {
                 this.isError = err;
@@ -82,6 +39,53 @@ class TcxFile {
             sport = self.data.TrainingCenterDatabase.Activities[0].Activity[0].$.Sport;
         }
         return sport;
+    }
+    ;
+    getAuthor() {
+        let author = null;
+        let self = this;
+        //runtastic does not have author record
+        if (self.isReady && self.data.TrainingCenterDatabase.Author !== undefined) {
+            author = new author_1.default(self.data.TrainingCenterDatabase.Author[0]);
+        }
+        return author;
+    }
+    ;
+    hasCreator() {
+        let self = this;
+        if (self.isReady) {
+            return self.data.TrainingCenterDatabase.$.creator !== undefined || self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator !== undefined;
+        }
+        return false;
+    }
+    ;
+    getCreator() {
+        let creator = null;
+        let self = this;
+        if (self.isReady && self.hasCreator()) {
+            if (self.data.TrainingCenterDatabase.$.creator !== undefined) {
+                creator = new creator_1.default();
+                creator.name = self.data.TrainingCenterDatabase.$.creator;
+                creator.isRuntastic = true;
+            }
+            else {
+                creator = new creator_1.default(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator[0]);
+                creator.isRuntastic = false;
+            }
+        }
+        return creator;
+    }
+    ;
+    getLaps() {
+        let laps = [];
+        let self = this;
+        if (self.isReady) {
+            let lapCount = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap.length;
+            for (let i = 0; i != lapCount; ++i) {
+                laps.push(new lap_1.default(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap[i]));
+            }
+        }
+        return laps;
     }
     ;
 }

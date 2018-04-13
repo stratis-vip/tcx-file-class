@@ -46,7 +46,7 @@ interface xmlData{
 }
 
 interface xmlTrainingCenterDatabase{
-    $: {creator?:String};
+    $: {creator?:string};
     Activities: Array<xmlActivities>;
     Author: Array<xmlAuthor>;
 }
