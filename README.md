@@ -11,6 +11,9 @@ To install `tcx-file-class` use npm.
 
 ## Usage
 
+- Import reference to TcxFile class like this:
+```Typescript
+import TcxFile from "tcx-file-class";
 - Create an instance of TcxFile like this: 
 ```
 const tcxFile = new new TcxFile(fname, (err:string)=>{
