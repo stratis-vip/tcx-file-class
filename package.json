@@ -1,7 +1,7 @@
 {
   "name": "tcx-file-class",
   "version": "1.0.0",
-  "description": "",
+  "description": "## Description",
   "main": "index.js",
   "scripts": {
     "start": "node dist/index",
@@ -18,5 +18,20 @@
   },
   "dependencies": {
     "xml2js": "^0.4.19"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stratis-vip/tcx-file-class.git"
+  },
+  "keywords": [
+    "tcx",
+    "read"
+  ],
+  "bugs": {
+    "url": "https://github.com/stratis-vip/tcx-file-class/issues"
+  },
+  "homepage": "https://github.com/stratis-vip/tcx-file-class#readme"
 }
