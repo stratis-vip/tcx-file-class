@@ -14,8 +14,7 @@ To install `tcx-file-class` use npm.
 - Import reference to TcxFile class like this:
 ```Typescript
 import TcxFile from "tcx-file-class";
-- Create an instance of TcxFile like this: 
-```
+
 const tcxFile = new new TcxFile(fname, (err:string)=>{
     if (err){ //something went wrong
     }
@@ -23,11 +22,11 @@ const tcxFile = new new TcxFile(fname, (err:string)=>{
 ```
 - If the class was created succesfully, the value `tcxFile.isReady` will be `true`.
 - Functions: 
-    -   **getId()** gives the Id of the file.
-    -   **getSport()** gives a string with the Sport 
-    -   **getAuthor()** give the Author class if any exists
-    -   **getCreator()** give the Creator class if any exists
-    -   **getLaps** give the Laps class
+    -   **getId():string** gives the Id of the file.
+    -   **getSport():string** gives a string with the Sport 
+    -   **getAuthor():Author|null** give the Author class if any exists
+    -   **getCreator():Creator|null** give the Creator class if any exists
+    -   **getLaps:Array<Lap> | Array<null>** give the Laps class
 
 ### Helper classes
 These classes are created internally and is not recommended to create them by yourself. 
