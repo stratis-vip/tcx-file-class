@@ -1,6 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * Τα στοιχεία του προγράμματος που παρήγαγε το TCX αρχείο
+ */
 class Author {
+    /**
+     * Δημιουργεί το αντικείμενο Author από το αντίστοιχο του TCX
+     * @param {iXmlAuthor} obj το αποθηκευμένο σε xml μορφή αντικείμενο στο TCX
+     */
     constructor(obj) {
         if (Object.keys(obj).length !== 0) {
             this.name = obj.Name[0];
