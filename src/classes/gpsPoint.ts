@@ -2,14 +2,29 @@ import * as consts from "./consts"
 import { iXmlTrackPoint, iXmlLap } from "./iFaces";
 import GeoPoint from "./geoPoint";
 
-class GpsPoint {
+/**
+ * To αντικείμενο που κρατά όλα τα στοιχεία που έχει το TCX αρχείο για κάθε ένα σημείο καταγραφής
+ */
+export default class GpsPoint {
+    /**Η μέχρι τώρα απόσταση */
     distanceMeters = consts.ERROR_NUMBER_VALUE;
+    /**η τρέχουσα ταχύτητα */
     speed = consts.ERROR_NUMBER_VALUE;
+    /**Η ταχύτητα βηματισμού */
     runCandence = consts.ERROR_NUMBER_VALUE;
+    /**Το cadence */
     candence = consts.ERROR_NUMBER_VALUE;
+    /**O τρέχων καρδιακός παλμός */
     heartRateBpm = consts.ERROR_NUMBER_VALUE;
+    /**Οι συντεταγμένες του σημείου και το υψόμετρο */
     position: GeoPoint=new GeoPoint();
+    /**Ο χρόνος καταγραφής */
     time = consts.ERROR_STRING_VALUE;
+    /**
+     * Συμπληρώνει το αντικείμενο από τα στοιχεία του TCX
+     * 
+     * @param obj η xml καταγραφή από το αρχείο TCX
+     */
     constructor(obj: iXmlTrackPoint) {
         if (obj !== undefined) {
             if (obj.DistanceMeters !== undefined) {
@@ -52,5 +67,3 @@ class GpsPoint {
 
     }
 }
-
-export default GpsPoint;

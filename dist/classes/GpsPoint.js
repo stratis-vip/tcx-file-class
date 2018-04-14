@@ -2,14 +2,29 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts = require("./consts");
 const geoPoint_1 = require("./geoPoint");
+/**
+ * To αντικείμενο που κρατά όλα τα στοιχεία που έχει το TCX αρχείο για κάθε ένα σημείο καταγραφής
+ */
 class GpsPoint {
+    /**
+     * Συμπληρώνει το αντικείμενο από τα στοιχεία του TCX
+     *
+     * @param obj η xml καταγραφή από το αρχείο TCX
+     */
     constructor(obj) {
+        /**Η μέχρι τώρα απόσταση */
         this.distanceMeters = consts.ERROR_NUMBER_VALUE;
+        /**η τρέχουσα ταχύτητα */
         this.speed = consts.ERROR_NUMBER_VALUE;
+        /**Η ταχύτητα βηματισμού */
         this.runCandence = consts.ERROR_NUMBER_VALUE;
+        /**Το cadence */
         this.candence = consts.ERROR_NUMBER_VALUE;
+        /**O τρέχων καρδιακός παλμός */
         this.heartRateBpm = consts.ERROR_NUMBER_VALUE;
+        /**Οι συντεταγμένες του σημείου και το υψόμετρο */
         this.position = new geoPoint_1.default();
+        /**Ο χρόνος καταγραφής */
         this.time = consts.ERROR_STRING_VALUE;
         if (obj !== undefined) {
             if (obj.DistanceMeters !== undefined) {
