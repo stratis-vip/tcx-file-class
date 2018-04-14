@@ -18,8 +18,8 @@ export default class Author {
      * Δημιουργεί το αντικείμενο Author από το αντίστοιχο του TCX
      * @param {iXmlAuthor} obj το αποθηκευμένο σε xml μορφή αντικείμενο στο TCX
      */
-    constructor(obj: iXmlAuthor|any) {
-        if (Object.keys(obj).length !== 0 ) {
+    constructor(obj: iXmlAuthor | any) {
+        if (Object.keys(obj).length !== 0) {
             this.name = obj.Name[0];
             this.typeOfAuthor = obj.$['xsi:type'];
             this.build = getBuildString(obj.Build[0].Version[0]);

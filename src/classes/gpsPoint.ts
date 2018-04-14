@@ -39,12 +39,9 @@ export default class GpsPoint {
                 }
             } else {
                 if (obj.Extensions !== undefined && obj.Extensions[0].TPX !== undefined) {
-                    //TODO na βρω ποδηλατικό πολαρ
-
                     this.runCandence = Number(obj.Extensions[0].TPX[0].RunCadence[0]);
                     this.speed = Number(obj.Extensions[0].TPX[0].Speed[0]);
                 }
-
             }
             if (obj.Cadence !== undefined) {
                 this.candence = Number(obj.Cadence[0]);
@@ -62,8 +59,6 @@ export default class GpsPoint {
                     this.position.altitudeMeters = consts.ERROR_NUMBER_VALUE;
                 }
             }
-
         }
-
     }
 }
