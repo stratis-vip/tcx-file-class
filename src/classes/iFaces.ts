@@ -1,60 +1,98 @@
-export interface xsiType {
+import Lap from "./lap";
+
+export interface iXsiType {
     'xsi:type':string;  
 }
 
-export interface xmlBuild {
-    VersionMajor: [string];
-    VersionMinor: [string];
-    BuildMajor: [string];
-    BuildMinor: [string];
+export interface iXmlBuild {
+    VersionMajor: Array<string>;
+    VersionMinor: Array<string>;
+    BuildMajor: Array<string>;
+    BuildMinor: Array<string>;
 }
 
-export interface xmlAuthor {
-    Name:[string];
-    $: xsiType;
-    Build: [any];
-    LangID: [string];
-    PartNumber: [string];
+export interface iXmlAuthor {
+    Name:Array<string>;
+    $: iXsiType;
+    Build: Array<any>;
+    LangID: Array<string>;
+    PartNumber: Array<string>;
 }
 
-export interface xmlCreator{
+export interface iXmlCreator{
     Name:Array<string>;
     isRuntastic: Boolean;
-    $: xsiType;
+    $: iXsiType;
     ProductID: Array<string>;
     UnitId: Array<string>;
-    Version:Array<xmlBuild>;
+    Version:Array<iXmlBuild>;
 }
 
-export interface xmlActivity_{
+export interface iXmlActivity{
     $:{Sport:string}; //{Sport}
-    Creator:Array<xmlCreator>;
+    Creator:Array<iXmlCreator>;
     Id: Array<string>;
-    Lap: any;
-
+    Lap: Array<iXmlLap>;
 }
 
-export interface xmlActivities{
-    $: {};
-    Creator:Array<xmlCreator>;
+export interface iXmlLap{
+    $:{StartTime:string};
+    AverageHeartRateBpm:Array<{Value:string}>;
+    MaximumHeartRateBpm:Array<{Value:string}>
+    MaximumSpeed:Array<string>;
+    TotalTimeSeconds:Array<string>;
+    Calories:Array<string>;
+    DistanceMeters:Array<string>;
+    MaxBikeCadence:Array<string>;
+    Steps:Array<string>;
+    AvgRunCadence:Array<string>;
+    MaxRunCadence:Array<string>;
+    AvgSpeed:Array<string>;
+    Intensity:Array<string>;
+    Extensions:any;
+    Cadence:Array<string>;
+    TriggerMethod:Array<string>;
+    Track:Array<iXmlTrack>;
+}
+
+export interface iXmlTrack{
+    Trackpoint:Array<iXmlTrackPoint>;
+}
+export interface iXmlTrackPoint{
+    AltitudeMeters:Array<string>;
+    DistanceMeters:Array<String>;
+    Extensions:Array<any>;
+    HeartRateBpm:Array<{
+        $:any;
+        value:string}>;
+    Position:Array<{
+        LatitudeDegrees:Array<string>;
+        LongitudeDegrees:Array<string>;
+    }>;
+    Time:Array<string>;
+}
+
+export interface iXmlActivities{
+    $: any;
+    Creator:Array<iXmlCreator>;
     Id: Array<string>;
-    Lap: Array<{}>; 
-    Activity: Array<xmlActivity_>;
+    Lap: Array<any>; 
+    Activity: Array<iXmlActivity>;
 }
-export interface xmlData{
-    TrainingCenterDatabase:xmlTrainingCenterDatabase;
+export interface iXmlData{
+    TrainingCenterDatabase:iXmlTrainingCenterDatabase;
 }
 
-export interface xmlTrainingCenterDatabase{
+export interface iXmlTrainingCenterDatabase{
     $: {creator?:string};
-    Activities: Array<xmlActivities>;
-    Author: Array<xmlAuthor>;
+    Activities: Array<iXmlActivities>;
+    Author: Array<iXmlAuthor>;
 }
 export { 
-    xsiType as iXsiType, 
-    xmlBuild as iXmlBuild,
-    xmlAuthor as iXmlAuthor,
-    xmlCreator as iXmlCreator,
-    xmlData as iXmlData,
-    xmlTrainingCenterDatabase as iXmlTrainingCenterDatabase,   
+    iXsiType as IXsiType, 
+    iXmlBuild as IXmlBuild,
+    iXmlAuthor as IXmlAuthor,
+    iXmlCreator as IXmlCreator,
+    iXmlData as IXmlData,
+    iXmlTrainingCenterDatabase as IXmlTrainingCenterDatabase,   
 };

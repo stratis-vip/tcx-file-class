@@ -2,17 +2,17 @@ export interface xsiType {
     'xsi:type': string;
 }
 export interface xmlBuild {
-    VersionMajor: [string];
-    VersionMinor: [string];
-    BuildMajor: [string];
-    BuildMinor: [string];
+    VersionMajor: Array<string>;
+    VersionMinor: Array<string>;
+    BuildMajor: Array<string>;
+    BuildMinor: Array<string>;
 }
 export interface xmlAuthor {
-    Name: [string];
+    Name: Array<string>;
     $: xsiType;
-    Build: [any];
-    LangID: [string];
-    PartNumber: [string];
+    Build: Array<any>;
+    LangID: Array<string>;
+    PartNumber: Array<string>;
 }
 export interface xmlCreator {
     Name: Array<string>;
@@ -31,10 +31,10 @@ export interface xmlActivity_ {
     Lap: any;
 }
 export interface xmlActivities {
-    $: {};
+    $: any;
     Creator: Array<xmlCreator>;
     Id: Array<string>;
-    Lap: Array<{}>;
+    Lap: Array<any>;
     Activity: Array<xmlActivity_>;
 }
 export interface xmlData {
