@@ -7,12 +7,24 @@ import { iXmlData, iXmlAuthor, iXmlCreator } from './iFaces';
 import Lap from './lap';
 
 const pString = pstring.parseString;
-
+/**
+ * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
+ */
 class TcxFile {
+    /**Όλα τα δεδομένα του αρχείου σε ΧΜL μορφή */
     data:iXmlData=null;
+    /**Κρατάει την τιμή του λάθους, αν υπάρχει, στην ανάγωνση του TCX αρχείου */
     isError = consts.ERROR_STRING_VALUE;
+    /**Ετοιμότητα του αντικειμένου */
     isReady = false;
 
+    /**
+     * Δημιουργία του αντικειμένου που διαβάζει τα δεδομένα από TCX  αρχείο
+     * 
+     * @param {string} filename το όνομα του αρχείου TCX
+     * @param {function} callback η συνάρτηση που καλείται όταν διαβάσει το αρχείο. Αν 
+     * υπάρχει λάθος, τότε η callback(err:string) επιστρέφει το λάθος στην err
+     */
     constructor(filename:string, callback:(err:string)=>void){
         read(this, filename,(err)=>{
             if (err){
@@ -26,7 +38,9 @@ class TcxFile {
     }
 
     
-
+    /**Διαβάζει την ιδότητα Id του ΤCX αρχείου
+     * @return {string} id η τσυτότητα της δραστηριότητας
+    */
     getId ():string {
         let id:string = "";
         let self = this;
@@ -36,6 +50,9 @@ class TcxFile {
         return id;
     };
 
+    /**Διαβάσει το τύπο του Sport από το TCX αρχείο
+     * @returns {string} sport το άθλημα της δραστηριότητας
+      */
     getSport():string {
         let sport;
         let self = this;
@@ -45,6 +62,11 @@ class TcxFile {
         return sport;
     };
     
+    /**
+     * Συμπληρώνει ένα αντικείμενο Author με τα στοχεία (αν υπάρχουν) στο TCX αρχείο
+     * 
+     * @returns {Author} author αντικείμενο Author η null
+     */
     getAuthor():Author|null {
         let author:Author= null;
         let self = this;
@@ -55,6 +77,10 @@ class TcxFile {
         return author;
     };
     
+    /**
+     * Ελέγχει αν το αρχείο έχει στοιχεία Creator
+     * @return {boolean} true ή false
+     */
     hasCreator():boolean {
         let self = this;
         if (self.isReady) {
@@ -63,6 +89,11 @@ class TcxFile {
         return false;
     };
 
+    /**
+    * Συμπληρώνει ένα αντικείμενο Creator με τα στοχεία (αν υπάρχουν) στο TCX αρχείο
+    * 
+    * @returns {Creator} creator αντικείμενο Creator η null
+    */
     getCreator():Creator |null {
         let creator:Creator=null;
         let self = this;
@@ -78,7 +109,11 @@ class TcxFile {
         }
         return creator;
     };
-    
+    /**
+     * Συμπληρώνει ένα πίνακα με όλα τα Laps του αρχείου TCX
+     * 
+     * @return τον πίνακα σε μορφή Array<Lap>
+     */
     getLaps():Array<Lap> | Array<null> {
         let laps = [];
         let self = this;
@@ -91,8 +126,15 @@ class TcxFile {
         return laps;
     };
 }
-
-function read(obj:any,filename: string, callback:(err:string, data:iXmlData)=>void) {
+/**
+ * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
+ * 
+ * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
+ * @param {string} filename το όνομα του αρχείου
+ * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData 
+ * το σύνολο των δεδομένων του TCX αρχείου (filename)
+ */
+function read(obj:TcxFile, filename: string, callback:(err:string, data:iXmlData)=>void) {
     let self = obj;
     fs.readFile(filename, 'utf8', (err, data) => {
         if (!err) {
