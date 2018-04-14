@@ -1,4 +1,5 @@
 import * as consts from "./consts"
+import { iXmlTrackPoint, iXmlLap } from "./iFaces";
 
 class Point {
     distanceMeters = consts.ERROR_NUMBER_VALUE;
@@ -13,7 +14,7 @@ class Point {
             altitudeMeters: consts.ERROR_NUMBER_VALUE
         }
     time = consts.ERROR_STRING_VALUE;
-    constructor(obj: any) {
+    constructor(obj: iXmlTrackPoint) {
         if (obj !== undefined) {
             if (obj.DistanceMeters !== undefined) {
                 this.distanceMeters = Number(obj.DistanceMeters[0]);
