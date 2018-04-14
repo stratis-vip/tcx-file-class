@@ -1,23 +1,43 @@
 import * as consts from "./consts";
 import Point from "./point";
+import { iXmlLap } from "./iFaces";
 
+/** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 class Lap {
+    /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
     startTime: string;
+    /**Μέσοι καρδιακοί παλμοί */
     averageHeartRateBpm: number;
+    /** Μέγιστος καρδιακός παλμός */
     maximumHeartRateBpm: number;
+    /** Μέγιστη ταχύτητα */
     maximumSpeed: number;
+    /**Συνολικός χρόνος */
     totalTimeSeconds: number;
+    /**θερμίδες */
     calories: number;
+    /**H απόσταση σε μέτρα */
     distanceMeters: number;
+    /**Μέγιστη πεταλιά ποδηλάτου */
     maxBikeCadence = consts.ERROR_NUMBER_VALUE;
+    /**Βήματα (;) */
     steps = consts.ERROR_NUMBER_VALUE;
+    /**Μέσος αριθμός βημάτων ανά λεπτό */
     avgRunCadence = consts.ERROR_NUMBER_VALUE;
+    /**Μέγιστος αριθμός βημάτων ανά λεπτό */
     maxRunCadence = consts.ERROR_NUMBER_VALUE;
+    /**Μέση ταχύτητα */
     avgSpeed = consts.ERROR_NUMBER_VALUE;
+    /**intensity */
     intensity = consts.ERROR_STRING_VALUE;
+    /**Πίνακας με τα σημεία που έχει καταγράψει το TCX */
     trackPoints: Array<Point>;
+    /**TriggerMethod*/
     triggerMethod = consts.ERROR_STRING_VALUE;
-    constructor(obj: any) {
+    /**Δημιουργία αντικειμένου
+     * @param obj το αντικείμενο με τον γύρο και τα σημεία
+     */
+    constructor(obj: iXmlLap) {
         if (Object.keys(obj).length !== 0) {
             this.startTime = obj.$.StartTime;
             this.averageHeartRateBpm = Number(obj.AverageHeartRateBpm[0].Value[0]);
@@ -62,23 +82,24 @@ class Lap {
                             this.avgRunCadence = Number(obj.Cadence[0]);
                         }
                     }
-                    //polar
                 }
-
             }
             if (obj.Intensity !== undefined) {
                 this.intensity = obj.Intensity[0];
             }
-            let po = obj.Track[0].TrackPoint;
+           // let po = obj.Track[0].TrackPoint;
             this.trackPoints = getPoints(obj);
             this.triggerMethod = obj.TriggerMethod[0];
         }
     }
-
-
 }
 
-function     getPoints(obj: any) {
+/**
+ * 
+ * 
+ * @param {iXmlLap} obj το αντικείμενο με τον xml Lap
+ */
+function getPoints(obj: iXmlLap) {
     let points=[];
     if (obj !== undefined) {
         let pointCount = obj.Track[0].Trackpoint.length;
@@ -88,7 +109,5 @@ function     getPoints(obj: any) {
     }
     return points;
 }
-
-
 
 export default Lap;
