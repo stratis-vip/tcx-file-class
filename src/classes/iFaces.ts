@@ -100,3 +100,7 @@ export interface iGeoPoint {
     longitudeDegrees: number
     altitudeMeters: number
 }
+
+export {
+    iGeoPoint as IGeoPoint
+}
