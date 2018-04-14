@@ -41,7 +41,7 @@ class TcxFile {
     /**Διαβάζει την ιδότητα Id του ΤCX αρχείου
      * @return {string} id η τσυτότητα της δραστηριότητας
     */
-    getId ():string {
+    getId():string {
         let id:string = "";
         let self = this;
         if (self.isReady) {
