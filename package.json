@@ -1,6 +1,6 @@
 {
   "name": "tcx-file-class",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "## Description",
   "main": "index.js",
   "scripts": {
