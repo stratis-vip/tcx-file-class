@@ -64,12 +64,13 @@ export interface iXmlTrackPoint{
     Extensions:Array<any>;
     HeartRateBpm:Array<{
         $:any;
-        value:string}>;
+        Value:string}>;
     Position:Array<{
         LatitudeDegrees:Array<string>;
         LongitudeDegrees:Array<string>;
     }>;
     Time:Array<string>;
+    Cadence:Array<string>;
 }
 
 export interface iXmlActivities{
