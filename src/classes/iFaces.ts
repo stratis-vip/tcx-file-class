@@ -1,7 +1,7 @@
 import Lap from "./lap";
 
 export interface iXsiType {
-    'xsi:type':string;  
+    'xsi:type': string;
 }
 
 export interface iXmlBuild {
@@ -12,88 +12,91 @@ export interface iXmlBuild {
 }
 
 export interface iXmlAuthor {
-    Name:Array<string>;
+    Name: Array<string>;
     $: iXsiType;
     Build: Array<any>;
     LangID: Array<string>;
     PartNumber: Array<string>;
 }
 
-export interface iXmlCreator{
-    Name:Array<string>;
+export interface iXmlCreator {
+    Name: Array<string>;
     isRuntastic: Boolean;
     $: iXsiType;
     ProductID: Array<string>;
     UnitId: Array<string>;
-    Version:Array<iXmlBuild>;
+    Version: Array<iXmlBuild>;
 }
 
-export interface iXmlActivity{
-    $:{Sport:string}; //{Sport}
-    Creator:Array<iXmlCreator>;
+export interface iXmlActivity {
+    $: { Sport: string }; //{Sport}
+    Creator: Array<iXmlCreator>;
     Id: Array<string>;
     Lap: Array<iXmlLap>;
 }
 
-export interface iXmlLap{
-    $:{StartTime:string};
-    AverageHeartRateBpm:Array<{Value:string}>;
-    MaximumHeartRateBpm:Array<{Value:string}>
-    MaximumSpeed:Array<string>;
-    TotalTimeSeconds:Array<string>;
-    Calories:Array<string>;
-    DistanceMeters:Array<string>;
-    MaxBikeCadence:Array<string>;
-    Steps:Array<string>;
-    AvgRunCadence:Array<string>;
-    MaxRunCadence:Array<string>;
-    AvgSpeed:Array<string>;
-    Intensity:Array<string>;
-    Extensions:any;
-    Cadence:Array<string>;
-    TriggerMethod:Array<string>;
-    Track:Array<iXmlTrack>;
+export interface iXmlLap {
+    $: { StartTime: string };
+    AverageHeartRateBpm: Array<{ Value: string }>;
+    MaximumHeartRateBpm: Array<{ Value: string }>
+    MaximumSpeed: Array<string>;
+    TotalTimeSeconds: Array<string>;
+    Calories: Array<string>;
+    DistanceMeters: Array<string>;
+    MaxBikeCadence: Array<string>;
+    Steps: Array<string>;
+    AvgRunCadence: Array<string>;
+    MaxRunCadence: Array<string>;
+    AvgSpeed: Array<string>;
+    Intensity: Array<string>;
+    Extensions: any;
+    Cadence: Array<string>;
+    TriggerMethod: Array<string>;
+    Track: Array<iXmlTrack>;
 }
 
-export interface iXmlTrack{
-    Trackpoint:Array<iXmlTrackPoint>;
+export interface iXmlTrack {
+    Trackpoint: Array<iXmlTrackPoint>;
 }
-export interface iXmlTrackPoint{
-    AltitudeMeters:Array<string>;
-    DistanceMeters:Array<String>;
-    Extensions:Array<any>;
-    HeartRateBpm:Array<{
-        $:any;
-        Value:string}>;
-    Position:Array<{
-        LatitudeDegrees:Array<string>;
-        LongitudeDegrees:Array<string>;
+export interface iXmlTrackPoint {
+    AltitudeMeters: Array<string>;
+    DistanceMeters: Array<String>;
+    Extensions: Array<any>;
+    HeartRateBpm: Array<{
+        $: any;
+        Value: string
     }>;
-    Time:Array<string>;
-    Cadence:Array<string>;
+    Position: Array<{
+        LatitudeDegrees: Array<string>;
+        LongitudeDegrees: Array<string>;
+    }>;
+    Time: Array<string>;
+    Cadence: Array<string>;
 }
 
-export interface iXmlActivities{
+export interface iXmlActivities {
     $: any;
-    Creator:Array<iXmlCreator>;
+    Creator: Array<iXmlCreator>;
     Id: Array<string>;
-    Lap: Array<any>; 
+    Lap: Array<any>;
     Activity: Array<iXmlActivity>;
 }
-export interface iXmlData{
-    TrainingCenterDatabase:iXmlTrainingCenterDatabase;
+export interface iXmlData {
+    TrainingCenterDatabase: iXmlTrainingCenterDatabase;
 }
 
-export interface iXmlTrainingCenterDatabase{
-    $: {creator?:string};
+export interface iXmlTrainingCenterDatabase {
+    $: { creator?: string };
     Activities: Array<iXmlActivities>;
     Author: Array<iXmlAuthor>;
 }
-export { 
-    iXsiType as IXsiType, 
-    iXmlBuild as IXmlBuild,
-    iXmlAuthor as IXmlAuthor,
-    iXmlCreator as IXmlCreator,
-    iXmlData as IXmlData,
-    iXmlTrainingCenterDatabase as IXmlTrainingCenterDatabase,   
-};
+
+/**
+ * Δήλωση για γεωγραφικό σημείο
+ * @interface
+ */
+export interface iGeoPoint {
+    latitudeDegrees: number
+    longitudeDegrees: number
+    altitudeMeters: number
+}
