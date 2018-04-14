@@ -10,7 +10,7 @@ const pString = pstring.parseString;
 /**
  * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
  */
-class TcxFile {
+export default class TcxFile {
     /**Όλα τα δεδομένα του αρχείου σε ΧΜL μορφή */
     data:iXmlData=null;
     /**Κρατάει την τιμή του λάθους, αν υπάρχει, στην ανάγωνση του TCX αρχείου */
@@ -161,5 +161,3 @@ function read(obj:TcxFile, filename: string, callback:(err:string, data:iXmlData
         }
     });
 }
-
-export default TcxFile;

@@ -74,6 +74,7 @@ class Lap {
         }
     }
 }
+exports.default = Lap;
 /**
  * Δημιουργεί ένα πίνακα με τα gps σημεία του αρχείου
  *
@@ -89,5 +90,4 @@ function getPoints(obj) {
     }
     return points;
 }
-exports.default = Lap;
 //# sourceMappingURL=lap.js.map

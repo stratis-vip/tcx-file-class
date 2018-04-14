@@ -13,10 +13,10 @@ class Creator {
         }
     }
 }
+exports.default = Creator;
 function getVersionString(obj) {
     let build = obj.VersionMajor[0] + "." + obj.VersionMinor[0] + "." +
         obj.BuildMajor[0] + "." + obj.BuildMinor[0];
     return build;
 }
-exports.default = Creator;
 //# sourceMappingURL=creator.js.map

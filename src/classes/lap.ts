@@ -3,7 +3,7 @@ import GpsPoint from "./GpsPoint";
 import { iXmlLap, iXmlTrackPoint } from "./iFaces";
 
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
-class Lap {
+export default class Lap {
     /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
     startTime: string;
     /**Μέσοι καρδιακοί παλμοί */
@@ -109,5 +109,3 @@ function getPoints(obj: iXmlLap) {
     }
     return points;
 }
-
-export default Lap;

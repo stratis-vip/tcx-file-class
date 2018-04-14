@@ -1,6 +1,6 @@
 import { iXsiType, iXmlBuild, iXmlCreator } from "./iFaces";
 
-class Creator {
+export default class Creator {
     name: string;
 
     typeOfCreator: string;
@@ -26,5 +26,3 @@ function getVersionString(obj: iXmlBuild): string {
         obj.BuildMajor[0] + "." + obj.BuildMinor[0];
     return build;
 }
-
-export default Creator;

@@ -3,7 +3,7 @@ import { iXsiType, iXmlBuild, iXmlAuthor } from "../classes/iFaces"
 /**
  * Τα στοιχεία του προγράμματος που παρήγαγε το TCX αρχείο
  */
-class Author {
+export default class Author {
     /**Το όνομα */
     name: string;
     /**Ο τύπος του προγράμματος */
@@ -37,5 +37,3 @@ function getBuildString(obj: iXmlBuild): string {
     }
     return build;
 }
-
-export default Author;

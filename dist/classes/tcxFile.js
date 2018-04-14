@@ -127,6 +127,7 @@ class TcxFile {
     }
     ;
 }
+exports.default = TcxFile;
 /**
  * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
  *
@@ -164,5 +165,4 @@ function read(obj, filename, callback) {
         }
     });
 }
-exports.default = TcxFile;
 //# sourceMappingURL=tcxFile.js.map

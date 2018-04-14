@@ -18,6 +18,7 @@ class Author {
         }
     }
 }
+exports.default = Author;
 function getBuildString(obj) {
     let build = obj.VersionMajor[0] + "." + obj.VersionMinor[0];
     //polar has not VersionMajor and VersionMinor
@@ -26,5 +27,4 @@ function getBuildString(obj) {
     }
     return build;
 }
-exports.default = Author;
 //# sourceMappingURL=author.js.map
