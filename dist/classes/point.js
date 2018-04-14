@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts = require("./consts");
+const geoPoint_1 = require("./geoPoint");
 class Point {
     constructor(obj) {
         this.distanceMeters = consts.ERROR_NUMBER_VALUE;
@@ -8,11 +9,7 @@ class Point {
         this.runCandence = consts.ERROR_NUMBER_VALUE;
         this.candence = consts.ERROR_NUMBER_VALUE;
         this.heartRateBpm = consts.ERROR_NUMBER_VALUE;
-        this.position = {
-            latitudeDegrees: consts.ERROR_NUMBER_VALUE,
-            longitudeDegrees: consts.ERROR_NUMBER_VALUE,
-            altitudeMeters: consts.ERROR_NUMBER_VALUE
-        };
+        this.position = new geoPoint_1.default();
         this.time = consts.ERROR_STRING_VALUE;
         if (obj !== undefined) {
             if (obj.DistanceMeters !== undefined) {

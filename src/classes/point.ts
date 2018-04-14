@@ -1,5 +1,6 @@
 import * as consts from "./consts"
 import { iXmlTrackPoint, iXmlLap } from "./iFaces";
+import GeoPoint from "./geoPoint";
 
 class Point {
     distanceMeters = consts.ERROR_NUMBER_VALUE;
@@ -7,12 +8,7 @@ class Point {
     runCandence = consts.ERROR_NUMBER_VALUE;
     candence = consts.ERROR_NUMBER_VALUE;
     heartRateBpm = consts.ERROR_NUMBER_VALUE;
-    position: { latitudeDegrees: number, longitudeDegrees: number, altitudeMeters: number } =
-        {
-            latitudeDegrees: consts.ERROR_NUMBER_VALUE,
-            longitudeDegrees: consts.ERROR_NUMBER_VALUE,
-            altitudeMeters: consts.ERROR_NUMBER_VALUE
-        }
+    position: GeoPoint=new GeoPoint();
     time = consts.ERROR_STRING_VALUE;
     constructor(obj: iXmlTrackPoint) {
         if (obj !== undefined) {
