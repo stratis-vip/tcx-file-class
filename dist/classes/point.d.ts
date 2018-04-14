@@ -1,4 +1,4 @@
-declare class Point {
+declare class GpsPoint {
     distanceMeters: number;
     speed: number;
     runCandence: number;
@@ -12,4 +12,4 @@ declare class Point {
     time: string;
     constructor(obj: any);
 }
-export default Point;
+export default GpsPoint;

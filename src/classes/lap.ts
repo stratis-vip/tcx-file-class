@@ -1,6 +1,6 @@
 import * as consts from "./consts";
-import Point from "./point";
-import { iXmlLap } from "./iFaces";
+import GpsPoint from "./GpsPoint";
+import { iXmlLap, iXmlTrackPoint } from "./iFaces";
 
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 class Lap {
@@ -31,7 +31,7 @@ class Lap {
     /**intensity */
     intensity = consts.ERROR_STRING_VALUE;
     /**Πίνακας με τα σημεία που έχει καταγράψει το TCX */
-    trackPoints: Array<Point>;
+    trackPoints: Array<GpsPoint>;
     /**TriggerMethod*/
     triggerMethod = consts.ERROR_STRING_VALUE;
     /**Δημιουργία αντικειμένου
@@ -95,16 +95,16 @@ class Lap {
 }
 
 /**
- * 
+ * Δημιουργεί ένα πίνακα με τα gps σημεία του αρχείου
  * 
  * @param {iXmlLap} obj το αντικείμενο με τον xml Lap
  */
 function getPoints(obj: iXmlLap) {
-    let points=[];
+    let points =new Array<GpsPoint>();
     if (obj !== undefined) {
         let pointCount = obj.Track[0].Trackpoint.length;
         for (let i = 0; i != pointCount; ++i) {
-            points.push(new Point(obj.Track[0].Trackpoint[i]));
+            points.push(new GpsPoint(obj.Track[0].Trackpoint[i]));
         }
     }
     return points;

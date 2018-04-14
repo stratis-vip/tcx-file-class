@@ -1,6 +1,4 @@
-const ERROR_NUMBER_VALUE = -1;
-const ERROR_STRING_VALUE = "";
-
-export {ERROR_NUMBER_VALUE as ERROR_NUMBER_VALUE,
-        ERROR_STRING_VALUE as ERROR_STRING_VALUE
-    }
+/**Λάθος τιμή για αριθμό */
+export const ERROR_NUMBER_VALUE = -1;
+/**Λάθος τιμή για γραμματοσειρά */
+export const ERROR_STRING_VALUE = "";

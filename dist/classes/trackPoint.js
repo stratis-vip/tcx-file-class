@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const point_1 = require("./point");
+const point_1 = require("./GpsPoint");
 class TrackPoints {
     constructor(obj) {
         this.points = new Array();

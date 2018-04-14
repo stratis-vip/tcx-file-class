@@ -1,16 +1,16 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const consts = require("./consts");
-const geoPoint_1 = require("./geoPoint");
+import * as consts from "./consts"
+import { iXmlTrackPoint, iXmlLap } from "./iFaces";
+import GeoPoint from "./geoPoint";
+
 class GpsPoint {
-    constructor(obj) {
-        this.distanceMeters = consts.ERROR_NUMBER_VALUE;
-        this.speed = consts.ERROR_NUMBER_VALUE;
-        this.runCandence = consts.ERROR_NUMBER_VALUE;
-        this.candence = consts.ERROR_NUMBER_VALUE;
-        this.heartRateBpm = consts.ERROR_NUMBER_VALUE;
-        this.position = new geoPoint_1.default();
-        this.time = consts.ERROR_STRING_VALUE;
+    distanceMeters = consts.ERROR_NUMBER_VALUE;
+    speed = consts.ERROR_NUMBER_VALUE;
+    runCandence = consts.ERROR_NUMBER_VALUE;
+    candence = consts.ERROR_NUMBER_VALUE;
+    heartRateBpm = consts.ERROR_NUMBER_VALUE;
+    position: GeoPoint=new GeoPoint();
+    time = consts.ERROR_STRING_VALUE;
+    constructor(obj: iXmlTrackPoint) {
         if (obj !== undefined) {
             if (obj.DistanceMeters !== undefined) {
                 this.distanceMeters = Number(obj.DistanceMeters[0]);
@@ -22,13 +22,14 @@ class GpsPoint {
                 if (obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"] !== undefined) {
                     this.runCandence = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"][0]);
                 }
-            }
-            else {
+            } else {
                 if (obj.Extensions !== undefined && obj.Extensions[0].TPX !== undefined) {
                     //TODO na βρω ποδηλατικό πολαρ
+
                     this.runCandence = Number(obj.Extensions[0].TPX[0].RunCadence[0]);
                     this.speed = Number(obj.Extensions[0].TPX[0].Speed[0]);
                 }
+
             }
             if (obj.Cadence !== undefined) {
                 this.candence = Number(obj.Cadence[0]);
@@ -42,13 +43,14 @@ class GpsPoint {
                 this.position.longitudeDegrees = Number(obj.Position[0].LongitudeDegrees[0]);
                 if (obj.AltitudeMeters !== undefined) {
                     this.position.altitudeMeters = Number(obj.AltitudeMeters[0]);
-                }
-                else {
+                } else {
                     this.position.altitudeMeters = consts.ERROR_NUMBER_VALUE;
                 }
             }
+
         }
+
     }
 }
-exports.default = GpsPoint;
-//# sourceMappingURL=point.js.map
+
+export default GpsPoint;

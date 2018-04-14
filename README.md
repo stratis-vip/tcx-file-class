@@ -67,14 +67,14 @@ class Lap {
     maxRunCadence = consts.ERROR_NUMBER_VALUE;
     avgSpeed = consts.ERROR_NUMBER_VALUE;
     intensity = consts.ERROR_STRING_VALUE;
-    trackPoints: Array<Point>;
+    trackPoints: Array<GpsPoint>;
     triggerMethod = consts.ERROR_STRING_VALUE;
 }
 ```
 
-#### Point
+#### GpsPoint
 ```Typescript
-class Point {
+class GpsPoint {
     distanceMeters = consts.ERROR_NUMBER_VALUE;
     speed = consts.ERROR_NUMBER_VALUE;
     runCandence = consts.ERROR_NUMBER_VALUE;

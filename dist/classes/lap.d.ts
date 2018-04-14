@@ -1,4 +1,4 @@
-import Point from "./point";
+import GpsPoint from "./GpsPoint";
 declare class Lap {
     startTime: string;
     averageHeartRateBpm: number;
@@ -13,7 +13,7 @@ declare class Lap {
     maxRunCadence: number;
     avgSpeed: number;
     intensity: string;
-    trackPoints: Array<Point>;
+    trackPoints: Array<GpsPoint>;
     triggerMethod: string;
     constructor(obj: any);
 }
