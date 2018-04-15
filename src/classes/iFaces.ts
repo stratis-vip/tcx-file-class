@@ -1,17 +1,17 @@
 import Lap from "./lap";
 
-export interface iXsiType {
+ interface iXsiType {
     'xsi:type': string;
 }
 
-export interface iXmlBuild {
+ interface iXmlBuild {
     VersionMajor: Array<string>;
     VersionMinor: Array<string>;
     BuildMajor: Array<string>;
     BuildMinor: Array<string>;
 }
 
-export interface iXmlAuthor {
+ interface iXmlAuthor {
     Name: Array<string>;
     $: iXsiType;
     Build: Array<any>;
@@ -19,7 +19,7 @@ export interface iXmlAuthor {
     PartNumber: Array<string>;
 }
 
-export interface iXmlCreator {
+ interface iXmlCreator {
     Name: Array<string>;
     isRuntastic: Boolean;
     $: iXsiType;
@@ -28,14 +28,14 @@ export interface iXmlCreator {
     Version: Array<iXmlBuild>;
 }
 
-export interface iXmlActivity {
+ interface iXmlActivity {
     $: { Sport: string }; //{Sport}
     Creator: Array<iXmlCreator>;
     Id: Array<string>;
     Lap: Array<iXmlLap>;
 }
 
-export interface iXmlLap {
+ interface iXmlLap {
     $: { StartTime: string };
     AverageHeartRateBpm: Array<{ Value: string }>;
     MaximumHeartRateBpm: Array<{ Value: string }>
@@ -55,10 +55,10 @@ export interface iXmlLap {
     Track: Array<iXmlTrack>;
 }
 
-export interface iXmlTrack {
+ interface iXmlTrack {
     Trackpoint: Array<iXmlTrackPoint>;
 }
-export interface iXmlTrackPoint {
+interface iXmlTrackPoint {
     AltitudeMeters: Array<string>;
     DistanceMeters: Array<String>;
     Extensions: Array<any>;
@@ -74,18 +74,19 @@ export interface iXmlTrackPoint {
     Cadence: Array<string>;
 }
 
-export interface iXmlActivities {
+interface iXmlActivities {
     $: any;
     Creator: Array<iXmlCreator>;
     Id: Array<string>;
     Lap: Array<any>;
     Activity: Array<iXmlActivity>;
 }
-export interface iXmlData {
+
+interface iXmlData {
     TrainingCenterDatabase: iXmlTrainingCenterDatabase;
 }
 
-export interface iXmlTrainingCenterDatabase {
+interface iXmlTrainingCenterDatabase {
     $: { creator?: string };
     Activities: Array<iXmlActivities>;
     Author: Array<iXmlAuthor>;
@@ -95,12 +96,23 @@ export interface iXmlTrainingCenterDatabase {
  * Δήλωση για γεωγραφικό σημείο
  * @interface
  */
-export interface iGeoPoint {
+interface iGeoPoint {
     latitudeDegrees: number
     longitudeDegrees: number
     altitudeMeters: number
 }
 
-export {
-    iGeoPoint as IGeoPoint
-}
+ export {
+    iGeoPoint, 
+    iXmlTrainingCenterDatabase,
+    iXmlLap,
+    iXmlTrackPoint,
+    iXsiType,
+    iXmlBuild,
+    iXmlAuthor,
+    iXmlCreator,
+    iXmlActivity,
+    iXmlTrack,
+    iXmlActivities, 
+    iXmlData
+ }
