@@ -96,7 +96,7 @@ interface iXmlTrainingCenterDatabase {
  * Δήλωση για γεωγραφικό σημείο
  * @interface
  */
-interface iGeoPoint {
+ interface iGeoPoint {
     latitudeDegrees: number
     longitudeDegrees: number
     altitudeMeters: number
