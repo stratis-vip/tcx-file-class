@@ -40,17 +40,17 @@ export default class Lap {
     constructor(obj: iXmlLap) {
         if (Object.keys(obj).length !== 0) {
             this.startTime = obj.$.StartTime;
-            if (Object.keys(obj.AverageHeartRateBpm).length !== 0)
+            if (obj.AverageHeartRateBpm !== undefined)
                 this.averageHeartRateBpm = Number(obj.AverageHeartRateBpm[0].Value[0]);
-            if (Object.keys(obj.MaximumHeartRateBpm).length !== 0)
+            if (obj.MaximumHeartRateBpm !== undefined)
                 this.maximumHeartRateBpm = Number(obj.MaximumHeartRateBpm[0].Value[0]);
-            if (Object.keys(obj.MaximumSpeed).length !== 0)
+            if (obj.MaximumSpeed !== undefined)
                 this.maximumSpeed = Number(obj.MaximumSpeed[0]);
-            if (Object.keys(obj.TotalTimeSeconds).length !== 0)
+            if (obj.TotalTimeSeconds !== undefined)
                 this.totalTimeSeconds = Number(obj.TotalTimeSeconds[0]);
-            if (Object.keys(obj.Calories).length !== 0)
+            if (obj.Calories !== undefined)
                 this.calories = Number(obj.Calories[0]);
-            if (Object.keys(obj.DistanceMeters).length !== 0)
+            if (obj.DistanceMeters !== undefined)
                 this.distanceMeters = Number(obj.DistanceMeters[0]);
 
             this.maxBikeCadence = consts.ERROR_NUMBER_VALUE;
