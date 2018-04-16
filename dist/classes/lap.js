@@ -8,6 +8,18 @@ class Lap {
      * @param obj το αντικείμενο με τον γύρο και τα σημεία
      */
     constructor(obj) {
+        /**Μέσοι καρδιακοί παλμοί */
+        this.averageHeartRateBpm = consts.ERROR_NUMBER_VALUE;
+        /** Μέγιστος καρδιακός παλμός */
+        this.maximumHeartRateBpm = consts.ERROR_NUMBER_VALUE;
+        /** Μέγιστη ταχύτητα */
+        this.maximumSpeed = consts.ERROR_NUMBER_VALUE;
+        /**Συνολικός χρόνος */
+        this.totalTimeSeconds = consts.ERROR_NUMBER_VALUE;
+        /**θερμίδες */
+        this.calories = consts.ERROR_NUMBER_VALUE;
+        /**H απόσταση σε μέτρα */
+        this.distanceMeters = consts.ERROR_NUMBER_VALUE;
         /**Μέγιστη πεταλιά ποδηλάτου */
         this.maxBikeCadence = consts.ERROR_NUMBER_VALUE;
         /**Βήματα (;) */
@@ -24,12 +36,18 @@ class Lap {
         this.triggerMethod = consts.ERROR_STRING_VALUE;
         if (Object.keys(obj).length !== 0) {
             this.startTime = obj.$.StartTime;
-            this.averageHeartRateBpm = Number(obj.AverageHeartRateBpm[0].Value[0]);
-            this.maximumHeartRateBpm = Number(obj.MaximumHeartRateBpm[0].Value[0]);
-            this.maximumSpeed = Number(obj.MaximumSpeed[0]);
-            this.totalTimeSeconds = Number(obj.TotalTimeSeconds[0]);
-            this.calories = Number(obj.Calories[0]);
-            this.distanceMeters = Number(obj.DistanceMeters[0]);
+            if (Object.keys(obj.AverageHeartRateBpm).length !== 0)
+                this.averageHeartRateBpm = Number(obj.AverageHeartRateBpm[0].Value[0]);
+            if (Object.keys(obj.MaximumHeartRateBpm).length !== 0)
+                this.maximumHeartRateBpm = Number(obj.MaximumHeartRateBpm[0].Value[0]);
+            if (Object.keys(obj.MaximumSpeed).length !== 0)
+                this.maximumSpeed = Number(obj.MaximumSpeed[0]);
+            if (Object.keys(obj.TotalTimeSeconds).length !== 0)
+                this.totalTimeSeconds = Number(obj.TotalTimeSeconds[0]);
+            if (Object.keys(obj.Calories).length !== 0)
+                this.calories = Number(obj.Calories[0]);
+            if (Object.keys(obj.DistanceMeters).length !== 0)
+                this.distanceMeters = Number(obj.DistanceMeters[0]);
             this.maxBikeCadence = consts.ERROR_NUMBER_VALUE;
             this.steps = consts.ERROR_NUMBER_VALUE;
             this.avgRunCadence = consts.ERROR_NUMBER_VALUE;

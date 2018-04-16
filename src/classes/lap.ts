@@ -7,17 +7,17 @@ export default class Lap {
     /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
     startTime: string;
     /**Μέσοι καρδιακοί παλμοί */
-    averageHeartRateBpm: number;
+    averageHeartRateBpm = consts.ERROR_NUMBER_VALUE;
     /** Μέγιστος καρδιακός παλμός */
-    maximumHeartRateBpm: number;
+    maximumHeartRateBpm = consts.ERROR_NUMBER_VALUE;
     /** Μέγιστη ταχύτητα */
-    maximumSpeed: number;
+    maximumSpeed = consts.ERROR_NUMBER_VALUE;
     /**Συνολικός χρόνος */
-    totalTimeSeconds: number;
+    totalTimeSeconds = consts.ERROR_NUMBER_VALUE;
     /**θερμίδες */
-    calories: number;
+    calories = consts.ERROR_NUMBER_VALUE;
     /**H απόσταση σε μέτρα */
-    distanceMeters: number;
+    distanceMeters = consts.ERROR_NUMBER_VALUE;
     /**Μέγιστη πεταλιά ποδηλάτου */
     maxBikeCadence = consts.ERROR_NUMBER_VALUE;
     /**Βήματα (;) */
@@ -40,15 +40,25 @@ export default class Lap {
     constructor(obj: iXmlLap) {
         if (Object.keys(obj).length !== 0) {
             this.startTime = obj.$.StartTime;
-            this.averageHeartRateBpm = Number(obj.AverageHeartRateBpm[0].Value[0]);
-            this.maximumHeartRateBpm = Number(obj.MaximumHeartRateBpm[0].Value[0]);
-            this.maximumSpeed = Number(obj.MaximumSpeed[0]);
-            this.totalTimeSeconds = Number(obj.TotalTimeSeconds[0]);
-            this.calories = Number(obj.Calories[0]);
-            this.distanceMeters = Number(obj.DistanceMeters[0]);
+            if (Object.keys(obj.AverageHeartRateBpm).length !== 0)
+                this.averageHeartRateBpm = Number(obj.AverageHeartRateBpm[0].Value[0]);
+            if (Object.keys(obj.MaximumHeartRateBpm).length !== 0)
+                this.maximumHeartRateBpm = Number(obj.MaximumHeartRateBpm[0].Value[0]);
+            if (Object.keys(obj.MaximumSpeed).length !== 0)
+                this.maximumSpeed = Number(obj.MaximumSpeed[0]);
+            if (Object.keys(obj.TotalTimeSeconds).length !== 0)
+                this.totalTimeSeconds = Number(obj.TotalTimeSeconds[0]);
+            if (Object.keys(obj.Calories).length !== 0)
+                this.calories = Number(obj.Calories[0]);
+            if (Object.keys(obj.DistanceMeters).length !== 0)
+                this.distanceMeters = Number(obj.DistanceMeters[0]);
+
             this.maxBikeCadence = consts.ERROR_NUMBER_VALUE;
+
             this.steps = consts.ERROR_NUMBER_VALUE;
+
             this.avgRunCadence = consts.ERROR_NUMBER_VALUE;
+
             this.maxRunCadence = consts.ERROR_NUMBER_VALUE;
             this.avgSpeed = consts.ERROR_NUMBER_VALUE;
             this.intensity = consts.ERROR_STRING_VALUE;
@@ -87,7 +97,7 @@ export default class Lap {
             if (obj.Intensity !== undefined) {
                 this.intensity = obj.Intensity[0];
             }
-           // let po = obj.Track[0].TrackPoint;
+            // let po = obj.Track[0].TrackPoint;
             this.trackPoints = getPoints(obj);
             this.triggerMethod = obj.TriggerMethod[0];
         }
@@ -100,7 +110,7 @@ export default class Lap {
  * @param {iXmlLap} obj το αντικείμενο με τον xml Lap
  */
 function getPoints(obj: iXmlLap) {
-    let points =new Array<GpsPoint>();
+    let points = new Array<GpsPoint>();
     if (obj !== undefined) {
         let pointCount = obj.Track[0].Trackpoint.length;
         for (let i = 0; i != pointCount; ++i) {
