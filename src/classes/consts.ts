@@ -12,3 +12,12 @@ export function getExt<T>(arg: T): number {
         return ERROR_NUMBER_VALUE;
     }
 }
+
+
+export function getExtV<T>(arg: T): number {
+    if (arg !== undefined) {
+        return Number(arg[0].Value[0]);
+    } else {
+        return ERROR_NUMBER_VALUE;
+    }
+}

@@ -3,17 +3,6 @@ import GpsPoint from "./GpsPoint";
 import { iXmlLap, iXmlTrackPoint } from "./iFaces";
 import { timingSafeEqual } from "crypto";
 
-function getValueFromObject<T extends iXmlLap>(arg: Array<{ Value: string }>): number {
-    if (arg !== undefined) {
-        return Number(arg[0].Value[0]);
-    } else {
-        return consts.ERROR_NUMBER_VALUE;
-    }
-}
-
-
-
-
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 export default class Lap {
     /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
@@ -52,8 +41,8 @@ export default class Lap {
     constructor(obj: iXmlLap) {
         if (Object.keys(obj).length !== 0) {
             this.startTime = obj.$.StartTime;
-            this.averageHeartRateBpm = getValueFromObject(obj.AverageHeartRateBpm);
-            this.maximumHeartRateBpm = getValueFromObject(obj.MaximumHeartRateBpm);
+            this.averageHeartRateBpm = consts.getExtV(obj.AverageHeartRateBpm);
+            this.maximumHeartRateBpm = consts.getExtV(obj.MaximumHeartRateBpm);
             this.maximumSpeed = consts.getExt(obj.MaximumSpeed);
             this.totalTimeSeconds = consts.getExt(obj.TotalTimeSeconds);
             this.calories = consts.getExt(obj.Calories);

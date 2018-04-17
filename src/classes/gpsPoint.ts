@@ -27,37 +27,29 @@ export default class GpsPoint {
      */
     constructor(obj: iXmlTrackPoint) {
         if (obj !== undefined) {
-            if (obj.DistanceMeters !== undefined) {
-                this.distanceMeters = Number(obj.DistanceMeters[0]);
-            }
+            this.distanceMeters = consts.getExt(obj.DistanceMeters);
             if (obj.Extensions !== undefined && obj.Extensions[0]["ns3:TPX"] !== undefined) {
-                if (obj.Extensions[0]["ns3:TPX"][0]["ns3:Speed"] !== undefined) {
-                    this.speed = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:Speed"][0]);
-                }
-                if (obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"] !== undefined) {
-                    this.runCadence = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"][0]);
-                }
+                this.speed = consts.getExt(obj.Extensions[0]["ns3:TPX"][0]["ns3:Speed"]);
+                this.runCadence = consts.getExt(obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"]);
             } else {
                 if (obj.Extensions !== undefined && obj.Extensions[0].TPX !== undefined) {
-                    this.runCadence = Number(obj.Extensions[0].TPX[0].RunCadence[0]);
-                    this.speed = Number(obj.Extensions[0].TPX[0].Speed[0]);
+                    this.runCadence = consts.getExt(obj.Extensions[0].TPX[0].RunCadence);
+                    this.speed = consts.getExt(obj.Extensions[0].TPX[0].Speed);
                 }
             }
-            if (obj.Cadence !== undefined) {
-                this.cadence = Number(obj.Cadence[0]);
-            }
+            this.cadence = consts.getExt(obj.Cadence);
+            // if (obj.Cadence !== undefined) {
+                // this.cadence = Number(obj.Cadence[0]);
+            // }
+
             if (obj.HeartRateBpm !== undefined) {
                 this.heartRateBpm = Number(obj.HeartRateBpm[0].Value[0]);
             }
             this.time = obj.Time[0];
             if (obj.Position !== undefined) {
-                this.position.latitudeDegrees = Number(obj.Position[0].LatitudeDegrees[0]);
-                this.position.longitudeDegrees = Number(obj.Position[0].LongitudeDegrees[0]);
-                if (obj.AltitudeMeters !== undefined) {
-                    this.position.altitudeMeters = Number(obj.AltitudeMeters[0]);
-                } else {
-                    this.position.altitudeMeters = consts.ERROR_NUMBER_VALUE;
-                }
+                this.position.latitudeDegrees = consts.getExt(obj.Position[0].LatitudeDegrees);
+                this.position.longitudeDegrees = consts.getExt(obj.Position[0].LongitudeDegrees);
+                this.position.altitudeMeters = consts.getExt(obj.AltitudeMeters);
             }
         }
     }

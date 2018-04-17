@@ -2,14 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts = require("./consts");
 const GpsPoint_1 = require("./GpsPoint");
-function getValueFromObject(arg) {
-    if (arg !== undefined) {
-        return Number(arg[0].Value[0]);
-    }
-    else {
-        return consts.ERROR_NUMBER_VALUE;
-    }
-}
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 class Lap {
     /**Δημιουργία αντικειμένου
@@ -44,8 +36,8 @@ class Lap {
         this.triggerMethod = consts.ERROR_STRING_VALUE;
         if (Object.keys(obj).length !== 0) {
             this.startTime = obj.$.StartTime;
-            this.averageHeartRateBpm = getValueFromObject(obj.AverageHeartRateBpm);
-            this.maximumHeartRateBpm = getValueFromObject(obj.MaximumHeartRateBpm);
+            this.averageHeartRateBpm = consts.getExtV(obj.AverageHeartRateBpm);
+            this.maximumHeartRateBpm = consts.getExtV(obj.MaximumHeartRateBpm);
             this.maximumSpeed = consts.getExt(obj.MaximumSpeed);
             this.totalTimeSeconds = consts.getExt(obj.TotalTimeSeconds);
             this.calories = consts.getExt(obj.Calories);

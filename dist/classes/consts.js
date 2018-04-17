@@ -13,4 +13,13 @@ function getExt(arg) {
     }
 }
 exports.getExt = getExt;
+function getExtV(arg) {
+    if (arg !== undefined) {
+        return Number(arg[0].Value[0]);
+    }
+    else {
+        return exports.ERROR_NUMBER_VALUE;
+    }
+}
+exports.getExtV = getExtV;
 //# sourceMappingURL=consts.js.map
