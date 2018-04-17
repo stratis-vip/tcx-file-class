@@ -77,8 +77,8 @@ class Lap {
 class GpsPoint {
     distanceMeters = consts.ERROR_NUMBER_VALUE;
     speed = consts.ERROR_NUMBER_VALUE;
-    runCandence = consts.ERROR_NUMBER_VALUE;
-    candence = consts.ERROR_NUMBER_VALUE;
+    runCadence = consts.ERROR_NUMBER_VALUE;
+    cadence = consts.ERROR_NUMBER_VALUE;
     heartRateBpm = consts.ERROR_NUMBER_VALUE;
     position: { latitudeDegrees: number, longitudeDegrees: number, altitudeMeters: number } =
         {
