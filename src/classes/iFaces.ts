@@ -37,22 +37,22 @@ import Lap from "./lap";
 
  interface iXmlLap {
     $: { StartTime: string };
-    AverageHeartRateBpm: Array<{ Value: string }>;
-    MaximumHeartRateBpm: Array<{ Value: string }>
-    MaximumSpeed: Array<string>;
-    TotalTimeSeconds: Array<string>;
-    Calories: Array<string>;
-    DistanceMeters: Array<string>;
-    MaxBikeCadence: Array<string>;
-    Steps: Array<string>;
-    AvgRunCadence: Array<string>;
-    MaxRunCadence: Array<string>;
-    AvgSpeed: Array<string>;
-    Intensity: Array<string>;
-    Extensions: any;
-    Cadence: Array<string>;
-    TriggerMethod: Array<string>;
-    Track: Array<iXmlTrack>;
+    AverageHeartRateBpm?: Array<{ Value: string }>;
+    MaximumHeartRateBpm?: Array<{ Value: string }>
+    MaximumSpeed?: Array<string>;
+    TotalTimeSeconds?: Array<string>;
+    Calories?: Array<string>;
+    DistanceMeters?: Array<string>;
+    MaxBikeCadence?: Array<string>;
+    Steps?: Array<string>;
+    AvgRunCadence?: Array<string>;
+    MaxRunCadence?: Array<string>;
+    AvgSpeed?: Array<string>;
+    Intensity?: Array<string>;
+    Extensions?: any;
+    Cadence?: Array<string>;
+    TriggerMethod?: Array<string>;
+    Track?: Array<iXmlTrack>;
 }
 
  interface iXmlTrack {
@@ -101,6 +101,7 @@ interface iXmlTrainingCenterDatabase {
     longitudeDegrees: number
     altitudeMeters: number
 }
+
 
  export {
     iGeoPoint, 

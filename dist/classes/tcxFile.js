@@ -115,7 +115,7 @@ class TcxFile {
      * @return τον πίνακα σε μορφή Array<Lap>
      */
     getLaps() {
-        let laps = [];
+        let laps = Array();
         let self = this;
         if (self.isReady) {
             let lapCount = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap.length;

@@ -11,13 +11,13 @@ export default class GpsPoint {
     /**η τρέχουσα ταχύτητα */
     speed = consts.ERROR_NUMBER_VALUE;
     /**Η ταχύτητα βηματισμού */
-    runCandence = consts.ERROR_NUMBER_VALUE;
+    runCadence = consts.ERROR_NUMBER_VALUE;
     /**Το cadence */
-    candence = consts.ERROR_NUMBER_VALUE;
+    cadence = consts.ERROR_NUMBER_VALUE;
     /**O τρέχων καρδιακός παλμός */
     heartRateBpm = consts.ERROR_NUMBER_VALUE;
     /**Οι συντεταγμένες του σημείου και το υψόμετρο */
-    position: GeoPoint=new GeoPoint();
+    position: GeoPoint = new GeoPoint();
     /**Ο χρόνος καταγραφής */
     time = consts.ERROR_STRING_VALUE;
     /**
@@ -35,16 +35,16 @@ export default class GpsPoint {
                     this.speed = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:Speed"][0]);
                 }
                 if (obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"] !== undefined) {
-                    this.runCandence = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"][0]);
+                    this.runCadence = Number(obj.Extensions[0]["ns3:TPX"][0]["ns3:RunCadence"][0]);
                 }
             } else {
                 if (obj.Extensions !== undefined && obj.Extensions[0].TPX !== undefined) {
-                    this.runCandence = Number(obj.Extensions[0].TPX[0].RunCadence[0]);
+                    this.runCadence = Number(obj.Extensions[0].TPX[0].RunCadence[0]);
                     this.speed = Number(obj.Extensions[0].TPX[0].Speed[0]);
                 }
             }
             if (obj.Cadence !== undefined) {
-                this.candence = Number(obj.Cadence[0]);
+                this.cadence = Number(obj.Cadence[0]);
             }
             if (obj.HeartRateBpm !== undefined) {
                 this.heartRateBpm = Number(obj.HeartRateBpm[0].Value[0]);
@@ -61,4 +61,5 @@ export default class GpsPoint {
             }
         }
     }
+
 }

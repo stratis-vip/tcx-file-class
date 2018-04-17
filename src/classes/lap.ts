@@ -1,6 +1,18 @@
 import * as consts from "./consts";
 import GpsPoint from "./GpsPoint";
 import { iXmlLap, iXmlTrackPoint } from "./iFaces";
+import { timingSafeEqual } from "crypto";
+
+function getValueFromObject<T extends iXmlLap>(arg: Array<{ Value: string }>): number {
+    if (arg !== undefined) {
+        return Number(arg[0].Value[0]);
+    } else {
+        return consts.ERROR_NUMBER_VALUE;
+    }
+}
+
+
+
 
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 export default class Lap {
@@ -40,67 +52,40 @@ export default class Lap {
     constructor(obj: iXmlLap) {
         if (Object.keys(obj).length !== 0) {
             this.startTime = obj.$.StartTime;
-            if (obj.AverageHeartRateBpm !== undefined)
-                this.averageHeartRateBpm = Number(obj.AverageHeartRateBpm[0].Value[0]);
-            if (obj.MaximumHeartRateBpm !== undefined)
-                this.maximumHeartRateBpm = Number(obj.MaximumHeartRateBpm[0].Value[0]);
-            if (obj.MaximumSpeed !== undefined)
-                this.maximumSpeed = Number(obj.MaximumSpeed[0]);
-            if (obj.TotalTimeSeconds !== undefined)
-                this.totalTimeSeconds = Number(obj.TotalTimeSeconds[0]);
-            if (obj.Calories !== undefined)
-                this.calories = Number(obj.Calories[0]);
-            if (obj.DistanceMeters !== undefined)
-                this.distanceMeters = Number(obj.DistanceMeters[0]);
-
+            this.averageHeartRateBpm = getValueFromObject(obj.AverageHeartRateBpm);
+            this.maximumHeartRateBpm = getValueFromObject(obj.MaximumHeartRateBpm);
+            this.maximumSpeed = consts.getExt(obj.MaximumSpeed);
+            this.totalTimeSeconds = consts.getExt(obj.TotalTimeSeconds);
+            this.calories = consts.getExt(obj.Calories);
+            this.distanceMeters = consts.getExt(obj.DistanceMeters);
             this.maxBikeCadence = consts.ERROR_NUMBER_VALUE;
-
             this.steps = consts.ERROR_NUMBER_VALUE;
-
             this.avgRunCadence = consts.ERROR_NUMBER_VALUE;
-
             this.maxRunCadence = consts.ERROR_NUMBER_VALUE;
             this.avgSpeed = consts.ERROR_NUMBER_VALUE;
             this.intensity = consts.ERROR_STRING_VALUE;
             if (obj.Extensions !== undefined) {
                 if (obj.Extensions[0]["ns3:LX"] !== undefined) {
                     //garimn
-                    if (obj.Extensions[0]["ns3:LX"][0]["ns3:MaxBikeCadence"] !== undefined) {
-                        this.maxBikeCadence = Number(obj.Extensions[0]["ns3:LX"][0]["ns3:MaxBikeCadence"][0]);
-                    }
-
-                    if (obj.Extensions[0]["ns3:LX"][0]["ns3:Steps"] !== undefined) {
-                        this.steps = Number(obj.Extensions[0]["ns3:LX"][0]["ns3:Steps"][0]);
-                    }
-
-                    if (obj.Extensions[0]["ns3:LX"][0]["ns3:AvgRunCadence"] !== undefined) {
-                        this.avgRunCadence = Number(obj.Extensions[0]["ns3:LX"][0]["ns3:AvgRunCadence"][0]);
-                    }
-
-                    if (obj.Extensions[0]["ns3:LX"][0]["ns3:MaxRunCadence"] !== undefined) {
-                        this.maxRunCadence = Number(obj.Extensions[0]["ns3:LX"][0]["ns3:MaxRunCadence"][0]);
-                    }
-
-                    if (obj.Extensions[0]["ns3:LX"][0]["ns3:AvgSpeed"] !== undefined) {
-                        this.avgSpeed = Number(obj.Extensions[0]["ns3:LX"][0]["ns3:AvgSpeed"][0]);
-                    }
+                    this.maxBikeCadence = consts.getExt(obj.Extensions[0]["ns3:LX"][0]["ns3:MaxBikeCadence"]);
+                    this.steps = consts.getExt(obj.Extensions[0]["ns3:LX"][0]["ns3:Steps"]);
+                    this.avgRunCadence = consts.getExt(obj.Extensions[0]["ns3:LX"][0]["ns3:AvgRunCadence"]);
+                    this.maxRunCadence = consts.getExt(obj.Extensions[0]["ns3:LX"][0]["ns3:MaxRunCadence"]);
+                    this.avgSpeed = consts.getExt(obj.Extensions[0]["ns3:LX"][0]["ns3:AvgSpeed"]);
                 } else {
                     if (obj.Extensions[0].LX !== undefined) {
-                        this.avgSpeed = Number(obj.Extensions[0].LX[0].AvgSpeed[0]);
-                        //TODO να δω τι γίνεται με ποδηλατικό πόλαρ αρχείο
-                        if (obj.Cadence !== undefined) {
-                            this.avgRunCadence = Number(obj.Cadence[0]);
-                        }
+                        this.avgSpeed = consts.getExt(obj.Extensions[0].LX[0].AvgSpeed);
+                        this.avgRunCadence = consts.getExt(obj.Cadence);
                     }
                 }
             }
-            if (obj.Intensity !== undefined) {
-                this.intensity = obj.Intensity[0];
-            }
-            // let po = obj.Track[0].TrackPoint;
-            this.trackPoints = getPoints(obj);
-            this.triggerMethod = obj.TriggerMethod[0];
         }
+        if (obj.Intensity !== undefined) {
+            this.intensity = obj.Intensity[0];
+        }
+        // let po = obj.Track[0].TrackPoint;
+        this.trackPoints = getPoints(obj);
+        this.triggerMethod = obj.TriggerMethod[0];
     }
 }
 

@@ -115,7 +115,7 @@ export default class TcxFile {
      * @return τον πίνακα σε μορφή Array<Lap>
      */
     getLaps():Array<Lap> | Array<null> {
-        let laps = [];
+        let laps = Array<Lap>();
         let self = this;
         if (self.isReady) {
             let lapCount = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap.length;
