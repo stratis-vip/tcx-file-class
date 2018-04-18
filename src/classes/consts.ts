@@ -6,7 +6,7 @@ export const ERROR_STRING_VALUE = "";
 
 export function getExt<T>(arg: T): number {
     if (arg !== undefined) {
-        return Number((arg[0] as Array<string>));
+        return Number(arg[0]);
     }
     else {
         return ERROR_NUMBER_VALUE;

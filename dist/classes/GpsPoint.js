@@ -42,9 +42,11 @@ class GpsPoint {
             // if (obj.Cadence !== undefined) {
             // this.cadence = Number(obj.Cadence[0]);
             // }
-            if (obj.HeartRateBpm !== undefined) {
-                this.heartRateBpm = Number(obj.HeartRateBpm[0].Value[0]);
-            }
+            this.heartRateBpm = consts.getExtV(obj.HeartRateBpm);
+            // if (obj.HeartRateBpm !== undefined) {
+            //     this.heartRateBpm = Number(obj.HeartRateBpm[0].Value[0]);
+            // }
+            //this.time = consts.getExt(obj.Time);
             this.time = obj.Time[0];
             if (obj.Position !== undefined) {
                 this.position.latitudeDegrees = consts.getExt(obj.Position[0].LatitudeDegrees);
