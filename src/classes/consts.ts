@@ -4,7 +4,7 @@ export const ERROR_NUMBER_VALUE = -1;
 export const ERROR_STRING_VALUE = "";
 
 
-export function getExt<T>(arg: T): number {
+export function getExt<T>(arg: T|any): number {
     if (arg !== undefined) {
         return Number(arg[0]);
     }
@@ -14,7 +14,7 @@ export function getExt<T>(arg: T): number {
 }
 
 
-export function getExtV<T>(arg: T): number {
+export function getExtV<T>(arg: T|any): number {
     if (arg !== undefined) {
         return Number(arg[0].Value[0]);
     } else {

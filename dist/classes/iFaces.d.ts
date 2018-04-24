@@ -1,25 +1,20 @@
-import Lap from "./lap";
-
- export interface iXsiType {
+export interface iXsiType {
     'xsi:type': string;
 }
-
- export interface iXmlBuild {
+export interface iXmlBuild {
     VersionMajor: Array<string>;
     VersionMinor: Array<string>;
     BuildMajor: Array<string>;
     BuildMinor: Array<string>;
 }
-
- export interface iXmlAuthor {
+export interface iXmlAuthor {
     Name: Array<string>;
     $: iXsiType;
     Build: Array<any>;
     LangID: Array<string>;
     PartNumber: Array<string>;
 }
-
- export interface iXmlCreator {
+export interface iXmlCreator {
     Name: Array<string>;
     isRuntastic: Boolean;
     $: iXsiType;
@@ -27,18 +22,24 @@ import Lap from "./lap";
     UnitId: Array<string>;
     Version: Array<iXmlBuild>;
 }
-
- export interface iXmlActivity {
-    $: { Sport: string }; //{Sport}
+export interface iXmlActivity {
+    $: {
+        Sport: string;
+    };
     Creator: Array<iXmlCreator>;
     Id: Array<string>;
     Lap: Array<iXmlLap>;
 }
-
- export interface iXmlLap {
-    $: { StartTime: string };
-    AverageHeartRateBpm?: Array<{ Value: string }>;
-    MaximumHeartRateBpm?: Array<{ Value: string }>
+export interface iXmlLap {
+    $: {
+        StartTime: string;
+    };
+    AverageHeartRateBpm?: Array<{
+        Value: string;
+    }>;
+    MaximumHeartRateBpm?: Array<{
+        Value: string;
+    }>;
     MaximumSpeed?: Array<string>;
     TotalTimeSeconds?: Array<string>;
     Calories?: Array<string>;
@@ -54,18 +55,16 @@ import Lap from "./lap";
     TriggerMethod?: Array<string>;
     Track?: Array<iXmlTrack>;
 }
-
- export interface iXmlTrack {
+export interface iXmlTrack {
     Trackpoint: Array<iXmlTrackPoint>;
 }
-
 export interface iXmlTrackPoint {
     AltitudeMeters: Array<string>;
     DistanceMeters: Array<String>;
     Extensions: Array<any>;
     HeartRateBpm: Array<{
         $: any;
-        Value: string
+        Value: string;
     }>;
     Position: Array<{
         LatitudeDegrees: Array<string>;
@@ -74,7 +73,6 @@ export interface iXmlTrackPoint {
     Time: Array<string>;
     Cadence: Array<string>;
 }
-
 export interface iXmlActivities {
     $: any;
     Creator: Array<iXmlCreator>;
@@ -82,30 +80,23 @@ export interface iXmlActivities {
     Lap: Array<any>;
     Activity: Array<iXmlActivity>;
 }
-
 interface iXmlData {
     TrainingCenterDatabase: iXmlTrainingCenterDatabase;
 }
-
 interface iXmlTrainingCenterDatabase {
-    $: { creator?: string };
+    $: {
+        creator?: string;
+    };
     Activities: Array<iXmlActivities>;
     Author: Array<iXmlAuthor>;
 }
-
 /**
  * Δήλωση για γεωγραφικό σημείο
  * @interface
  */
- interface iGeoPoint {
-    latitudeDegrees: number
-    longitudeDegrees: number
-    altitudeMeters: number
+interface iGeoPoint {
+    latitudeDegrees: number;
+    longitudeDegrees: number;
+    altitudeMeters: number;
 }
-
-
- export {
-    iGeoPoint, 
-    iXmlTrainingCenterDatabase,
-    iXmlData
- }
+export { iGeoPoint, iXmlTrainingCenterDatabase, iXmlData };

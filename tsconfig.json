@@ -7,7 +7,8 @@
     "outDir": "./dist",                        /* Redirect output structure to the directory. */
     "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
     "listEmittedFiles": true, 
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "declaration": true
   },
   "include": [
     "src/**/*"
