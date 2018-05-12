@@ -57,4 +57,4 @@ class GpsPoint {
     }
 }
 exports.default = GpsPoint;
-//# sourceMappingURL=GpsPoint.js.map
+//# sourceMappingURL=gpsPoint.js.map

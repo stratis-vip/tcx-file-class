@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts = require("./consts");
-const GpsPoint_1 = require("./GpsPoint");
+const GpsPoint_1 = require("./gpsPoint");
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 class Lap {
     /**Δημιουργία αντικειμένου
