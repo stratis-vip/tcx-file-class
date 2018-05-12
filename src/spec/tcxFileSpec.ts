@@ -14,7 +14,7 @@ describe("Αρχεία TCX\n", function () {
 
     it("\tΈλεγχος του αντικειμένου tcxFile όταν δεν υπάρχει το αρχείο", (done) => {
         let tcx = new TcxFile("test.tcx", (err:string)=>{
-            expect(tcx.isError).not.toBe(consts.ERROR_STRING_VALUE);
+            expect(tcx.isError).not.toBe(undefined);
             expect(tcx.data).toEqual(null);
             done()
         });
@@ -24,7 +24,7 @@ describe("Αρχεία TCX\n", function () {
         let fname =  path.join(__dirname,'garmin.tcx');
         let tcxFile = new TcxFile(fname, (err:string)=>{
             expect(tcxFile.data).not.toEqual(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             done();
         });
     });
@@ -33,7 +33,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'garmin.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2018-04-05T03:23:17.000Z");
@@ -79,7 +79,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'garmin-b.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Biking");
             expect(tcxFile.getId()).toEqual("2018-04-07T09:46:15.000Z");
@@ -125,7 +125,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'tapirik.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2017-10-29T07:11:03.000Z");
@@ -167,7 +167,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'tapirik-b.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Biking");
             expect(tcxFile.getId()).toEqual("2018-04-07T09:46:15.000Z");
@@ -209,7 +209,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'runtastic.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("running");
             expect(tcxFile.getId()).toEqual("2017-12-16T05:06:45.000Z");
@@ -247,7 +247,7 @@ describe("Αρχεία TCX\n", function () {
         let author = new Author({});
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("cycling");
             expect(tcxFile.getId()).toEqual("2018-04-07T09:46:15.000Z");
@@ -284,7 +284,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'polar.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2017-10-29T05:45:48.000Z");
@@ -332,7 +332,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'polar-b.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Biking");
             expect(tcxFile.getId()).toEqual("2018-04-11T15:21:10.000Z");
@@ -396,7 +396,7 @@ describe("Αρχεία TCX\n", function () {
         let fname = path.join(__dirname, 'nobpmgarmin.tcx');
         let tcxFile = new TcxFile(fname, (err)=>{
             expect(this.data).not.toBe(null);
-            expect(err).toBe(consts.ERROR_STRING_VALUE);
+            expect(err).toBe(undefined);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2018-04-16T16:56:17.000Z");
