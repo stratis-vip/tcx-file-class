@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const consts = require("./consts");
-const GpsPoint_1 = require("./gpsPoint");
+const gpsPoint_1 = require("./gpsPoint");
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 class Lap {
     /**Δημιουργία αντικειμένου
@@ -84,7 +84,7 @@ function getPoints(obj) {
     if (obj !== undefined) {
         let pointCount = obj.Track[0].Trackpoint.length;
         for (let i = 0; i != pointCount; ++i) {
-            points.push(new GpsPoint_1.default(obj.Track[0].Trackpoint[i]));
+            points.push(new gpsPoint_1.default(obj.Track[0].Trackpoint[i]));
         }
     }
     return points;

@@ -25,14 +25,14 @@ class TcxFile {
         this.isError = consts.ERROR_STRING_VALUE;
         /**Ετοιμότητα του αντικειμένου */
         this.isReady = false;
-        read(this, filename, (err) => {
+        this.read(filename, (err) => {
             if (err) {
                 this.isError = err;
                 callback(err);
             }
             else {
                 this.isReady = true;
-                callback(consts.ERROR_STRING_VALUE);
+                callback(undefined);
             }
         });
     }
@@ -126,43 +126,43 @@ class TcxFile {
         return laps;
     }
     ;
+    /**
+     * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
+     *
+     * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
+     * @param {string} filename το όνομα του αρχείου
+     * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData
+     * το σύνολο των δεδομένων του TCX αρχείου (filename)
+     */
+    read(filename, callback) {
+        let self = this;
+        fs.readFile(filename, 'utf8', (err, data) => {
+            if (!err) {
+                //το αρχείο υπάρχει τότε το string πάει για parsing
+                pString(data, function (err, result) {
+                    if (!err) {
+                        self.data = result;
+                        self.isError = consts.ERROR_STRING_VALUE;
+                        self.isReady = true;
+                        callback(null, result);
+                    }
+                    else {
+                        self.isError = err.message;
+                        self.data = null;
+                        self.isReady = false;
+                        callback(err, null);
+                    }
+                });
+            }
+            else {
+                //το αρχείο δεν υπάρχει
+                self.data = null;
+                self.isError = err.message;
+                self.isReady = false;
+                callback(err.message, null);
+            }
+        });
+    }
 }
 exports.default = TcxFile;
-/**
- * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
- *
- * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
- * @param {string} filename το όνομα του αρχείου
- * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData
- * το σύνολο των δεδομένων του TCX αρχείου (filename)
- */
-function read(obj, filename, callback) {
-    let self = obj;
-    fs.readFile(filename, 'utf8', (err, data) => {
-        if (!err) {
-            //το αρχείο υπάρχει τότε το string πάει για parsing
-            pString(data, function (err, result) {
-                if (!err) {
-                    self.data = result;
-                    self.isError = consts.ERROR_STRING_VALUE;
-                    self.isReady = true;
-                    callback(null, result);
-                }
-                else {
-                    self.isError = err.message;
-                    self.data = null;
-                    self.isReady = false;
-                    callback(err, null);
-                }
-            });
-        }
-        else {
-            //το αρχείο δεν υπάρχει
-            self.data = null;
-            self.isError = err.message;
-            self.isReady = false;
-            callback(err.message, null);
-        }
-    });
-}
 //# sourceMappingURL=tcxFile.js.map

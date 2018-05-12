@@ -19,7 +19,7 @@ export default class TcxFile {
      * @param {function} callback η συνάρτηση που καλείται όταν διαβάσει το αρχείο. Αν
      * υπάρχει λάθος, τότε η callback(err:string) επιστρέφει το λάθος στην err
      */
-    constructor(filename: string, callback: (err: string) => void);
+    constructor(filename: string, callback: (err: string | undefined) => void);
     /**Διαβάζει την ιδότητα Id του ΤCX αρχείου
      * @return {string} id η τσυτότητα της δραστηριότητας
     */
@@ -51,4 +51,13 @@ export default class TcxFile {
      * @return τον πίνακα σε μορφή Array<Lap>
      */
     getLaps(): Array<Lap> | Array<null>;
+    /**
+     * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
+     *
+     * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
+     * @param {string} filename το όνομα του αρχείου
+     * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData
+     * το σύνολο των δεδομένων του TCX αρχείου (filename)
+     */
+    read(filename: string, callback: (err: string, data: iXmlData) => void): void;
 }

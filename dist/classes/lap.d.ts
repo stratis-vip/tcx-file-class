@@ -1,4 +1,4 @@
-import GpsPoint from "./GpsPoint";
+import GpsPoint from "./gpsPoint";
 import { iXmlLap } from "./iFaces";
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
 export default class Lap {
