@@ -5,6 +5,7 @@ import * as pstring from 'xml2js';
 import * as consts from "./consts";
 import { iXmlData, iXmlAuthor, iXmlCreator } from './iFaces';
 import Lap from './lap';
+import Activity from './activity';
 
 const pString = pstring.parseString;
 /**
@@ -158,6 +159,17 @@ export default class TcxFile {
                 self.isError = err.message;
                 self.isReady = false;
                 callback(err.message, null);
+            }
+        });
+    }
+
+    save(filename: string, athleteId: number, zones: [number, number, number, number]|null, callback: (err: string) => void) {
+        let act = new Activity(athleteId, this, zones);
+        fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
+            if (err) {
+                callback(err.message);
+            } else {
+                callback(undefined);
             }
         });
     }

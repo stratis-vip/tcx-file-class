@@ -4,6 +4,7 @@ const path = require("path");
 const tcxFile_1 = require("../classes/tcxFile");
 const author_1 = require("../classes/author");
 const consts = require("../classes/consts");
+const fs = require("fs");
 class XmlData {
 }
 describe("Αρχεία TCX\n", function () {
@@ -12,6 +13,89 @@ describe("Αρχεία TCX\n", function () {
             expect(tcx.isError).not.toBe(undefined);
             expect(tcx.data).toEqual(null);
             done();
+        });
+    });
+    it("\tΘα πρέπει να αποθηκεύει ένα υπάρχον αρχείο tcx χωρίς ζώνες", (done) => {
+        let fname = path.join(__dirname, 'g1.tcx');
+        let tcxFile = new tcxFile_1.default(fname, (err) => {
+            expect(tcxFile.data).not.toEqual(null);
+            expect(err).toBe(undefined);
+            tcxFile.save(path.join(__dirname, 'act.json'), 1358, null, (err) => {
+                fs.readFile(path.join(__dirname, "act.json"), 'utf8', (err, data) => {
+                    if (!err) {
+                        let res = JSON.parse(data);
+                        //console.log(act.proccessElements.times);
+                        expect(res.id).toEqual("2018-05-08T15:15:06.000Z");
+                        expect(res.athlete).toEqual(1358);
+                        expect(res.distance).toEqual(12024.20416867978);
+                        expect(res.sport).toEqual(1);
+                        expect(res.minAlt).toEqual(53.400001525878906);
+                        expect(res.totalTime).toEqual(4155);
+                        expect(res.maxAlt).toEqual(58);
+                        expect(res.totalUp).toEqual(112.00003433227539);
+                        expect(res.totalDown).toEqual(111.20003509521484);
+                        expect(res.maxSpeed).toEqual(6.6367348461480455);
+                        expect(res.maxHR).toEqual(147);
+                        expect(res.maxCadence).toEqual(92);
+                        expect(res.times[0].start).toEqual(2482);
+                        expect(res.times[1].end).toEqual(2555);
+                        expect(res.times[2].distance).toEqual(402.31005859375);
+                        expect(res.times[3].time).toEqual(297);
+                        expect(res.times[4].recTime).toEqual(611.614758273315);
+                        expect(res.times[5].avgHr).toEqual(142);
+                        expect(res.times[6].dAlt).toEqual(1);
+                        fs.unlinkSync(path.join(__dirname, "act.json"));
+                        done();
+                    }
+                    else {
+                        done();
+                    }
+                });
+            });
+        });
+    });
+    it("\tΘα πρέπει να αποθηκεύει ένα υπάρχον αρχείο tcx με ζώνες", (done) => {
+        let fname = path.join(__dirname, 'g1.tcx');
+        let tcxFile = new tcxFile_1.default(fname, (err) => {
+            expect(tcxFile.data).not.toEqual(null);
+            expect(err).toBe(undefined);
+            tcxFile.save(path.join(__dirname, 'actZones.json'), 1358, [112, 126, 137, 142], (err) => {
+                fs.readFile(path.join(__dirname, "actZones.json"), 'utf8', (err, data) => {
+                    if (!err) {
+                        let res = JSON.parse(data);
+                        //console.log(act.proccessElements.times);
+                        expect(res.id).toEqual("2018-05-08T15:15:06.000Z");
+                        expect(res.athlete).toEqual(1358);
+                        expect(res.distance).toEqual(12024.20416867978);
+                        expect(res.sport).toEqual(1);
+                        expect(res.minAlt).toEqual(53.400001525878906);
+                        expect(res.totalTime).toEqual(4155);
+                        expect(res.maxAlt).toEqual(58);
+                        expect(res.totalUp).toEqual(112.00003433227539);
+                        expect(res.totalDown).toEqual(111.20003509521484);
+                        expect(res.maxSpeed).toEqual(6.6367348461480455);
+                        expect(res.maxHR).toEqual(147);
+                        expect(res.maxCadence).toEqual(92);
+                        expect(res.times[0].start).toEqual(2482);
+                        expect(res.times[1].end).toEqual(2555);
+                        expect(res.times[2].distance).toEqual(402.31005859375);
+                        expect(res.times[3].time).toEqual(297);
+                        expect(res.times[4].recTime).toEqual(611.614758273315);
+                        expect(res.times[5].avgHr).toEqual(142);
+                        expect(res.times[6].dAlt).toEqual(1);
+                        expect(res.zones[0].time).toEqual(40);
+                        expect(res.zones[1].time).toEqual(202);
+                        expect(res.zones[2].time).toEqual(500);
+                        expect(res.zones[3].time).toEqual(1335);
+                        expect(res.zones[4].time).toEqual(2078);
+                        fs.unlinkSync(path.join(__dirname, "actZones.json"));
+                        done();
+                    }
+                    else {
+                        done();
+                    }
+                });
+            });
         });
     });
     it("\tΘα πρέπει να ανοίγει ένα υπάρχον αρχείο tcx", (done) => {

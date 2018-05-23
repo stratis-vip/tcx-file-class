@@ -6,6 +6,7 @@ const creator_1 = require("./creator");
 const pstring = require("xml2js");
 const consts = require("./consts");
 const lap_1 = require("./lap");
+const activity_1 = require("./activity");
 const pString = pstring.parseString;
 /**
  * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
@@ -160,6 +161,17 @@ class TcxFile {
                 self.isError = err.message;
                 self.isReady = false;
                 callback(err.message, null);
+            }
+        });
+    }
+    save(filename, athleteId, zones, callback) {
+        let act = new activity_1.default(athleteId, this, zones);
+        fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
+            if (err) {
+                callback(err.message);
+            }
+            else {
+                callback(undefined);
             }
         });
     }

@@ -60,4 +60,5 @@ export default class TcxFile {
      * το σύνολο των δεδομένων του TCX αρχείου (filename)
      */
     read(filename: string, callback: (err: string, data: iXmlData) => void): void;
+    save(filename: string, athleteId: number, zones: [number, number, number, number] | null, callback: (err: string) => void): void;
 }
