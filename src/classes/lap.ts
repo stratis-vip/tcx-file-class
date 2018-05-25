@@ -1,5 +1,5 @@
 import * as consts from "./consts";
-import GpsPoint from "./GpsPoint";
+import GpsPoint from "./gpsPoint";
 import { iXmlLap, iXmlTrackPoint } from "./iFaces";
 import { timingSafeEqual } from "crypto";
 

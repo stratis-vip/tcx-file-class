@@ -6,6 +6,7 @@ import * as pstring from 'xml2js';
 import * as consts from "./consts";
 import { iXmlData, iXmlAuthor, iXmlCreator } from './iFaces';
 import Lap from './lap';
+import Activity from './activity';
 
 const pString = pstring.parseString;
 /**
@@ -13,7 +14,7 @@ const pString = pstring.parseString;
  */
 export default class TcxFile extends EventEmitter {
     /**Όλα τα δεδομένα του αρχείου σε ΧΜL μορφή */
-    data:iXmlData=null;
+    data: iXmlData = null;
     /**Κρατάει την τιμή του λάθους, αν υπάρχει, στην ανάγωνση του TCX αρχείου */
     isError = consts.ERROR_STRING_VALUE;
     /**Ετοιμότητα του αντικειμένου */
@@ -36,17 +37,17 @@ export default class TcxFile extends EventEmitter {
             }else {
                 this.emit('endReading',null)
                 this.isReady = true;
-                callback(consts.ERROR_STRING_VALUE);
+                callback(undefined);
             }
         });
     }
 
-    
+
     /**Διαβάζει την ιδότητα Id του ΤCX αρχείου
      * @return {string} id η τσυτότητα της δραστηριότητας
     */
-    getId():string {
-        let id:string = "";
+    getId(): string {
+        let id: string = "";
         let self = this;
         if (self.isReady) {
             id = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Id[0];
@@ -57,7 +58,7 @@ export default class TcxFile extends EventEmitter {
     /**Διαβάσει το τύπο του Sport από το TCX αρχείο
      * @returns {string} sport το άθλημα της δραστηριότητας
       */
-    getSport():string {
+    getSport(): string {
         let sport;
         let self = this;
         if (self.isReady) {
@@ -65,14 +66,14 @@ export default class TcxFile extends EventEmitter {
         }
         return sport;
     };
-    
+
     /**
      * Συμπληρώνει ένα αντικείμενο Author με τα στοχεία (αν υπάρχουν) στο TCX αρχείο
      * 
      * @returns {Author} author αντικείμενο Author η null
      */
-    getAuthor():Author|null {
-        let author:Author= null;
+    getAuthor(): Author | null {
+        let author: Author = null;
         let self = this;
         //runtastic does not have author record
         if (self.isReady && self.data.TrainingCenterDatabase.Author !== undefined) {
@@ -80,12 +81,12 @@ export default class TcxFile extends EventEmitter {
         }
         return author;
     };
-    
+
     /**
      * Ελέγχει αν το αρχείο έχει στοιχεία Creator
      * @return {boolean} true ή false
      */
-    hasCreator():boolean {
+    hasCreator(): boolean {
         let self = this;
         if (self.isReady) {
             return self.data.TrainingCenterDatabase.$.creator !== undefined || self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator !== undefined;
@@ -98,8 +99,8 @@ export default class TcxFile extends EventEmitter {
     * 
     * @returns {Creator} creator αντικείμενο Creator η null
     */
-    getCreator():Creator |null {
-        let creator:Creator=null;
+    getCreator(): Creator | null {
+        let creator: Creator = null;
         let self = this;
         if (self.isReady && self.hasCreator()) {
             if (self.data.TrainingCenterDatabase.$.creator !== undefined) {
@@ -118,50 +119,62 @@ export default class TcxFile extends EventEmitter {
      * 
      * @return τον πίνακα σε μορφή Array<Lap>
      */
-    getLaps():Array<Lap> | Array<null> {
+    getLaps(): Array<Lap> | Array<null> {
         let laps = Array<Lap>();
         let self = this;
         if (self.isReady) {
             let lapCount = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap.length;
-            for (let i = 0 ; i != lapCount; ++i){
+            for (let i = 0; i != lapCount; ++i) {
                 laps.push(new Lap(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap[i]));
             }
         }
         return laps;
     };
-}
-/**
- * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
- * 
- * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
- * @param {string} filename το όνομα του αρχείου
- * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData 
- * το σύνολο των δεδομένων του TCX αρχείου (filename)
- */
-function read(obj:TcxFile, filename: string, callback:(err:string, data:iXmlData)=>void) {
-    let self = obj;
-    fs.readFile(filename, 'utf8', (err, data) => {
-        if (!err) {
-            //το αρχείο υπάρχει τότε το string πάει για parsing
-            pString(data, function (err, result) {
-                if (!err) {
-                    self.data = result;
-                    self.isError = consts.ERROR_STRING_VALUE;
-                    self.isReady = true;
-                    callback(null, result);
-                } else {
-                    self.isError = err.message;
-                    self.data = null;
-                    self.isReady = false;
-                    callback(err, null);
-                }
-            });
-        } else {
-            //το αρχείο δεν υπάρχει
-            self.data = null;
-            self.isError = err.message;
-            self.isReady = false;
-            callback(err.message, null);
-        }
-    });
+
+    /**
+     * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
+     * 
+     * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
+     * @param {string} filename το όνομα του αρχείου
+     * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData 
+     * το σύνολο των δεδομένων του TCX αρχείου (filename)
+     */
+    read(filename: string, callback: (err: string, data: iXmlData) => void) {
+        let self = this;
+        fs.readFile(filename, 'utf8', (err, data) => {
+            if (!err) {
+                //το αρχείο υπάρχει τότε το string πάει για parsing
+                pString(data, function (err, result) {
+                    if (!err) {
+                        self.data = result;
+                        self.isError = consts.ERROR_STRING_VALUE;
+                        self.isReady = true;
+                        callback(null, result);
+                    } else {
+                        self.isError = err.message;
+                        self.data = null;
+                        self.isReady = false;
+                        callback(err, null);
+                    }
+                });
+            } else {
+                //το αρχείο δεν υπάρχει
+                self.data = null;
+                self.isError = err.message;
+                self.isReady = false;
+                callback(err.message, null);
+            }
+        });
+    }
+
+    save(filename: string, athleteId: number, zones: [number, number, number, number]|null, callback: (err: string) => void) {
+        let act = new Activity(athleteId, this, zones);
+        fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
+            if (err) {
+                callback(err.message);
+            } else {
+                callback(undefined);
+            }
+        });
+    }
 }

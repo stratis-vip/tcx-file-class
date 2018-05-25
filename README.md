@@ -15,7 +15,7 @@ To install `tcx-file-class` use npm.
 ```Typescript
 import TcxFile from "tcx-file-class";
 
-const tcxFile = new new TcxFile(fname, (err:string)=>{
+const tcxFile = new new TcxFile(fname, (err:string|undefined)=>{
     if (err){ //something went wrong
     }
 });
@@ -27,6 +27,7 @@ const tcxFile = new new TcxFile(fname, (err:string)=>{
     -   **getAuthor():Author|null** give the Author class if any exists
     -   **getCreator():Creator|null** give the Creator class if any exists
     -   **getLaps:Array\<Lap> | Array\<null>** give the Laps class
+    -   **save(filename: string, athleteId: number, zones: [number, number, number, number]|null, callback: (err: string) => void)** save to the file (in json format), whith the proper athlete Id. The optional heart rate zones are used to calculate the time in zones.
 
 ### Helper classes
 These classes are created internally and is not recommended to create them by yourself. 

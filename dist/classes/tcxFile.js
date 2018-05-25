@@ -7,6 +7,7 @@ const creator_1 = require("./creator");
 const pstring = require("xml2js");
 const consts = require("./consts");
 const lap_1 = require("./lap");
+const activity_1 = require("./activity");
 const pString = pstring.parseString;
 /**
  * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
@@ -27,7 +28,7 @@ class TcxFile extends events_1.EventEmitter {
         this.isError = consts.ERROR_STRING_VALUE;
         /**Ετοιμότητα του αντικειμένου */
         this.isReady = false;
-        read(this, filename, (err) => {
+        this.read(filename, (err) => {
             if (err) {
                 this.isError = err;
                 this.emit('endReading', err);
@@ -36,7 +37,7 @@ class TcxFile extends events_1.EventEmitter {
             else {
                 this.emit('endReading', null);
                 this.isReady = true;
-                callback(consts.ERROR_STRING_VALUE);
+                callback(undefined);
             }
         });
     }
@@ -130,43 +131,54 @@ class TcxFile extends events_1.EventEmitter {
         return laps;
     }
     ;
+    /**
+     * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
+     *
+     * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
+     * @param {string} filename το όνομα του αρχείου
+     * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData
+     * το σύνολο των δεδομένων του TCX αρχείου (filename)
+     */
+    read(filename, callback) {
+        let self = this;
+        fs.readFile(filename, 'utf8', (err, data) => {
+            if (!err) {
+                //το αρχείο υπάρχει τότε το string πάει για parsing
+                pString(data, function (err, result) {
+                    if (!err) {
+                        self.data = result;
+                        self.isError = consts.ERROR_STRING_VALUE;
+                        self.isReady = true;
+                        callback(null, result);
+                    }
+                    else {
+                        self.isError = err.message;
+                        self.data = null;
+                        self.isReady = false;
+                        callback(err, null);
+                    }
+                });
+            }
+            else {
+                //το αρχείο δεν υπάρχει
+                self.data = null;
+                self.isError = err.message;
+                self.isReady = false;
+                callback(err.message, null);
+            }
+        });
+    }
+    save(filename, athleteId, zones, callback) {
+        let act = new activity_1.default(athleteId, this, zones);
+        fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
+            if (err) {
+                callback(err.message);
+            }
+            else {
+                callback(undefined);
+            }
+        });
+    }
 }
 exports.default = TcxFile;
-/**
- * Ανάγνωση αρχείου TCX και απόδοση των στοιχείων του στο obj αντικείμενο TcxFile
- *
- * @param {TcxFile} obj το αντικείμενο που θα διαβάσουμε
- * @param {string} filename το όνομα του αρχείου
- * @param callback η συνάρτηση που επιστρέφει (err, data). Όπου data σε μορφή iXmlData
- * το σύνολο των δεδομένων του TCX αρχείου (filename)
- */
-function read(obj, filename, callback) {
-    let self = obj;
-    fs.readFile(filename, 'utf8', (err, data) => {
-        if (!err) {
-            //το αρχείο υπάρχει τότε το string πάει για parsing
-            pString(data, function (err, result) {
-                if (!err) {
-                    self.data = result;
-                    self.isError = consts.ERROR_STRING_VALUE;
-                    self.isReady = true;
-                    callback(null, result);
-                }
-                else {
-                    self.isError = err.message;
-                    self.data = null;
-                    self.isReady = false;
-                    callback(err, null);
-                }
-            });
-        }
-        else {
-            //το αρχείο δεν υπάρχει
-            self.data = null;
-            self.isError = err.message;
-            self.isReady = false;
-            callback(err.message, null);
-        }
-    });
-}
 //# sourceMappingURL=tcxFile.js.map

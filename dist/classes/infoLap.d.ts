@@ -1,7 +1,6 @@
-import GpsPoint from "./gpsPoint";
-import { iXmlLap } from "./iFaces";
-/** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
-export default class Lap {
+import Lap from "./lap";
+/** Οι πληροφορίες που έχει συγκεντρωτικά το κάθε Lap στο tcx αρχείο */
+export default class InfoLap {
     /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
     startTime: string;
     /**Μέσοι καρδιακοί παλμοί */
@@ -26,14 +25,8 @@ export default class Lap {
     maxRunCadence: number;
     /**Μέση ταχύτητα */
     avgSpeed: number;
-    /**intensity */
-    intensity: string;
-    /**Πίνακας με τα σημεία που έχει καταγράψει το TCX */
-    trackPoints: Array<GpsPoint>;
-    /**TriggerMethod*/
-    triggerMethod: string;
     /**Δημιουργία αντικειμένου
-     * @param obj το αντικείμενο με τον γύρο και τα σημεία
+     * @param obj το αντικείμενο από όπου θα αφαιρέσει μόνο τις ιδιότητες που μας ενδιαφέρουν
      */
-    constructor(obj: iXmlLap);
+    constructor(obj: Lap);
 }

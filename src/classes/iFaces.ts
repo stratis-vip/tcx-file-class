@@ -1,4 +1,8 @@
 import Lap from "./lap";
+import GeoPoint from "./geoPoint";
+import GpsPoint from "./gpsPoint";
+import * as consts from './consts';
+import Activity from "./activity";
 
  export interface iXsiType {
     'xsi:type': string;
@@ -103,6 +107,64 @@ interface iXmlTrainingCenterDatabase {
     altitudeMeters: number
 }
 
+export {
+    iGeoPoint as IGeoPoint
+}
+
+export interface iZone{
+    zone:number, 
+    time:number
+}
+
+export const enum ActivitiesTypes {
+    Generic = 0,
+    Running = 1,
+    Biking = 2,
+    Transition = 3,
+    FitnessEquipment = 4,
+    Swimming = 5,
+    Walking = 6,
+    Sedentary = 8,
+    All = 254,
+    Invalid = 0xFF
+}
+
+export class SavePoints {
+    time: number;
+    hr: number;
+    cadence: number;
+    distance: number;
+    position: GeoPoint;
+    constructor() {
+        this.hr = consts.ERROR_NUMBER_VALUE;
+        this.cadence = consts.ERROR_NUMBER_VALUE;
+    }
+
+    assignPoint(point: GpsPoint, distance: number, time: number, thisValue: Activity): void {
+        if (point) {
+            this.time = time;
+            this.hr = point.heartRateBpm;
+            switch (thisValue.sport) {
+                case ActivitiesTypes.Running:
+                    this.cadence = point.runCadence;
+                    break;
+                case ActivitiesTypes.Biking:
+                    this.cadence = point.cadence;
+                    break;
+                default:
+                    this.cadence = consts.ERROR_NUMBER_VALUE;
+                    break;
+            }
+            this.position = point.position;
+            this.distance = distance;
+        }
+    }
+}
+
+export class DataRecord {
+    date:Date;
+    value:number | string | any;
+}
 
  export {
     iGeoPoint, 
