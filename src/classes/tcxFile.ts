@@ -19,6 +19,7 @@ export default class TcxFile extends EventEmitter {
     isError = consts.ERROR_STRING_VALUE;
     /**Ετοιμότητα του αντικειμένου */
     isReady = false;
+    
 
     /**
      * Δημιουργία του αντικειμένου που διαβάζει τα δεδομένα από TCX  αρχείο
