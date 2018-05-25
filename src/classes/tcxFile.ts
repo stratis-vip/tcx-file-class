@@ -1,3 +1,4 @@
+import {EventEmitter} from 'events';
 import * as fs from 'fs';
 import Author from "./author";
 import Creator from "./creator";
@@ -10,7 +11,7 @@ const pString = pstring.parseString;
 /**
  * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
  */
-export default class TcxFile {
+export default class TcxFile extends EventEmitter {
     /**Όλα τα δεδομένα του αρχείου σε ΧΜL μορφή */
     data:iXmlData=null;
     /**Κρατάει την τιμή του λάθους, αν υπάρχει, στην ανάγωνση του TCX αρχείου */
@@ -26,11 +27,14 @@ export default class TcxFile {
      * υπάρχει λάθος, τότε η callback(err:string) επιστρέφει το λάθος στην err
      */
     constructor(filename:string, callback:(err:string)=>void){
+        super();
         read(this, filename,(err)=>{
             if (err){
                 this.isError = err;
+                this.emit('endReading',err);
                 callback(err);
             }else {
+                this.emit('endReading',null)
                 this.isReady = true;
                 callback(consts.ERROR_STRING_VALUE);
             }

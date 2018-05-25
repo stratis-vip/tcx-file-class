@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const events_1 = require("events");
 const fs = require("fs");
 const author_1 = require("./author");
 const creator_1 = require("./creator");
@@ -10,7 +11,7 @@ const pString = pstring.parseString;
 /**
  * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
  */
-class TcxFile {
+class TcxFile extends events_1.EventEmitter {
     /**
      * Δημιουργία του αντικειμένου που διαβάζει τα δεδομένα από TCX  αρχείο
      *
@@ -19,6 +20,7 @@ class TcxFile {
      * υπάρχει λάθος, τότε η callback(err:string) επιστρέφει το λάθος στην err
      */
     constructor(filename, callback) {
+        super();
         /**Όλα τα δεδομένα του αρχείου σε ΧΜL μορφή */
         this.data = null;
         /**Κρατάει την τιμή του λάθους, αν υπάρχει, στην ανάγωνση του TCX αρχείου */
@@ -28,9 +30,11 @@ class TcxFile {
         read(this, filename, (err) => {
             if (err) {
                 this.isError = err;
+                this.emit('endReading', err);
                 callback(err);
             }
             else {
+                this.emit('endReading', null);
                 this.isReady = true;
                 callback(consts.ERROR_STRING_VALUE);
             }
