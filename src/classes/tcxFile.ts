@@ -29,7 +29,7 @@ export default class TcxFile extends EventEmitter {
      */
     constructor(filename:string, callback:(err:string)=>void){
         super();
-        read(this, filename,(err)=>{
+        this.read(filename,(err)=>{
             if (err){
                 this.isError = err;
                 this.emit('endReading',err);

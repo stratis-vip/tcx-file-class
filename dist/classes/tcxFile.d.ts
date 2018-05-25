@@ -21,7 +21,7 @@ export default class TcxFile extends EventEmitter {
      * @param {function} callback η συνάρτηση που καλείται όταν διαβάσει το αρχείο. Αν
      * υπάρχει λάθος, τότε η callback(err:string) επιστρέφει το λάθος στην err
      */
-    constructor(filename: string, callback: (err: string | undefined) => void);
+    constructor(filename: string, callback: (err: string) => void);
     /**Διαβάζει την ιδότητα Id του ΤCX αρχείου
      * @return {string} id η τσυτότητα της δραστηριότητας
     */
