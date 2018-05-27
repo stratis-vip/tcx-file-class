@@ -175,7 +175,7 @@ class TcxFile extends events_1.EventEmitter {
         let self = this;
         self.emit('Proccessing', 'starting...');
         let act = new activity_1.default(athleteId, this, zones);
-        self.emit('Proccessing', '...end');
+        self.emit('Proccnpessing', '...end');
         fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
             if (err) {
                 self.emit('endWriting', err);
