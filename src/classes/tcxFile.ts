@@ -28,21 +28,21 @@ export default class TcxFile extends EventEmitter {
      * @param {function} callback η συνάρτηση που καλείται όταν διαβάσει το αρχείο. Αν 
      * υπάρχει λάθος, τότε η callback(err:string) επιστρέφει το λάθος στην err
      */
-    constructor(filename:string, callback:(err:string)=>void){
+    //constructor(filename:string, callback:(err:string)=>void){
+    constructor(){
         super();
-        this.read(filename,(err)=>{
-            if (err){
-                this.isError = err;
-                this.emit('endReading',err);
-                callback(err);
-            }else {
-                this.emit('endReading',null)
-                this.isReady = true;
-                callback(undefined);
-            }
-        });
+        // this.read(filename,(err)=>{
+        //     if (err){
+        //         this.isError = err;
+        //         this.emit('endReading',err);
+        //         callback(err);
+        //     }else {
+        //         this.emit('endReading',null)
+        //         this.isReady = true;
+        //         callback(undefined);
+        //     }
+        // });
     }
-
 
     /**Διαβάζει την ιδότητα Id του ΤCX αρχείου
      * @return {string} id η τσυτότητα της δραστηριότητας
@@ -150,11 +150,13 @@ export default class TcxFile extends EventEmitter {
                         self.data = result;
                         self.isError = consts.ERROR_STRING_VALUE;
                         self.isReady = true;
+                        self.emit('endReading',null);
                         callback(null, result);
                     } else {
                         self.isError = err.message;
                         self.data = null;
                         self.isReady = false;
+                        self.emit('endReading',err);
                         callback(err, null);
                     }
                 });
@@ -163,6 +165,7 @@ export default class TcxFile extends EventEmitter {
                 self.data = null;
                 self.isError = err.message;
                 self.isReady = false;
+                self.emit('endReading',err);``
                 callback(err.message, null);
             }
         });

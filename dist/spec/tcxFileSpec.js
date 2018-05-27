@@ -8,18 +8,20 @@ const fs = require("fs");
 class XmlData {
 }
 describe("Αρχεία TCX\n", function () {
-    it("\tΈλεγχος του αντικειμένου tcxFile όταν δεν υπάρχει το αρχείο", (done) => {
-        let tcx = new tcxFile_1.default("test.tcx", (err) => {
-            expect(tcx.isError).not.toBe(undefined);
-            expect(tcx.data).toEqual(null);
-            done();
-        });
-    });
+    // it("\tΈλεγχος του αντικειμένου tcxFile όταν δεν υπάρχει το αρχείο", (done) => {
+    //     let tcx = new TcxFile();
+    //     tcx.read("test.tcx", (err: string) => {
+    //         expect(tcx.isError).not.toBe(undefined);
+    //         expect(tcx.data).toEqual(null);
+    //         done()
+    //     });
+    // });
     it("\tΘα πρέπει να αποθηκεύει ένα υπάρχον αρχείο tcx χωρίς ζώνες", (done) => {
         let fname = path.join(__dirname, 'g1.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(tcxFile.data).not.toEqual(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             tcxFile.save(path.join(__dirname, 'act.json'), 1358, null, (err) => {
                 fs.readFile(path.join(__dirname, "act.json"), 'utf8', (err, data) => {
                     if (!err) {
@@ -56,9 +58,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να αποθηκεύει ένα υπάρχον αρχείο tcx με ζώνες", (done) => {
         let fname = path.join(__dirname, 'g1.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(tcxFile.data).not.toEqual(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             tcxFile.save(path.join(__dirname, 'actZones.json'), 1358, [112, 126, 137, 142], (err) => {
                 fs.readFile(path.join(__dirname, "actZones.json"), 'utf8', (err, data) => {
                     if (!err) {
@@ -100,17 +103,19 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να ανοίγει ένα υπάρχον αρχείο tcx", (done) => {
         let fname = path.join(__dirname, 'garmin.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(tcxFile.data).not.toEqual(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             done();
         });
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Garmin", (done) => {
         let fname = path.join(__dirname, 'garmin.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2018-04-05T03:23:17.000Z");
@@ -153,9 +158,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδηλασία tcx της Garmin", (done) => {
         let fname = path.join(__dirname, 'garmin-b.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Biking");
             expect(tcxFile.getId()).toEqual("2018-04-07T09:46:15.000Z");
@@ -198,9 +204,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Tapiriik", (done) => {
         let fname = path.join(__dirname, 'tapirik.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2017-10-29T07:11:03.000Z");
@@ -238,9 +245,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδήλατο tcx της Tapiriik", (done) => {
         let fname = path.join(__dirname, 'tapirik-b.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Biking");
             expect(tcxFile.getId()).toEqual("2018-04-07T09:46:15.000Z");
@@ -278,9 +286,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της runtastic", (done) => {
         let fname = path.join(__dirname, 'runtastic.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("running");
             expect(tcxFile.getId()).toEqual("2017-12-16T05:06:45.000Z");
@@ -315,9 +324,10 @@ describe("Αρχεία TCX\n", function () {
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδήλατο tcx της runtastic", (done) => {
         let fname = path.join(__dirname, 'runtastic-b.tcx');
         let author = new author_1.default({});
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("cycling");
             expect(tcxFile.getId()).toEqual("2018-04-07T09:46:15.000Z");
@@ -351,9 +361,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Polar", (done) => {
         let fname = path.join(__dirname, 'polar.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2017-10-29T05:45:48.000Z");
@@ -396,9 +407,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδήλατο tcx της Polar", (done) => {
         let fname = path.join(__dirname, 'polar-b.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Biking");
             expect(tcxFile.getId()).toEqual("2018-04-11T15:21:10.000Z");
@@ -441,7 +453,8 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να ανοίγει ένα υπάρχον αρχείο που δεν είναι tcx και να γυρνάει κενό", (done) => {
         let fname = path.join(__dirname, 'tcxFileSpec.js');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).not.toBe(consts.ERROR_STRING_VALUE);
             expect(tcxFile.data).toEqual(null);
@@ -454,9 +467,10 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Garmin χωρίς καρδιακούς παλμούς", (done) => {
         let fname = path.join(__dirname, 'nobpmgarmin.tcx');
-        let tcxFile = new tcxFile_1.default(fname, (err) => {
+        let tcxFile = new tcxFile_1.default();
+        tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
-            expect(err).toBe(undefined);
+            expect(err).toBe(null);
             expect(tcxFile.data).not.toEqual(null);
             expect(tcxFile.getSport()).toEqual("Running");
             expect(tcxFile.getId()).toEqual("2018-04-16T16:56:17.000Z");
@@ -497,16 +511,16 @@ describe("Αρχεία TCX\n", function () {
             done();
         });
     });
-    // it("\tΘα πρέπει να εμφανίζει λάθος όταν δεν υπάρχει το αρχείο tcx", (done) => {
-    //     let tcxFile = new TcxFile();
-    //     let fname = path.join(__dirname, 'NotExisted.ts');
-    //     tcxFile.read(fname, (err, data) => {
-    //         expect(data).toBe(null);
-    //         expect(err).not.toBe(null);
-    //         expect(tcxFile.data).toEqual(null);
-    //         expect(tcxFile.getSport()).toEqual(undefined);
-    //         done();
-    //     });
-    // });
+    it("\tΘα πρέπει να εμφανίζει λάθος όταν δεν υπάρχει το αρχείο tcx", (done) => {
+        let tcxFile = new tcxFile_1.default();
+        let fname = path.join(__dirname, 'NotExisted.ts');
+        tcxFile.read(fname, (err, data) => {
+            expect(data).toBe(null);
+            expect(err).not.toBe(null);
+            expect(tcxFile.data).toEqual(null);
+            expect(tcxFile.getSport()).toEqual(undefined);
+            done();
+        });
+    });
 });
 //# sourceMappingURL=tcxFileSpec.js.map
