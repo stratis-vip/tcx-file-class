@@ -165,18 +165,21 @@ export default class TcxFile extends EventEmitter {
                 self.data = null;
                 self.isError = err.message;
                 self.isReady = false;
-                self.emit('endReading',err);``
+                self.emit('endReading',err);
                 callback(err.message, null);
             }
         });
     }
 
     save(filename: string, athleteId: number, zones: [number, number, number, number]|null, callback: (err: string) => void) {
+        let self = this;
         let act = new Activity(athleteId, this, zones);
         fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
             if (err) {
+                self.emit('endWriting',err);
                 callback(err.message);
             } else {
+                self.emit('endWriting',null);
                 callback(undefined);
             }
         });

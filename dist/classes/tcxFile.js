@@ -167,18 +167,20 @@ class TcxFile extends events_1.EventEmitter {
                 self.isError = err.message;
                 self.isReady = false;
                 self.emit('endReading', err);
-                ``;
                 callback(err.message, null);
             }
         });
     }
     save(filename, athleteId, zones, callback) {
+        let self = this;
         let act = new activity_1.default(athleteId, this, zones);
         fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
             if (err) {
+                self.emit('endWriting', err);
                 callback(err.message);
             }
             else {
+                self.emit('endWriting', null);
                 callback(undefined);
             }
         });
