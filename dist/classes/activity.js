@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const events_1 = require("events");
 const consts = require("./consts");
 const geoPoint_1 = require("./geoPoint");
 const functions_1 = require("../utils/functions");
@@ -10,11 +11,12 @@ const iFaces_1 = require("./iFaces");
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους
  * τα στοιχεία του ώστε να είναι πιο πρακτικό.
  */
-class Activity {
+class Activity extends events_1.EventEmitter {
     /**
      * @param {TcxFile} xmlSource το αντικείμενο που κρατά όλα τα στοιχεία από το tcx αρχείο
      */
-    constructor(athleteId, xmlSource, zones) {
+    constructor() {
+        super();
         /**Η Ταυτότητα της δραστηριότητας */
         this.id = consts.ERROR_STRING_VALUE;
         /**Αν είναι έτοιμη η δραστηριότητα. Αν το αρχείο TCX είναι εσφαλμένο, η ιδιότητα αυτή είναι false */
@@ -36,6 +38,9 @@ class Activity {
         this.sport = 255 /* Invalid */;
         this.proccessElements = new ResultClass();
         this.lapsElements = new ResultClass();
+    }
+    read(athleteId, xmlSource, zones) {
+        let self = this;
         if (xmlSource.isReady) {
             this.id = xmlSource.getId();
             let laps = new Array();
@@ -59,17 +64,20 @@ class Activity {
             this.proccessElements.sport = this.sport;
             this.proccessElements.athlete = athleteId;
             if (this.proccessElements.points.length > 1) {
-                this.getFasters();
+                this.getFasters(self);
             }
         }
     }
-    getFasters() {
+    getFasters(obj) {
+        let self = obj;
         let len = this.proccessElements.points.length;
         for (let i = 0; i != len; ++i) {
-            this.checkDistance(i);
+            self.emit('Process', { event: 'getFasters', position: i, positionOf: len });
+            this.checkDistance(self, i);
         }
     }
-    checkDistance(position) {
+    checkDistance(obj, position) {
+        let self = obj;
         let limits = [100, 200, 400, 1000, 2000, 5000, 10000, 21100, 42195, 50000, 100000, 200000];
         let curLimit = 0;
         let startingDistance = this.proccessElements.points[position].distance;

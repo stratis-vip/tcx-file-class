@@ -1,3 +1,5 @@
+/// <reference types="node" />
+import { EventEmitter } from 'events';
 import TcxFile from "./tcxFile";
 import InfoLap from "./infoLap";
 import GpsPoint from "./gpsPoint";
@@ -7,7 +9,7 @@ import { iZone, ActivitiesTypes, SavePoints } from "./iFaces";
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους
  * τα στοιχεία του ώστε να είναι πιο πρακτικό.
  */
-export default class Activity {
+export default class Activity extends EventEmitter {
     /**Η Ταυτότητα της δραστηριότητας */
     id: string;
     /**Αν είναι έτοιμη η δραστηριότητα. Αν το αρχείο TCX είναι εσφαλμένο, η ιδιότητα αυτή είναι false */
@@ -32,9 +34,10 @@ export default class Activity {
     /**
      * @param {TcxFile} xmlSource το αντικείμενο που κρατά όλα τα στοιχεία από το tcx αρχείο
      */
-    constructor(athleteId: number, xmlSource: TcxFile, zones?: [number, number, number, number] | null);
-    getFasters(): void;
-    checkDistance(position: number): void;
+    constructor();
+    read(athleteId: number, xmlSource: TcxFile, zones?: [number, number, number, number] | null): void;
+    getFasters(obj: Activity): void;
+    checkDistance(obj: Activity, position: number): void;
     /**
     * Βρίσκει την απόσταση μόνο από τις πληροφορίες των γύρων
     *
