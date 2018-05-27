@@ -81,7 +81,7 @@ export default class Activity extends EventEmitter {
         let len = this.proccessElements.points.length;
 
         for (let i = 0; i != len; ++i) {
-            self.emit('Process',{event:'getFasters',position:i,positionOf:len});
+            self.emit('Process',{event:'getFasters',value:i/len});
             this.checkDistance(self, i);
         }
     }
