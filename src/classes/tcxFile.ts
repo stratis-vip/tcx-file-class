@@ -178,6 +178,9 @@ export default class TcxFile extends EventEmitter {
         act.on('Process',(val)=>{
             self.emit('Process',val);
         })
+        act.on('progress',(val)=>{
+            self.emit('progress',val);
+        })
         act.read(athleteId, this, zones);
         self.emit('Proccessing','...end');
         fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
