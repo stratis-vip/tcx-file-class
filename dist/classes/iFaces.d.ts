@@ -132,4 +132,8 @@ export declare class DataRecord {
     date: Date;
     value: number | string | any;
 }
+export interface ProgressMessage {
+    type: string;
+    value: number;
+}
 export { iGeoPoint, iXmlTrainingCenterDatabase, iXmlData };

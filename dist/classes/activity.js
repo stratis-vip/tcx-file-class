@@ -54,7 +54,7 @@ class Activity extends events_1.EventEmitter {
                 });
             });
             this.sport = getSportFromString(xmlSource.getSport());
-            this.proccessElements = this.getDistanceFromPoints(this.tPoints, zones);
+            this.proccessElements = this.getDistanceFromPoints(self, this.tPoints, zones);
             this.distanceFromLaps = this.getDistanceFromLaps();
             this.distanceDromPoints = this.proccessElements.distance;
             this.timeFromLaps = getTimeFromLaps(this.infoLaps);
@@ -178,13 +178,17 @@ class Activity extends events_1.EventEmitter {
                 return consts.ERROR_NUMBER_VALUE;
         }
     }
+    sendEmit(msg) {
+        this.emit('progress', msg);
+    }
     /**
  * Υπολογίζει την απόσταση από τα σημεία του TCX
  *
  * @param {Point[]} points τα  σημεία TrackPoints από την δραστηριότητα
  * @return {ResultClass} αντικείμενο ResultClassπου κρατά όλα τα στοιχεία
  */
-    getDistanceFromPoints(points, bpmZones) {
+    getDistanceFromPoints(obj, points, bpmZones) {
+        let self = obj;
         let pointsCount = points.length;
         let from = new geoPoint_1.default();
         let to = new geoPoint_1.default();
@@ -193,6 +197,7 @@ class Activity extends events_1.EventEmitter {
         let toTime;
         let oldDistance = 0;
         let temp = new ResultClass();
+        let counter = 0;
         for (let i = 0; i != pointsCount; ++i) {
             if (points[i].position.longitudeDegrees !== consts.ERROR_NUMBER_VALUE &&
                 points[i].position.latitudeDegrees !== consts.ERROR_NUMBER_VALUE) {
@@ -299,6 +304,11 @@ class Activity extends events_1.EventEmitter {
                 let sPoint = new iFaces_1.SavePoints();
                 sPoint.assignPoint(points[i], oldDistance, temp.totalTime, this);
                 temp.points.push(sPoint);
+                let cur = 100 * i / pointsCount;
+                if ((cur) > counter) {
+                    counter++;
+                    self.sendEmit({ type: 'Υπολογισμός σημείων', value: cur });
+                }
             }
         }
         this.zones = temp.zones;

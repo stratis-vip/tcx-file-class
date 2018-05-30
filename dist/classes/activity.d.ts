@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 import TcxFile from "./tcxFile";
 import InfoLap from "./infoLap";
 import GpsPoint from "./gpsPoint";
-import { iZone, ActivitiesTypes, SavePoints } from "./iFaces";
+import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
 /**
  * Αρχικό αντικείμενο που κρατά πρακτικά όλη την προπόνηση
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους
@@ -46,13 +46,14 @@ export default class Activity extends EventEmitter {
     */
     getDistanceFromLaps(): number;
     getMaxCadence(value1: number, value2: number): number;
+    sendEmit(msg: ProgressMessage): void;
     /**
  * Υπολογίζει την απόσταση από τα σημεία του TCX
  *
  * @param {Point[]} points τα  σημεία TrackPoints από την δραστηριότητα
  * @return {ResultClass} αντικείμενο ResultClassπου κρατά όλα τα στοιχεία
  */
-    getDistanceFromPoints(points: Array<GpsPoint>, bpmZones?: [number, number, number, number]): ResultClass;
+    getDistanceFromPoints(obj: Activity, points: Array<GpsPoint>, bpmZones?: [number, number, number, number]): ResultClass;
 }
 export declare class bestTimes {
     start: number;

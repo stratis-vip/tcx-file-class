@@ -7,7 +7,7 @@ import { apostasi, secsToTime, TimePaceFromSpeedMpS } from "../utils/functions";
 import InfoLap from "./infoLap";
 import  Lap  from "./lap"
 import  GpsPoint  from "./gpsPoint"
-import { iZone, ActivitiesTypes, SavePoints } from "./iFaces";
+import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
 
 /**
  * Αρχικό αντικείμενο που κρατά πρακτικά όλη την προπόνηση 
@@ -60,7 +60,7 @@ export default class Activity extends EventEmitter {
                 });
             });
             this.sport = getSportFromString(xmlSource.getSport());
-            this.proccessElements = this.getDistanceFromPoints(this.tPoints, zones);
+            this.proccessElements = this.getDistanceFromPoints(self, this.tPoints, zones);
 
             this.distanceFromLaps = this.getDistanceFromLaps();
             this.distanceDromPoints = this.proccessElements.distance;
@@ -159,11 +159,6 @@ export default class Activity extends EventEmitter {
                 let dt = Math.round(up - down);
                 this.proccessElements.times[curLimit].avgHr = Math.round(avgHr);
                 this.proccessElements.times[curLimit].dAlt = Math.round(dt);
-
-
-
-
-
                 ++curLimit;
             }
         } while (nextPoint !== undefined);
@@ -200,13 +195,20 @@ export default class Activity extends EventEmitter {
                 return consts.ERROR_NUMBER_VALUE;
         }
     }
+
+
+    sendEmit(msg:ProgressMessage){
+        this.emit('progress',msg);
+    }
     /**
  * Υπολογίζει την απόσταση από τα σημεία του TCX
  * 
  * @param {Point[]} points τα  σημεία TrackPoints από την δραστηριότητα
  * @return {ResultClass} αντικείμενο ResultClassπου κρατά όλα τα στοιχεία
  */
-    getDistanceFromPoints(points: Array<GpsPoint>, bpmZones?: [number, number, number, number]): ResultClass {
+    getDistanceFromPoints(obj:Activity,points: Array<GpsPoint>, bpmZones?: [number, number, number, number]): ResultClass {
+       
+       let self= obj;
         let pointsCount = points.length;
         let from: GeoPoint = new GeoPoint();
         let to: GeoPoint = new GeoPoint();
@@ -217,7 +219,9 @@ export default class Activity extends EventEmitter {
         let oldDistance = 0;
         let temp = new ResultClass();
 
+        let counter = 0;
         for (let i = 0; i != pointsCount; ++i) {
+            
             if (points[i].position.longitudeDegrees !== consts.ERROR_NUMBER_VALUE &&
                 points[i].position.latitudeDegrees !== consts.ERROR_NUMBER_VALUE) {
                 if (from.latitudeDegrees === consts.ERROR_NUMBER_VALUE &&
@@ -324,6 +328,11 @@ export default class Activity extends EventEmitter {
                 let sPoint = new SavePoints();
                 sPoint.assignPoint(points[i], oldDistance, temp.totalTime, this);
                 temp.points.push(sPoint);
+                let cur= 100*i/pointsCount;
+                if ((cur)>counter){
+                    counter++;
+                    self.sendEmit({type:'Υπολογισμός σημείων',value:cur});
+                }
             }
         }
 

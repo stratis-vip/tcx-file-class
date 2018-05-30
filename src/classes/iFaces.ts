@@ -166,6 +166,11 @@ export class DataRecord {
     value:number | string | any;
 }
 
+export interface ProgressMessage{
+    type:string;
+    value:number;
+}
+
  export {
     iGeoPoint, 
     iXmlTrainingCenterDatabase,
