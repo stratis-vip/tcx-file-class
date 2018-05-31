@@ -171,6 +171,25 @@ class TcxFile extends events_1.EventEmitter {
             }
         });
     }
+    readFromString(source, callback) {
+        let self = this;
+        pString(source, function (err, result) {
+            if (!err) {
+                self.data = result;
+                self.isError = consts.ERROR_STRING_VALUE;
+                self.isReady = true;
+                self.emit('endReading', null);
+                callback(null, result);
+            }
+            else {
+                self.isError = err.message;
+                self.data = null;
+                self.isReady = false;
+                self.emit('endReading', err);
+                callback(err, null);
+            }
+        });
+    }
     save(filename, athleteId, zones, callback) {
         let self = this;
         self.emit('Proccessing', 'starting...');

@@ -1,4 +1,4 @@
-import {EventEmitter} from 'events';
+import { EventEmitter } from 'events';
 import * as fs from 'fs';
 import Author from "./author";
 import Creator from "./creator";
@@ -19,7 +19,7 @@ export default class TcxFile extends EventEmitter {
     isError = consts.ERROR_STRING_VALUE;
     /**Ετοιμότητα του αντικειμένου */
     isReady = false;
-    
+
 
     /**
      * Δημιουργία του αντικειμένου που διαβάζει τα δεδομένα από TCX  αρχείο
@@ -29,7 +29,7 @@ export default class TcxFile extends EventEmitter {
      * υπάρχει λάθος, τότε η callback(err:string) επιστρέφει το λάθος στην err
      */
     //constructor(filename:string, callback:(err:string)=>void){
-    constructor(){
+    constructor() {
         super();
         // this.read(filename,(err)=>{
         //     if (err){
@@ -150,13 +150,13 @@ export default class TcxFile extends EventEmitter {
                         self.data = result;
                         self.isError = consts.ERROR_STRING_VALUE;
                         self.isReady = true;
-                        self.emit('endReading',null);
+                        self.emit('endReading', null);
                         callback(null, result);
                     } else {
                         self.isError = err.message;
                         self.data = null;
                         self.isReady = false;
-                        self.emit('endReading',err);
+                        self.emit('endReading', err);
                         callback(err, null);
                     }
                 });
@@ -165,30 +165,50 @@ export default class TcxFile extends EventEmitter {
                 self.data = null;
                 self.isError = err.message;
                 self.isReady = false;
-                self.emit('endReading',err);
+                self.emit('endReading', err);
                 callback(err.message, null);
             }
         });
     }
 
-    save(filename: string, athleteId: number, zones: [number, number, number, number]|null, callback: (err: string) => void) {
+
+    readFromString(source: string, callback: (err: string, data: iXmlData) => void) {
         let self = this;
-        self.emit('Proccessing','starting...');
+        pString(source, function (err, result) {
+            if (!err) {
+                self.data = result;
+                self.isError = consts.ERROR_STRING_VALUE;
+                self.isReady = true;
+                self.emit('endReading', null);
+                callback(null, result);
+            } else {
+                self.isError = err.message;
+                self.data = null;
+                self.isReady = false;
+                self.emit('endReading', err);
+                callback(err, null);
+            }
+        });
+    }
+
+    save(filename: string, athleteId: number, zones: [number, number, number, number] | null, callback: (err: string) => void) {
+        let self = this;
+        self.emit('Proccessing', 'starting...');
         let act = new Activity();
-        act.on('Process',(val)=>{
-            self.emit('Process',val);
+        act.on('Process', (val) => {
+            self.emit('Process', val);
         })
-        act.on('progress',(val)=>{
-            self.emit('progress',val);
+        act.on('progress', (val) => {
+            self.emit('progress', val);
         })
         act.read(athleteId, this, zones);
-        self.emit('Proccessing','...end');
+        self.emit('Proccessing', '...end');
         fs.writeFile(filename, JSON.stringify(act.proccessElements), (err) => {
             if (err) {
-                self.emit('endWriting',err);
+                self.emit('endWriting', err);
                 callback(err.message);
             } else {
-                self.emit('endWriting',null);
+                self.emit('endWriting', null);
                 callback(undefined);
             }
         });
