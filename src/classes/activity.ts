@@ -1,5 +1,5 @@
-import {EventEmitter} from 'events';
-import  TcxFile  from "./tcxFile";
+const EventEmitter = require('events');
+import  TcxFcvbcvbile  from "./tcxFile";
 import * as consts from "./consts";
 
 import GeoPoint from "./geoPoint";
@@ -9,12 +9,13 @@ import  Lap  from "./lap"
 import  GpsPoint  from "./gpsPoint"
 import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
 
+//class MyEmitter extends EventEmitter {}
 /**
  * Αρχικό αντικείμενο που κρατά πρακτικά όλη την προπόνηση 
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους 
  * τα στοιχεία του ώστε να είναι πιο πρακτικό.
  */
-export default class Activity extends EventEmitter {
+export class Activity extends EventEmitter {
     /**Η Ταυτότητα της δραστηριότητας */
     id: string = consts.ERROR_STRING_VALUE;
     /**Αν είναι έτοιμη η δραστηριότητα. Αν το αρχείο TCX είναι εσφαλμένο, η ιδιότητα αυτή είναι false */
@@ -23,7 +24,8 @@ export default class Activity extends EventEmitter {
     distanceFromLaps = consts.ERROR_NUMBER_VALUE;
     /**Η απόσταση (σε ΜΕΤΡΑ) όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο TCX */
     distanceDromPoints = consts.ERROR_NUMBER_VALUE;
-    /**Ο χρόνος όπως έχει καταγραφεί στα Laps (σε secs) */
+    /**Ο χρόνος όπως έχει καταγρ
+     * αφεί στα Laps (σε secs) */
     timeFromLaps = consts.ERROR_NUMBER_VALUE;
     /**Ο χρόνος όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο ΤCX (σε secs) */
     timeFromPoints = consts.ERROR_NUMBER_VALUE;
@@ -461,3 +463,5 @@ function getTimeFromPoints(points: Array<GpsPoint>): number {
     }
     return time / 1000.0;
 }
+
+export default Activity;
