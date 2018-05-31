@@ -49,30 +49,30 @@ export default class Activity extends EventEmitter {
     read(athleteId:number,xmlSource: TcxFile, zones?: [number, number, number, number]|null){
         let self = this;
         if (xmlSource.isReady) {
-            this.id = xmlSource.getId();
+            self.id = xmlSource.getId();
             let laps: Array<Lap> = new Array<Lap>();
             laps = xmlSource.getLaps();
             laps.forEach((lap: Lap) => {
-                this.infoLaps.push(new InfoLap(lap));
+                self.infoLaps.push(new InfoLap(lap));
                 (lap as Lap).trackPoints.forEach((point: GpsPoint) => {
                     if (point.position.latitudeDegrees !== consts.ERROR_NUMBER_VALUE) {
-                        this.tPoints.push(point);
+                        self.tPoints.push(point);
                     }
                 });
             });
-            this.sport = getSportFromString(xmlSource.getSport());
-            this.proccessElements = this.getDistanceFromPoints(self, this.tPoints, zones);
+            self.sport = getSportFromString(xmlSource.getSport());
+            self.proccessElements = self.getDistanceFromPoints(self, self.tPoints, zones);
 
-            this.distanceFromLaps = this.getDistanceFromLaps();
-            this.distanceDromPoints = this.proccessElements.distance;
-            this.timeFromLaps = getTimeFromLaps(this.infoLaps);
-            this.timeFromPoints = this.proccessElements.totalTime;
-            this.isReady = true;
-            this.proccessElements.id = this.id;
-            this.proccessElements.sport = this.sport;
-            this.proccessElements.athlete = athleteId;
-            if (this.proccessElements.points.length > 1) {
-                this.getFasters(self);
+            self.distanceFromLaps = self.getDistanceFromLaps();
+            self.distanceDromPoints = self.proccessElements.distance;
+            self.timeFromLaps = getTimeFromLaps(self.infoLaps);
+            self.timeFromPoints = self.proccessElements.totalTime;
+            self.isReady = true;
+            self.proccessElements.id = self.id;
+            self.proccessElements.sport = self.sport;
+            self.proccessElements.athlete = athleteId;
+            if (self.proccessElements.points.length > 1) {
+                self.getFasters(self);
             }
         }
     }
