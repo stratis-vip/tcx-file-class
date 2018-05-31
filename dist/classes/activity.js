@@ -38,6 +38,7 @@ class Activity extends events_1.EventEmitter {
         this.sport = 255 /* Invalid */;
         this.proccessElements = new ResultClass();
         this.lapsElements = new ResultClass();
+        this.isReady = false;
     }
     read(athleteId, xmlSource, zones) {
         let self = this;

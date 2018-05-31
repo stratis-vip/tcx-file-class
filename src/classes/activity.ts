@@ -43,6 +43,7 @@ export default class Activity extends EventEmitter {
      */
     constructor() {
         super();
+        this.isReady = false;
     }
 
     read(athleteId:number,xmlSource: TcxFile, zones?: [number, number, number, number]|null){
