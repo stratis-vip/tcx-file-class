@@ -1,4 +1,5 @@
 import TcxFile from "./dist/classes/tcxFile"
+import Activity from "./dist/classes/activity"
 import GeoPoint from "./dist/classes/geoPoint"
 import GpsPoint from "./dist/classes/gpsPoint"
 import Author from "./dist/classes/author"
@@ -20,6 +21,7 @@ import {iGeoPoint,
 
 export { 
     TcxFile,
+    Activity,
     GpsPoint,
     Author,
     Creator,
