@@ -2,8 +2,3 @@ src/spec/*.tcx
 output
 test
 node_modules
-
-dist/**/*.js
-dist/**/*.js.map
-dist/**/*.json
-dist/**/*.ts
