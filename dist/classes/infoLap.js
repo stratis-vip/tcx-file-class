@@ -20,5 +20,5 @@ class InfoLap {
         this.avgSpeed = obj.avgSpeed;
     }
 }
-exports.default = InfoLap;
+exports.InfoLap = InfoLap;
 //# sourceMappingURL=infoLap.js.map

@@ -1,16 +1,16 @@
-import geoPoint from "../classes/geoPoint";
+import {GeoPoint} from "../classes/geoPoint";
 import * as consts from '../classes/consts';
 
 
 /** 
  * Υπολογίζει την απόσταση σε ΜΕΤΡΑ από το σημείο FromPoint στο σημείο ToPoint
  * 
- * @param {geoPoint} FromPoint οι συντεταγμένες του αρχικού σημείου σε ΜΟΙΡΕΣ
- * @param {geoPoint} ToPoint οι συντεταγμένες του τελικού σημείου σε ΜΟΙΡΕΣ
+ * @param {GeoPoint} FromPoint οι συντεταγμένες του αρχικού σημείου σε ΜΟΙΡΕΣ
+ * @param {GeoPoint} ToPoint οι συντεταγμένες του τελικού σημείου σε ΜΟΙΡΕΣ
  * @returns {number} η απόσταση ανάμεσα στα σημεία σε ΜΕΤΡΑ
 */
 //test οκ
-const apostasi = (FromPoint: geoPoint, ToPoint: geoPoint): number => {
+const apostasi = (FromPoint: GeoPoint, ToPoint: GeoPoint): number => {
   let lat2 = ToPoint.latitudeDegrees;
   let lon2 = ToPoint.longitudeDegrees;
   let lat1 = FromPoint.latitudeDegrees;
@@ -121,17 +121,17 @@ const secsToTime = (value: number, showHours?: boolean) => {
 /** 
  * Υπολογίζει τις συντεταγμένες του σημείου που βρίσκεται σε δεδομένα απόσταση και αζιμούθιο από το σημείο που στεκόμαστε
  * 
- * @param {geoPoint} FromPoint το αρχικό σημείο
+ * @param {GeoPoint} FromPoint το αρχικό σημείο
  * @param {number} distance η απόσταση σε μέτρα προς το επόμενο σημείο
  * @param {number} Bearing το αζιμούθιο προς το τελικό σημείο σε ΜΟΙΡΕΣ 
  * @returns {GeoPoint} αντικείμενο Cordinates
  */
 //test ok
 const getNextPointCordinatesFromDistanceBearing = (
-  FromPoint: geoPoint,
+  FromPoint: GeoPoint,
   distance: number,
   Bearing: number
-): geoPoint => {
+): GeoPoint => {
   let brng = degToRads(Bearing);
   let lat1 = FromPoint.latitudeDegrees;
   let lon1 = FromPoint.longitudeDegrees;
@@ -141,7 +141,7 @@ const getNextPointCordinatesFromDistanceBearing = (
 
   let λ1 = degToRads(lon1);
 
-  let temp = new geoPoint();
+  let temp = new GeoPoint();
   temp.latitudeDegrees = Math.asin(
     Math.sin(φ1) * Math.cos(d / R) +
     Math.cos(φ1) * Math.sin(d / R) * Math.cos(brng)

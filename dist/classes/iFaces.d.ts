@@ -1,6 +1,6 @@
-import GeoPoint from "./geoPoint";
-import GpsPoint from "./gpsPoint";
-import Activity from "./activity";
+import { GeoPoint } from "./geoPoint";
+import { GpsPoint } from "./gpsPoint";
+import { Activity } from "./activity";
 export interface iXsiType {
     'xsi:type': string;
 }

@@ -1,4 +1,4 @@
-export default class BestTimes {
+export declare class BestTimes {
     start: number;
     end: number;
     distance: number;

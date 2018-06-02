@@ -11,5 +11,5 @@ class BestTimes {
         this.dAlt = consts.ERROR_NUMBER_VALUE;
     }
 }
-exports.default = BestTimes;
+exports.BestTimes = BestTimes;
 //# sourceMappingURL=bestTimes.js.map

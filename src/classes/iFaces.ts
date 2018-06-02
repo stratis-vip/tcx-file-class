@@ -1,8 +1,8 @@
-import Lap from "./lap";
-import GeoPoint from "./geoPoint";
-import GpsPoint from "./gpsPoint";
+import {Lap} from "./lap";
+import {GeoPoint} from "./geoPoint";
+import {GpsPoint} from "./gpsPoint";
 import * as consts from './consts';
-import Activity from "./activity";
+import {Activity} from "./activity";
 
  export interface iXsiType {
     'xsi:type': string;

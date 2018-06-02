@@ -1,6 +1,6 @@
 import * as consts from "./consts";
 import { SavePoints } from "./iFaces";
-import BestTimes from "./bestTimes";
+import {BestTimes} from "./bestTimes";
 
 export class ResultClass {
     id = "";

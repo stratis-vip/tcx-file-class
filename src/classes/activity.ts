@@ -4,13 +4,13 @@ import * as consts from "./consts";
 
 import {GeoPoint} from "./geoPoint";
 import { apostasi, secsToTime, TimePaceFromSpeedMpS } from "../utils/functions";
-import InfoLap from "./infoLap";
+import {InfoLap} from "./infoLap";
 import  {Lap}  from "./lap"
 import  {GpsPoint}  from "./gpsPoint"
 import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
 import {TcxFile} from './tcxFile';
 import { ResultClass } from './resultClass';
-import BestTimes from './bestTimes';
+import {BestTimes} from './bestTimes';
 
 //class MyEmitter extends EventEmitter {}
 /**

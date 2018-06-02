@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
-import InfoLap from "./infoLap";
+import { InfoLap } from "./infoLap";
 import { GpsPoint } from "./gpsPoint";
 import { iZone, ActivitiesTypes, ProgressMessage } from "./iFaces";
 import { TcxFile } from './tcxFile';

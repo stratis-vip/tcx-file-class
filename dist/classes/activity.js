@@ -51,7 +51,7 @@ class Activity extends events_1.EventEmitter {
             let laps = new Array();
             laps = xmlSource.getLaps();
             laps.forEach((lap) => {
-                self.infoLaps.push(new infoLap_1.default(lap));
+                self.infoLaps.push(new infoLap_1.InfoLap(lap));
                 lap.trackPoints.forEach((point) => {
                     if (point.position.latitudeDegrees !== consts.ERROR_NUMBER_VALUE) {
                         self.tPoints.push(point);
@@ -99,7 +99,7 @@ class Activity extends events_1.EventEmitter {
                 let distance = nextPoint.distance - startingDistance;
                 let limitTime = time * limits[curLimit] / distance;
                 if (this.proccessElements.times[curLimit] === undefined) {
-                    this.proccessElements.times[curLimit] = new bestTimes_1.default();
+                    this.proccessElements.times[curLimit] = new bestTimes_1.BestTimes();
                     this.proccessElements.times[curLimit] =
                         {
                             start: position,

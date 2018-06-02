@@ -5,8 +5,8 @@ const consts = require("../classes/consts");
 /**
  * Υπολογίζει την απόσταση σε ΜΕΤΡΑ από το σημείο FromPoint στο σημείο ToPoint
  *
- * @param {geoPoint} FromPoint οι συντεταγμένες του αρχικού σημείου σε ΜΟΙΡΕΣ
- * @param {geoPoint} ToPoint οι συντεταγμένες του τελικού σημείου σε ΜΟΙΡΕΣ
+ * @param {GeoPoint} FromPoint οι συντεταγμένες του αρχικού σημείου σε ΜΟΙΡΕΣ
+ * @param {GeoPoint} ToPoint οι συντεταγμένες του τελικού σημείου σε ΜΟΙΡΕΣ
  * @returns {number} η απόσταση ανάμεσα στα σημεία σε ΜΕΤΡΑ
 */
 //test οκ
@@ -111,7 +111,7 @@ exports.secsToTime = secsToTime;
 /**
  * Υπολογίζει τις συντεταγμένες του σημείου που βρίσκεται σε δεδομένα απόσταση και αζιμούθιο από το σημείο που στεκόμαστε
  *
- * @param {geoPoint} FromPoint το αρχικό σημείο
+ * @param {GeoPoint} FromPoint το αρχικό σημείο
  * @param {number} distance η απόσταση σε μέτρα προς το επόμενο σημείο
  * @param {number} Bearing το αζιμούθιο προς το τελικό σημείο σε ΜΟΙΡΕΣ
  * @returns {GeoPoint} αντικείμενο Cordinates
@@ -125,7 +125,7 @@ const getNextPointCordinatesFromDistanceBearing = (FromPoint, distance, Bearing)
     let R = 6371e3;
     let φ1 = degToRads(lat1);
     let λ1 = degToRads(lon1);
-    let temp = new geoPoint_1.default();
+    let temp = new geoPoint_1.GeoPoint();
     temp.latitudeDegrees = Math.asin(Math.sin(φ1) * Math.cos(d / R) +
         Math.cos(φ1) * Math.sin(d / R) * Math.cos(brng));
     let φ2 = temp.latitudeDegrees;

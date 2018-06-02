@@ -1,7 +1,7 @@
 import * as consts from "./consts";
 import { ActivitiesTypes } from "./iFaces";
 
-export default class BestTimes {
+export class BestTimes {
     start = consts.ERROR_NUMBER_VALUE;
     end = consts.ERROR_NUMBER_VALUE;
     distance: number;
