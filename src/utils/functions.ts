@@ -270,6 +270,8 @@ function movingAvg(ar: Array<number | null>, period?: number): Array<number> | n
   return result;
 }
 
+
+
 export {
   addTuples,
   apostasi,

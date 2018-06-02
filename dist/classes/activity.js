@@ -6,6 +6,9 @@ const geoPoint_1 = require("./geoPoint");
 const functions_1 = require("../utils/functions");
 const infoLap_1 = require("./infoLap");
 const iFaces_1 = require("./iFaces");
+const resultClass_1 = require("./resultClass");
+const bestTimes_1 = require("./bestTimes");
+//class MyEmitter extends EventEmitter {}
 /**
  * Αρχικό αντικείμενο που κρατά πρακτικά όλη την προπόνηση
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους
@@ -25,7 +28,8 @@ class Activity extends events_1.EventEmitter {
         this.distanceFromLaps = consts.ERROR_NUMBER_VALUE;
         /**Η απόσταση (σε ΜΕΤΡΑ) όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο TCX */
         this.distanceDromPoints = consts.ERROR_NUMBER_VALUE;
-        /**Ο χρόνος όπως έχει καταγραφεί στα Laps (σε secs) */
+        /**Ο χρόνος όπως έχει καταγρ
+         * αφεί στα Laps (σε secs) */
         this.timeFromLaps = consts.ERROR_NUMBER_VALUE;
         /**Ο χρόνος όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο ΤCX (σε secs) */
         this.timeFromPoints = consts.ERROR_NUMBER_VALUE;
@@ -36,36 +40,36 @@ class Activity extends events_1.EventEmitter {
         /**Πίνακας που κρατάει τα δευτερόλεπτα προπόνησης */
         this.zones = new Array();
         this.sport = 255 /* Invalid */;
-        this.proccessElements = new ResultClass();
-        this.lapsElements = new ResultClass();
+        this.proccessElements = new resultClass_1.ResultClass();
+        this.lapsElements = new resultClass_1.ResultClass();
         this.isReady = false;
     }
     read(athleteId, xmlSource, zones) {
         let self = this;
         if (xmlSource.isReady) {
-            this.id = xmlSource.getId();
+            self.id = xmlSource.getId();
             let laps = new Array();
             laps = xmlSource.getLaps();
             laps.forEach((lap) => {
-                this.infoLaps.push(new infoLap_1.default(lap));
+                self.infoLaps.push(new infoLap_1.default(lap));
                 lap.trackPoints.forEach((point) => {
                     if (point.position.latitudeDegrees !== consts.ERROR_NUMBER_VALUE) {
-                        this.tPoints.push(point);
+                        self.tPoints.push(point);
                     }
                 });
             });
-            this.sport = getSportFromString(xmlSource.getSport());
-            this.proccessElements = this.getDistanceFromPoints(self, this.tPoints, zones);
-            this.distanceFromLaps = this.getDistanceFromLaps();
-            this.distanceDromPoints = this.proccessElements.distance;
-            this.timeFromLaps = getTimeFromLaps(this.infoLaps);
-            this.timeFromPoints = this.proccessElements.totalTime;
-            this.isReady = true;
-            this.proccessElements.id = this.id;
-            this.proccessElements.sport = this.sport;
-            this.proccessElements.athlete = athleteId;
-            if (this.proccessElements.points.length > 1) {
-                this.getFasters(self);
+            self.sport = getSportFromString(xmlSource.getSport());
+            self.proccessElements = self.getDistanceFromPoints(self, self.tPoints, zones);
+            self.distanceFromLaps = self.getDistanceFromLaps();
+            self.distanceDromPoints = self.proccessElements.distance;
+            self.timeFromLaps = getTimeFromLaps(self.infoLaps);
+            self.timeFromPoints = self.proccessElements.totalTime;
+            self.isReady = true;
+            self.proccessElements.id = self.id;
+            self.proccessElements.sport = self.sport;
+            self.proccessElements.athlete = athleteId;
+            if (self.proccessElements.points.length > 1) {
+                self.getFasters(self);
             }
         }
     }
@@ -95,7 +99,7 @@ class Activity extends events_1.EventEmitter {
                 let distance = nextPoint.distance - startingDistance;
                 let limitTime = time * limits[curLimit] / distance;
                 if (this.proccessElements.times[curLimit] === undefined) {
-                    this.proccessElements.times[curLimit] = new bestTimes();
+                    this.proccessElements.times[curLimit] = new bestTimes_1.default();
                     this.proccessElements.times[curLimit] =
                         {
                             start: position,
@@ -158,7 +162,7 @@ class Activity extends events_1.EventEmitter {
     */
     getDistanceFromLaps() {
         let laps = this.infoLaps;
-        let temp = new ResultClass();
+        let temp = new resultClass_1.ResultClass();
         let distance = 0;
         let lapCount = laps.length;
         for (let i = 0; i != lapCount; ++i) {
@@ -197,7 +201,7 @@ class Activity extends events_1.EventEmitter {
         let fromTime;
         let toTime;
         let oldDistance = 0;
-        let temp = new ResultClass();
+        let temp = new resultClass_1.ResultClass();
         let counter = 0;
         for (let i = 0; i != pointsCount; ++i) {
             if (points[i].position.longitudeDegrees !== consts.ERROR_NUMBER_VALUE &&
@@ -318,17 +322,41 @@ class Activity extends events_1.EventEmitter {
     }
 }
 exports.default = Activity;
-class bestTimes {
-    constructor() {
-        this.start = consts.ERROR_NUMBER_VALUE;
-        this.end = consts.ERROR_NUMBER_VALUE;
-        this.time = consts.ERROR_NUMBER_VALUE;
-        this.recTime = consts.ERROR_NUMBER_VALUE;
-        this.avgHr = consts.ERROR_NUMBER_VALUE;
-        this.dAlt = consts.ERROR_NUMBER_VALUE;
+/**
+ * Υπολογίζει τον χρόνο από τις πληροφορίες των γύρων
+ *
+ * @param {InfoLap[]} laps τα InfoLap από την δραστηριότητα
+ * @return o χρόνος σε δευτερόλεπτα
+ */
+function getTimeFromLaps(laps) {
+    let lapCount = laps.length;
+    let time = consts.ERROR_NUMBER_VALUE;
+    for (let i = 0; i != lapCount; ++i) {
+        time += laps[i].totalTimeSeconds;
     }
+    return time;
 }
-exports.bestTimes = bestTimes;
+/**
+ * Υπολογίζει τον χρόνο από τα σημεία του TCX
+ *
+ * @param {Point[]} points τα σημεία Point από την δραστηριότητα
+ * @return o χρόνος σε δευτερόλεπτα
+ */
+function getTimeFromPoints(points) {
+    let time = 0.0;
+    let pointsCount = points.length;
+    let from = null;
+    let to = null;
+    for (let i = 0; i != pointsCount; ++i) {
+        if (from === null) {
+            from = new Date(points[i].time);
+        }
+        to = new Date(points[i].time);
+        time += to.valueOf() - from.valueOf();
+        from = to;
+    }
+    return time / 1000.0;
+}
 /**
  *
  * @param sp Το κείμενο στο Xml Αρχείο
@@ -382,64 +410,5 @@ function getBiggerValue(value1, value2) {
         value2 = value1;
     }
     return value2;
-}
-class ResultClass {
-    constructor() {
-        this.id = "";
-        this.sport = 255;
-        this.athlete = consts.ERROR_NUMBER_VALUE;
-        this.distance = 0;
-        this.totalTime = 0;
-        this.minAlt = consts.ERROR_NUMBER_VALUE;
-        this.maxAlt = consts.ERROR_NUMBER_VALUE;
-        this.totalUp = 0;
-        this.totalDown = 0;
-        this.maxSpeed = consts.ERROR_NUMBER_VALUE;
-        this.maxCadence = consts.ERROR_NUMBER_VALUE;
-        this.maxHR = consts.ERROR_NUMBER_VALUE;
-        this.zones = [{ zone: 1, time: 0 },
-            { zone: 2, time: 0 },
-            { zone: 3, time: 0 },
-            { zone: 4, time: 0 },
-            { zone: 5, time: 0 }];
-        this.times = Array();
-        this.points = new Array();
-    }
-}
-exports.ResultClass = ResultClass;
-/**
- * Υπολογίζει τον χρόνο από τις πληροφορίες των γύρων
- *
- * @param {InfoLap[]} laps τα InfoLap από την δραστηριότητα
- * @return o χρόνος σε δευτερόλεπτα
- */
-function getTimeFromLaps(laps) {
-    let lapCount = laps.length;
-    let time = consts.ERROR_NUMBER_VALUE;
-    for (let i = 0; i != lapCount; ++i) {
-        time += laps[i].totalTimeSeconds;
-    }
-    return time;
-}
-/**
- * Υπολογίζει τον χρόνο από τα σημεία του TCX
- *
- * @param {Point[]} points τα σημεία Point από την δραστηριότητα
- * @return o χρόνος σε δευτερόλεπτα
- */
-function getTimeFromPoints(points) {
-    let time = 0.0;
-    let pointsCount = points.length;
-    let from = null;
-    let to = null;
-    for (let i = 0; i != pointsCount; ++i) {
-        if (from === null) {
-            from = new Date(points[i].time);
-        }
-        to = new Date(points[i].time);
-        time += to.valueOf() - from.valueOf();
-        from = to;
-    }
-    return time / 1000.0;
 }
 //# sourceMappingURL=activity.js.map

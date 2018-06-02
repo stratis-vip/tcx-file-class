@@ -1,9 +1,10 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
-import TcxFile from "./tcxFile";
 import InfoLap from "./infoLap";
 import GpsPoint from "./gpsPoint";
-import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
+import { iZone, ActivitiesTypes, ProgressMessage } from "./iFaces";
+import TcxFile from './tcxFile';
+import { ResultClass } from './resultClass';
 /**
  * Αρχικό αντικείμενο που κρατά πρακτικά όλη την προπόνηση
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους
@@ -18,7 +19,8 @@ export default class Activity extends EventEmitter {
     distanceFromLaps: number;
     /**Η απόσταση (σε ΜΕΤΡΑ) όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο TCX */
     distanceDromPoints: number;
-    /**Ο χρόνος όπως έχει καταγραφεί στα Laps (σε secs) */
+    /**Ο χρόνος όπως έχει καταγρ
+     * αφεί στα Laps (σε secs) */
     timeFromLaps: number;
     /**Ο χρόνος όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο ΤCX (σε secs) */
     timeFromPoints: number;
@@ -54,34 +56,4 @@ export default class Activity extends EventEmitter {
  * @return {ResultClass} αντικείμενο ResultClassπου κρατά όλα τα στοιχεία
  */
     getDistanceFromPoints(obj: Activity, points: Array<GpsPoint>, bpmZones?: [number, number, number, number]): ResultClass;
-}
-export declare class bestTimes {
-    start: number;
-    end: number;
-    distance: number;
-    time: number;
-    recTime: number;
-    avgHr: number;
-    dAlt: number;
-}
-export declare class ResultClass {
-    id: string;
-    sport: number;
-    athlete: number;
-    distance: number;
-    totalTime: number;
-    minAlt: number;
-    maxAlt: number;
-    totalUp: number;
-    totalDown: number;
-    maxSpeed: number;
-    maxCadence: number;
-    maxHR: number;
-    zones: {
-        zone: number;
-        time: number;
-    }[];
-    points: Array<SavePoints>;
-    times: bestTimes[];
-    constructor();
 }

@@ -1,4 +1,4 @@
-const EventEmitter = require('events');
+import {EventEmitter} from 'events';
 import  TcxFcvbcvbile  from "./tcxFile";
 import * as consts from "./consts";
 
@@ -8,6 +8,9 @@ import InfoLap from "./infoLap";
 import  Lap  from "./lap"
 import  GpsPoint  from "./gpsPoint"
 import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
+import TcxFile from './tcxFile';
+import { ResultClass } from './resultClass';
+import BestTimes from './bestTimes';
 
 //class MyEmitter extends EventEmitter {}
 /**
@@ -15,7 +18,7 @@ import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους 
  * τα στοιχεία του ώστε να είναι πιο πρακτικό.
  */
-export class Activity extends EventEmitter {
+export default class Activity extends EventEmitter {
     /**Η Ταυτότητα της δραστηριότητας */
     id: string = consts.ERROR_STRING_VALUE;
     /**Αν είναι έτοιμη η δραστηριότητα. Αν το αρχείο TCX είναι εσφαλμένο, η ιδιότητα αυτή είναι false */
@@ -107,7 +110,7 @@ export class Activity extends EventEmitter {
                 let distance = nextPoint.distance - startingDistance;
                 let limitTime = time * limits[curLimit] / distance;
                 if (this.proccessElements.times[curLimit] === undefined) {
-                    this.proccessElements.times[curLimit] = new bestTimes();
+                    this.proccessElements.times[curLimit] = new BestTimes();
                     this.proccessElements.times[curLimit] =
                         {
                             start: position,
@@ -345,15 +348,44 @@ export class Activity extends EventEmitter {
     }
 }
 
-export class bestTimes {
-    start = consts.ERROR_NUMBER_VALUE;
-    end = consts.ERROR_NUMBER_VALUE;
-    distance: number;
-    time = consts.ERROR_NUMBER_VALUE;
-    recTime = consts.ERROR_NUMBER_VALUE;
-    avgHr = consts.ERROR_NUMBER_VALUE;
-    dAlt = consts.ERROR_NUMBER_VALUE;
+/**
+ * Υπολογίζει τον χρόνο από τις πληροφορίες των γύρων
+ * 
+ * @param {InfoLap[]} laps τα InfoLap από την δραστηριότητα
+ * @return o χρόνος σε δευτερόλεπτα
+ */
+function getTimeFromLaps(laps: InfoLap[]): number {
+    let lapCount = laps.length;
+    let time = consts.ERROR_NUMBER_VALUE;
+    for (let i = 0; i != lapCount; ++i) {
+        time += laps[i].totalTimeSeconds;
+    }
+    return time;
 }
+
+/**
+ * Υπολογίζει τον χρόνο από τα σημεία του TCX
+ * 
+ * @param {Point[]} points τα σημεία Point από την δραστηριότητα
+ * @return o χρόνος σε δευτερόλεπτα
+ */
+function getTimeFromPoints(points: Array<GpsPoint>): number {
+    let time = 0.0;
+    let pointsCount = points.length;
+    let from: Date = null;
+    let to: Date = null;
+    for (let i = 0; i != pointsCount; ++i) {
+        if (from === null) {
+            from = new Date(points[i].time);
+        }
+        to = new Date(points[i].time);
+        time += to.valueOf() - from.valueOf();
+        from = to;
+    }
+    return time / 1000.0;
+}
+
+
 /**
  * 
  * @param sp Το κείμενο στο Xml Αρχείο
@@ -400,68 +432,3 @@ function getBiggerValue(value1: number, value2: number): number {
     return value2;
 }
 
-
-
-export class ResultClass {
-    id = "";
-    sport = 255;
-    athlete =consts.ERROR_NUMBER_VALUE;
-    distance = 0;
-    totalTime = 0;
-    minAlt = consts.ERROR_NUMBER_VALUE;
-    maxAlt = consts.ERROR_NUMBER_VALUE;
-    totalUp = 0;
-    totalDown = 0;
-    maxSpeed = consts.ERROR_NUMBER_VALUE;
-    maxCadence = consts.ERROR_NUMBER_VALUE;
-    maxHR = consts.ERROR_NUMBER_VALUE;
-    zones = [{ zone: 1, time: 0 },
-    { zone: 2, time: 0 },
-    { zone: 3, time: 0 },
-    { zone: 4, time: 0 },
-    { zone: 5, time: 0 }]
-    points: Array<SavePoints>;
-    times = Array<bestTimes>();
-    constructor() {
-        this.points = new Array<SavePoints>();
-    }
-}
-
-/**
- * Υπολογίζει τον χρόνο από τις πληροφορίες των γύρων
- * 
- * @param {InfoLap[]} laps τα InfoLap από την δραστηριότητα
- * @return o χρόνος σε δευτερόλεπτα
- */
-function getTimeFromLaps(laps: InfoLap[]): number {
-    let lapCount = laps.length;
-    let time = consts.ERROR_NUMBER_VALUE;
-    for (let i = 0; i != lapCount; ++i) {
-        time += laps[i].totalTimeSeconds;
-    }
-    return time;
-}
-
-/**
- * Υπολογίζει τον χρόνο από τα σημεία του TCX
- * 
- * @param {Point[]} points τα σημεία Point από την δραστηριότητα
- * @return o χρόνος σε δευτερόλεπτα
- */
-function getTimeFromPoints(points: Array<GpsPoint>): number {
-    let time = 0.0;
-    let pointsCount = points.length;
-    let from: Date = null;
-    let to: Date = null;
-    for (let i = 0; i != pointsCount; ++i) {
-        if (from === null) {
-            from = new Date(points[i].time);
-        }
-        to = new Date(points[i].time);
-        time += to.valueOf() - from.valueOf();
-        from = to;
-    }
-    return time / 1000.0;
-}
-
-export default Activity;
