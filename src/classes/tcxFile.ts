@@ -1,18 +1,18 @@
 import { EventEmitter } from 'events';
 import * as fs from 'fs';
-import Author from "./author";
-import Creator from "./creator";
+import {Author} from "./author";
+import {Creator} from "./creator";
 import * as pstring from 'xml2js';
 import * as consts from "./consts";
 import { iXmlData, iXmlAuthor, iXmlCreator } from './iFaces';
-import Lap from './lap';
-import Activity from './activity';
+import {Lap} from './lap';
+import {Activity} from './activity';
 
 const pString = pstring.parseString;
 /**
  * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
  */
-export default class TcxFile extends EventEmitter {
+export class TcxFile extends EventEmitter {
     /**Όλα τα δεδομένα του αρχείου σε ΧΜL μορφή */
     data: iXmlData = null;
     /**Κρατάει την τιμή του λάθους, αν υπάρχει, στην ανάγωνση του TCX αρχείου */

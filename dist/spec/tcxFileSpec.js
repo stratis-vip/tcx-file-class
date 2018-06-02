@@ -18,7 +18,7 @@ describe("Αρχεία TCX\n", function () {
     // });
     it("\tΘα πρέπει να αποθηκεύει ένα υπάρχον αρχείο tcx χωρίς ζώνες", (done) => {
         let fname = path.join(__dirname, 'g1.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(tcxFile.data).not.toEqual(null);
             expect(err).toBe(null);
@@ -58,7 +58,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να αποθηκεύει ένα υπάρχον αρχείο tcx με ζώνες", (done) => {
         let fname = path.join(__dirname, 'g1.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(tcxFile.data).not.toEqual(null);
             expect(err).toBe(null);
@@ -103,7 +103,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να ανοίγει ένα υπάρχον αρχείο tcx", (done) => {
         let fname = path.join(__dirname, 'garmin.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(tcxFile.data).not.toEqual(null);
             expect(err).toBe(null);
@@ -112,7 +112,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Garmin", (done) => {
         let fname = path.join(__dirname, 'garmin.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -158,7 +158,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδηλασία tcx της Garmin", (done) => {
         let fname = path.join(__dirname, 'garmin-b.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -204,7 +204,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Tapiriik", (done) => {
         let fname = path.join(__dirname, 'tapirik.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -245,7 +245,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδήλατο tcx της Tapiriik", (done) => {
         let fname = path.join(__dirname, 'tapirik-b.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -286,7 +286,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της runtastic", (done) => {
         let fname = path.join(__dirname, 'runtastic.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -323,8 +323,8 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδήλατο tcx της runtastic", (done) => {
         let fname = path.join(__dirname, 'runtastic-b.tcx');
-        let author = new author_1.default({});
-        let tcxFile = new tcxFile_1.default();
+        let author = new author_1.Author({});
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -361,7 +361,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Polar", (done) => {
         let fname = path.join(__dirname, 'polar.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -407,7 +407,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με ποδήλατο tcx της Polar", (done) => {
         let fname = path.join(__dirname, 'polar-b.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -453,7 +453,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να ανοίγει ένα υπάρχον αρχείο που δεν είναι tcx και να γυρνάει κενό", (done) => {
         let fname = path.join(__dirname, 'tcxFileSpec.js');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).not.toBe(consts.ERROR_STRING_VALUE);
@@ -467,7 +467,7 @@ describe("Αρχεία TCX\n", function () {
     });
     it("\tΘα πρέπει να διαβάζει σωστά ένα αρχείο με τρέξιμο tcx της Garmin χωρίς καρδιακούς παλμούς", (done) => {
         let fname = path.join(__dirname, 'nobpmgarmin.tcx');
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         tcxFile.read(fname, (err) => {
             expect(this.data).not.toBe(null);
             expect(err).toBe(null);
@@ -512,7 +512,7 @@ describe("Αρχεία TCX\n", function () {
         });
     });
     it("\tΘα πρέπει να εμφανίζει λάθος όταν δεν υπάρχει το αρχείο tcx", (done) => {
-        let tcxFile = new tcxFile_1.default();
+        let tcxFile = new tcxFile_1.TcxFile();
         let fname = path.join(__dirname, 'NotExisted.ts');
         tcxFile.read(fname, (err, data) => {
             expect(data).toBe(null);

@@ -18,5 +18,5 @@ class GeoPoint {
         alt ? (this.altitudeMeters = alt) : (this.altitudeMeters = consts.ERROR_NUMBER_VALUE);
     }
 }
-exports.default = GeoPoint;
+exports.GeoPoint = GeoPoint;
 //# sourceMappingURL=geoPoint.js.map

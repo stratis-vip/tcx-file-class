@@ -1,9 +1,9 @@
 import { iXmlTrackPoint } from "./iFaces";
-import GeoPoint from "./geoPoint";
+import { GeoPoint } from "./geoPoint";
 /**
  * To αντικείμενο που κρατά όλα τα στοιχεία που έχει το TCX αρχείο για κάθε ένα σημείο καταγραφής
  */
-export default class GpsPoint {
+export declare class GpsPoint {
     /**Η μέχρι τώρα απόσταση */
     distanceMeters: number;
     /**η τρέχουσα ταχύτητα */

@@ -1,16 +1,16 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
 import InfoLap from "./infoLap";
-import GpsPoint from "./gpsPoint";
+import { GpsPoint } from "./gpsPoint";
 import { iZone, ActivitiesTypes, ProgressMessage } from "./iFaces";
-import TcxFile from './tcxFile';
+import { TcxFile } from './tcxFile';
 import { ResultClass } from './resultClass';
 /**
  * Αρχικό αντικείμενο που κρατά πρακτικά όλη την προπόνηση
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους
  * τα στοιχεία του ώστε να είναι πιο πρακτικό.
  */
-export default class Activity extends EventEmitter {
+export declare class Activity extends EventEmitter {
     /**Η Ταυτότητα της δραστηριότητας */
     id: string;
     /**Αν είναι έτοιμη η δραστηριότητα. Αν το αρχείο TCX είναι εσφαλμένο, η ιδιότητα αυτή είναι false */

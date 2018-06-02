@@ -13,7 +13,7 @@ class Creator {
         }
     }
 }
-exports.default = Creator;
+exports.Creator = Creator;
 function getVersionString(obj) {
     let build = obj.VersionMajor[0] + "." + obj.VersionMinor[0] + "." +
         obj.BuildMajor[0] + "." + obj.BuildMinor[0];

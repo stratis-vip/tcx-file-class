@@ -18,7 +18,7 @@ class Author {
         }
     }
 }
-exports.default = Author;
+exports.Author = Author;
 function getBuildString(obj) {
     let build = obj.VersionMajor[0] + "." + obj.VersionMinor[0];
     //polar has not VersionMajor and VersionMinor

@@ -3,7 +3,7 @@ import { iGeoPoint } from "./iFaces";
  * Κρατά τα δεδομένα του γεωγραφικού σημείου
  * @implements iGeoPoint
  */
-export default class GeoPoint implements iGeoPoint {
+export declare class GeoPoint implements iGeoPoint {
     latitudeDegrees: number;
     longitudeDegrees: number;
     altitudeMeters: number;

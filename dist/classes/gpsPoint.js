@@ -23,7 +23,7 @@ class GpsPoint {
         /**O τρέχων καρδιακός παλμός */
         this.heartRateBpm = consts.ERROR_NUMBER_VALUE;
         /**Οι συντεταγμένες του σημείου και το υψόμετρο */
-        this.position = new geoPoint_1.default();
+        this.position = new geoPoint_1.GeoPoint();
         /**Ο χρόνος καταγραφής */
         this.time = consts.ERROR_STRING_VALUE;
         if (obj !== undefined) {
@@ -56,5 +56,5 @@ class GpsPoint {
         }
     }
 }
-exports.default = GpsPoint;
+exports.GpsPoint = GpsPoint;
 //# sourceMappingURL=gpsPoint.js.map

@@ -73,7 +73,7 @@ class Lap {
         this.triggerMethod = obj.TriggerMethod[0];
     }
 }
-exports.default = Lap;
+exports.Lap = Lap;
 /**
  * Δημιουργεί ένα πίνακα με τα gps σημεία του αρχείου
  *
@@ -84,7 +84,7 @@ function getPoints(obj) {
     if (obj !== undefined) {
         let pointCount = obj.Track[0].Trackpoint.length;
         for (let i = 0; i != pointCount; ++i) {
-            points.push(new gpsPoint_1.default(obj.Track[0].Trackpoint[i]));
+            points.push(new gpsPoint_1.GpsPoint(obj.Track[0].Trackpoint[i]));
         }
     }
     return points;

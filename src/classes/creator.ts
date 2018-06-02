@@ -1,6 +1,6 @@
 import { iXsiType, iXmlBuild, iXmlCreator } from "./iFaces";
 
-export default class Creator {
+export  class Creator {
     name: string;
 
     typeOfCreator: string;

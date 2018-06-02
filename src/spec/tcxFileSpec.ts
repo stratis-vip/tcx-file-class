@@ -1,12 +1,12 @@
 import * as path from 'path';
 
-import TcxFile from "../classes/tcxFile";
-import Author from "../classes/author";
+import {TcxFile} from "../classes/tcxFile";
+import {Author} from "../classes/author";
 import * as consts from "../classes/consts";
 import { iXmlData, iXmlTrainingCenterDatabase } from '../classes/iFaces';
 
 import * as fs from 'fs';
-import { ResultClass } from '../classes/activity';
+import { ResultClass } from '../classes/resultClass';
 
 
 class XmlData implements iXmlData {

@@ -1,10 +1,10 @@
 import * as consts from "./consts";
-import GpsPoint from "./gpsPoint";
+import {GpsPoint} from "./gpsPoint";
 import { iXmlLap, iXmlTrackPoint } from "./iFaces";
 import { timingSafeEqual } from "crypto";
 
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
-export default class Lap {
+export  class Lap {
     /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
     startTime: string;
     /**Μέσοι καρδιακοί παλμοί */

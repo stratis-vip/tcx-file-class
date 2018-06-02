@@ -1,7 +1,7 @@
-import GpsPoint from "./gpsPoint";
+import { GpsPoint } from "./gpsPoint";
 import { iXmlLap } from "./iFaces";
 /** Οι πληροφορίες που έχει το κάθε Lap στο tcx αρχείο */
-export default class Lap {
+export declare class Lap {
     /**Ο χρόνος έναρξης του Lap σε μορφή  <YYYY>-<MM>-<ΔΔ>T<ΩΩ>:<ΛΛ>:<ΔΔ>.<000>Z */
     startTime: string;
     /**Μέσοι καρδιακοί παλμοί */

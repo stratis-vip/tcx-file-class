@@ -1,13 +1,13 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
-import Author from "./author";
-import Creator from "./creator";
+import { Author } from "./author";
+import { Creator } from "./creator";
 import { iXmlData } from './iFaces';
-import Lap from './lap';
+import { Lap } from './lap';
 /**
  * Το κεντρικό αντικείμενο που διαχειρίζεται το TCX αρχείο
  */
-export default class TcxFile extends EventEmitter {
+export declare class TcxFile extends EventEmitter {
     /**Όλα τα δεδομένα του αρχείου σε ΧΜL μορφή */
     data: iXmlData;
     /**Κρατάει την τιμή του λάθους, αν υπάρχει, στην ανάγωνση του TCX αρχείου */

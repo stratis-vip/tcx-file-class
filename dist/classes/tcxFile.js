@@ -75,7 +75,7 @@ class TcxFile extends events_1.EventEmitter {
         let self = this;
         //runtastic does not have author record
         if (self.isReady && self.data.TrainingCenterDatabase.Author !== undefined) {
-            author = new author_1.default(self.data.TrainingCenterDatabase.Author[0]);
+            author = new author_1.Author(self.data.TrainingCenterDatabase.Author[0]);
         }
         return author;
     }
@@ -102,12 +102,12 @@ class TcxFile extends events_1.EventEmitter {
         let self = this;
         if (self.isReady && self.hasCreator()) {
             if (self.data.TrainingCenterDatabase.$.creator !== undefined) {
-                creator = new creator_1.default();
+                creator = new creator_1.Creator();
                 creator.name = self.data.TrainingCenterDatabase.$.creator;
                 creator.isRuntastic = true;
             }
             else {
-                creator = new creator_1.default(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator[0]);
+                creator = new creator_1.Creator(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Creator[0]);
                 creator.isRuntastic = false;
             }
         }
@@ -125,7 +125,7 @@ class TcxFile extends events_1.EventEmitter {
         if (self.isReady) {
             let lapCount = self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap.length;
             for (let i = 0; i != lapCount; ++i) {
-                laps.push(new lap_1.default(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap[i]));
+                laps.push(new lap_1.Lap(self.data.TrainingCenterDatabase.Activities[0].Activity[0].Lap[i]));
             }
         }
         return laps;
@@ -193,7 +193,7 @@ class TcxFile extends events_1.EventEmitter {
     save(filename, athleteId, zones, callback) {
         let self = this;
         self.emit('Proccessing', 'starting...');
-        let act = new activity_1.default();
+        let act = new activity_1.Activity();
         act.on('Process', (val) => {
             self.emit('Process', val);
         });
@@ -214,5 +214,5 @@ class TcxFile extends events_1.EventEmitter {
         });
     }
 }
-exports.default = TcxFile;
+exports.TcxFile = TcxFile;
 //# sourceMappingURL=tcxFile.js.map

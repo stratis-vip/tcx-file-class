@@ -195,8 +195,8 @@ class Activity extends events_1.EventEmitter {
     getDistanceFromPoints(obj, points, bpmZones) {
         let self = obj;
         let pointsCount = points.length;
-        let from = new geoPoint_1.default();
-        let to = new geoPoint_1.default();
+        let from = new geoPoint_1.GeoPoint();
+        let to = new geoPoint_1.GeoPoint();
         let previous = 0;
         let fromTime;
         let toTime;
@@ -321,7 +321,7 @@ class Activity extends events_1.EventEmitter {
         return temp;
     }
 }
-exports.default = Activity;
+exports.Activity = Activity;
 /**
  * Υπολογίζει τον χρόνο από τις πληροφορίες των γύρων
  *

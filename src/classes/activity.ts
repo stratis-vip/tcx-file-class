@@ -1,14 +1,14 @@
 import {EventEmitter} from 'events';
-import  TcxFcvbcvbile  from "./tcxFile";
+
 import * as consts from "./consts";
 
-import GeoPoint from "./geoPoint";
+import {GeoPoint} from "./geoPoint";
 import { apostasi, secsToTime, TimePaceFromSpeedMpS } from "../utils/functions";
 import InfoLap from "./infoLap";
-import  Lap  from "./lap"
-import  GpsPoint  from "./gpsPoint"
+import  {Lap}  from "./lap"
+import  {GpsPoint}  from "./gpsPoint"
 import { iZone, ActivitiesTypes, SavePoints, ProgressMessage } from "./iFaces";
-import TcxFile from './tcxFile';
+import {TcxFile} from './tcxFile';
 import { ResultClass } from './resultClass';
 import BestTimes from './bestTimes';
 
@@ -18,7 +18,7 @@ import BestTimes from './bestTimes';
  * Πρακτικά, το αντικείμενο αυτό θα «μοιράσει» επι μέρους 
  * τα στοιχεία του ώστε να είναι πιο πρακτικό.
  */
-export default class Activity extends EventEmitter {
+export  class Activity extends EventEmitter {
     /**Η Ταυτότητα της δραστηριότητας */
     id: string = consts.ERROR_STRING_VALUE;
     /**Αν είναι έτοιμη η δραστηριότητα. Αν το αρχείο TCX είναι εσφαλμένο, η ιδιότητα αυτή είναι false */

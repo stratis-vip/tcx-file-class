@@ -1,4 +1,3 @@
-import geoPoint from "../classes/geoPoint";
 /**
  * Υπολογίζει την απόσταση σε ΜΕΤΡΑ από το σημείο FromPoint στο σημείο ToPoint
  *
@@ -6,7 +5,7 @@ import geoPoint from "../classes/geoPoint";
  * @param {geoPoint} ToPoint οι συντεταγμένες του τελικού σημείου σε ΜΟΙΡΕΣ
  * @returns {number} η απόσταση ανάμεσα στα σημεία σε ΜΕΤΡΑ
 */
-declare const apostasi: (FromPoint: geoPoint, ToPoint: geoPoint) => number;
+declare const apostasi: (FromPoint: any, ToPoint: any) => number;
 /**
 * Μετατρέπει τις Μοίρες σε Ακτίνια
 *
@@ -41,7 +40,7 @@ declare const secsToTime: (value: number, showHours?: boolean) => string;
  * @param {number} Bearing το αζιμούθιο προς το τελικό σημείο σε ΜΟΙΡΕΣ
  * @returns {GeoPoint} αντικείμενο Cordinates
  */
-declare const getNextPointCordinatesFromDistanceBearing: (FromPoint: geoPoint, distance: number, Bearing: number) => geoPoint;
+declare const getNextPointCordinatesFromDistanceBearing: (FromPoint: any, distance: number, Bearing: number) => any;
 /**
  * Mετατρέπει την ταχύτητα από m/s σε δεκαδικό ρυθμό min/km
  * @param {number} value η ταχύτητα σε m/s

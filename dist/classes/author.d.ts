@@ -2,7 +2,7 @@ import { iXmlAuthor } from "../classes/iFaces";
 /**
  * Τα στοιχεία του προγράμματος που παρήγαγε το TCX αρχείο
  */
-export default class Author {
+export declare class Author {
     /**Το όνομα */
     name: string;
     /**Ο τύπος του προγράμματος */

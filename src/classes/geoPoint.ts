@@ -4,7 +4,7 @@ import * as consts from "./consts";
  * Κρατά τα δεδομένα του γεωγραφικού σημείου
  * @implements iGeoPoint
  */
-export default class GeoPoint implements iGeoPoint {
+export  class GeoPoint implements iGeoPoint {
     latitudeDegrees: number;
     longitudeDegrees: number;
     altitudeMeters: number;
