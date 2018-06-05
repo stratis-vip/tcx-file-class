@@ -9,7 +9,10 @@
             "type": "node",
             "request": "launch",
             "name": "Debug",
-            "program": "${workspaceFolder}/dist/app.js"
+            "program": "${workspaceFolder}/test.js",
+            "args": [
+                "dist/spec/g1.tcx"
+            ]
         },
         {
             "type": "node",
@@ -24,7 +27,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "${workspaceFolder}//dist/app.js",
+            "program": "${workspaceFolder}/test.js",
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]

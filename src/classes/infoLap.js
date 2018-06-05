@@ -1,0 +1,24 @@
+"use strict";
+exports.__esModule = true;
+/** Οι πληροφορίες που έχει συγκεντρωτικά το κάθε Lap στο tcx αρχείο */
+var InfoLap = /** @class */ (function () {
+    /**Δημιουργία αντικειμένου
+     * @param obj το αντικείμενο από όπου θα αφαιρέσει μόνο τις ιδιότητες που μας ενδιαφέρουν
+     */
+    function InfoLap(obj) {
+        this.startTime = obj.startTime;
+        this.averageHeartRateBpm = obj.averageHeartRateBpm;
+        this.maximumHeartRateBpm = obj.maximumHeartRateBpm;
+        this.maximumSpeed = obj.maximumSpeed;
+        this.totalTimeSeconds = obj.totalTimeSeconds;
+        this.calories = obj.calories;
+        this.distanceMeters = obj.distanceMeters;
+        this.maxBikeCadence = obj.maxBikeCadence;
+        this.steps = obj.steps;
+        this.avgRunCadence = obj.avgRunCadence;
+        this.maxRunCadence = obj.maxRunCadence;
+        this.avgSpeed = obj.avgSpeed;
+    }
+    return InfoLap;
+}());
+exports.InfoLap = InfoLap;
