@@ -254,7 +254,7 @@ export class Activity extends EventEmitter {
         from = this.assignGpsPoint(points[0]);
         fromTime = new Date(points[0].time);
         let firstPoint = new SavePoints();
-        firstPoint.assignPoint(points[0], 0, 0, this);
+        firstPoint.assignPoint(points[0], 0, 0, this,false);
         temp.points.push(firstPoint);
         let tempSpeed = 0;
         let isChangingPoint = false;
