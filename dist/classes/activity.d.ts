@@ -1,5 +1,6 @@
 /// <reference types="node" />
 import { EventEmitter } from 'events';
+import { GeoPoint } from "./geoPoint";
 import { InfoLap } from "./infoLap";
 import { GpsPoint } from "./gpsPoint";
 import { iZone, ActivitiesTypes, ProgressMessage } from "./iFaces";
@@ -18,7 +19,7 @@ export declare class Activity extends EventEmitter {
     /**Η απόσταση (σε ΜΕΤΡΑ) όπως την έχει καταγγεγραμένη στα Laps */
     distanceFromLaps: number;
     /**Η απόσταση (σε ΜΕΤΡΑ) όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο TCX */
-    distanceDromPoints: number;
+    distanceFromPoints: number;
     /**Ο χρόνος όπως έχει καταγρ
      * αφεί στα Laps (σε secs) */
     timeFromLaps: number;
@@ -49,11 +50,13 @@ export declare class Activity extends EventEmitter {
     getDistanceFromLaps(): number;
     getMaxCadence(value1: number, value2: number): number;
     sendEmit(msg: ProgressMessage): void;
+    assignGpsPoint(point: GpsPoint): GeoPoint;
+    getSportMaxCadence(point: GpsPoint, obj: ResultClass): number;
     /**
  * Υπολογίζει την απόσταση από τα σημεία του TCX
  *
  * @param {Point[]} points τα  σημεία TrackPoints από την δραστηριότητα
  * @return {ResultClass} αντικείμενο ResultClassπου κρατά όλα τα στοιχεία
  */
-    getDistanceFromPoints(obj: Activity, points: Array<GpsPoint>, bpmZones?: [number, number, number, number]): ResultClass;
+    getDistanceFromPoints(points: Array<GpsPoint>, bpmZones?: [number, number, number, number]): ResultClass;
 }

@@ -1,5 +1,5 @@
 import { Activity, TcxFile} from './index';
-import {secsToTime} from './src/utils/functions'
+import {secsToTime} from './dist/utils/functions'
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -22,10 +22,12 @@ function read(alfa: string) {
                     let act = new Activity();
                     act.read(0,t);
                     console.log(act.id);
-                    console.log(act.distanceDromPoints);
+                    console.log(act.distanceFromPoints);
                     console.log(act.distanceFromLaps +' <-Laps');
                     console.log(secsToTime(act.timeFromPoints));
                     console.log(secsToTime(act.timeFromLaps) +' <-Laps');
+                    console.log('Pace =' +act.timeFromPoints +' '+secsToTime(act.timeFromPoints / (act.distanceFromPoints/1000)));
+
                     
                     
                     

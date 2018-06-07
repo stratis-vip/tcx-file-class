@@ -117,7 +117,7 @@ export declare const enum ActivitiesTypes {
     Walking = 6,
     Sedentary = 8,
     All = 254,
-    Invalid = 255,
+    Invalid = 255
 }
 export declare class SavePoints {
     time: number;
@@ -125,8 +125,9 @@ export declare class SavePoints {
     cadence: number;
     distance: number;
     position: GeoPoint;
+    isChangingPoint: boolean;
     constructor();
-    assignPoint(point: GpsPoint, distance: number, time: number, thisValue: Activity): void;
+    assignPoint(point: GpsPoint, distance: number, time: number, thisValue: Activity, isChangingPoint: boolean): void;
 }
 export declare class DataRecord {
     date: Date;

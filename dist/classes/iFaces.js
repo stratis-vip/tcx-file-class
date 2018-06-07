@@ -5,8 +5,9 @@ class SavePoints {
     constructor() {
         this.hr = consts.ERROR_NUMBER_VALUE;
         this.cadence = consts.ERROR_NUMBER_VALUE;
+        this.isChangingPoint = false;
     }
-    assignPoint(point, distance, time, thisValue) {
+    assignPoint(point, distance, time, thisValue, isChangingPoint) {
         if (point) {
             this.time = time;
             this.hr = point.heartRateBpm;
@@ -23,6 +24,7 @@ class SavePoints {
             }
             this.position = point.position;
             this.distance = distance;
+            this.isChangingPoint = isChangingPoint;
         }
     }
 }

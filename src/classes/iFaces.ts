@@ -135,12 +135,14 @@ export class SavePoints {
     cadence: number;
     distance: number;
     position: GeoPoint;
+    isChangingPoint: boolean;
     constructor() {
         this.hr = consts.ERROR_NUMBER_VALUE;
         this.cadence = consts.ERROR_NUMBER_VALUE;
+        this.isChangingPoint=false;
     }
 
-    assignPoint(point: GpsPoint, distance: number, time: number, thisValue: Activity): void {
+    assignPoint(point: GpsPoint, distance: number, time: number, thisValue: Activity,isChangingPoint:boolean): void {
         if (point) {
             this.time = time;
             this.hr = point.heartRateBpm;
@@ -157,6 +159,7 @@ export class SavePoints {
             }
             this.position = point.position;
             this.distance = distance;
+            this.isChangingPoint = isChangingPoint;
         }
     }
 }

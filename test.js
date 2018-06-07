@@ -1,7 +1,7 @@
 "use strict";
 exports.__esModule = true;
 var index_1 = require("./index");
-var functions_1 = require("./src/utils/functions");
+var functions_1 = require("./dist/utils/functions");
 var fs = require("fs");
 process.argv.forEach(function (val, index) {
     if (index >= 2) {
@@ -20,10 +20,11 @@ function read(alfa) {
                     var act = new index_1.Activity();
                     act.read(0, t_1);
                     console.log(act.id);
-                    console.log(act.distanceDromPoints);
+                    console.log(act.distanceFromPoints);
                     console.log(act.distanceFromLaps + ' <-Laps');
                     console.log(functions_1.secsToTime(act.timeFromPoints));
                     console.log(functions_1.secsToTime(act.timeFromLaps) + ' <-Laps');
+                    console.log('Pace =' + act.timeFromPoints + ' ' + functions_1.secsToTime(act.timeFromPoints / (act.distanceFromPoints / 1000)));
                 }
                 else {
                     console.log(err);

@@ -27,7 +27,7 @@ class Activity extends events_1.EventEmitter {
         /**Η απόσταση (σε ΜΕΤΡΑ) όπως την έχει καταγγεγραμένη στα Laps */
         this.distanceFromLaps = consts.ERROR_NUMBER_VALUE;
         /**Η απόσταση (σε ΜΕΤΡΑ) όπως υπολογίζεται από τα σημεία που έχει καταγράψει στο TCX */
-        this.distanceDromPoints = consts.ERROR_NUMBER_VALUE;
+        this.distanceFromPoints = consts.ERROR_NUMBER_VALUE;
         /**Ο χρόνος όπως έχει καταγρ
          * αφεί στα Laps (σε secs) */
         this.timeFromLaps = consts.ERROR_NUMBER_VALUE;
@@ -59,9 +59,9 @@ class Activity extends events_1.EventEmitter {
                 });
             });
             self.sport = getSportFromString(xmlSource.getSport());
-            self.proccessElements = self.getDistanceFromPoints(self, self.tPoints, zones);
+            self.proccessElements = self.getDistanceFromPoints(self.tPoints, zones);
             self.distanceFromLaps = self.getDistanceFromLaps();
-            self.distanceDromPoints = self.proccessElements.distance;
+            self.distanceFromPoints = self.proccessElements.distance;
             self.timeFromLaps = getTimeFromLaps(self.infoLaps);
             self.timeFromPoints = self.proccessElements.totalTime;
             self.isReady = true;
@@ -186,138 +186,155 @@ class Activity extends events_1.EventEmitter {
     sendEmit(msg) {
         this.emit('progress', msg);
     }
+    assignGpsPoint(point) {
+        let temp = new geoPoint_1.GeoPoint();
+        temp.altitudeMeters = point.position.altitudeMeters;
+        temp.latitudeDegrees = point.position.latitudeDegrees;
+        temp.longitudeDegrees = point.position.longitudeDegrees;
+        return temp;
+    }
+    getSportMaxCadence(point, obj) {
+        switch (this.sport) {
+            case 2 /* Biking */:
+                return this.getMaxCadence(point.cadence, obj.maxCadence);
+            case 1 /* Running */:
+                return this.getMaxCadence(point.runCadence, obj.maxCadence);
+            default:
+                return consts.ERROR_NUMBER_VALUE;
+        }
+    }
     /**
  * Υπολογίζει την απόσταση από τα σημεία του TCX
  *
  * @param {Point[]} points τα  σημεία TrackPoints από την δραστηριότητα
  * @return {ResultClass} αντικείμενο ResultClassπου κρατά όλα τα στοιχεία
  */
-    getDistanceFromPoints(obj, points, bpmZones) {
-        let self = obj;
+    getDistanceFromPoints(points, bpmZones) {
+        let self = this;
         let pointsCount = points.length;
         let from = new geoPoint_1.GeoPoint();
         let to = new geoPoint_1.GeoPoint();
         let previous = 0;
         let fromTime;
         let toTime;
-        let oldDistance = 0;
+        let removeTime = 0;
+        //  let oldDistance = 0;
         let temp = new resultClass_1.ResultClass();
         let counter = 0;
-        for (let i = 0; i != pointsCount; ++i) {
+        //DEBUG 
+        let count1000 = 1000;
+        //το πρπωτο σημείο μπαίνει αυτόματα.
+        from = this.assignGpsPoint(points[0]);
+        fromTime = new Date(points[0].time);
+        let firstPoint = new iFaces_1.SavePoints();
+        firstPoint.assignPoint(points[0], 0, 0, this);
+        temp.points.push(firstPoint);
+        let tempSpeed = 0;
+        let isChangingPoint = false;
+        for (let i = 1; i != pointsCount; ++i) {
             if (points[i].position.longitudeDegrees !== consts.ERROR_NUMBER_VALUE &&
                 points[i].position.latitudeDegrees !== consts.ERROR_NUMBER_VALUE) {
-                if (from.latitudeDegrees === consts.ERROR_NUMBER_VALUE &&
-                    from.longitudeDegrees === consts.ERROR_NUMBER_VALUE) {
-                    from.longitudeDegrees = points[i].position.longitudeDegrees;
-                    from.latitudeDegrees = points[i].position.latitudeDegrees;
-                    from.altitudeMeters = points[i].position.altitudeMeters;
-                    fromTime = new Date(points[i].time);
-                    oldDistance = points[i].distanceMeters;
-                }
-                to.longitudeDegrees = points[i].position.longitudeDegrees;
-                to.latitudeDegrees = points[i].position.latitudeDegrees;
-                to.altitudeMeters = points[i].position.altitudeMeters;
+                //de;ytero βήμα
+                to = this.assignGpsPoint(points[i]);
                 toTime = new Date(points[i].time);
-                if ((points[i].speed === 0) || (points[i].distanceMeters - oldDistance < 0.2 && oldDistance !== 0)) {
-                    // console.log('DEBUG '+oldDistance + '  ' + points[i].distanceMeters+ ' '+points[i].time);
+                temp.totalTime += (toTime.valueOf() - fromTime.valueOf()) / 1000;
+                let meters = functions_1.apostasi(from, to);
+                let diff;
+                diff = (Number(toTime) - Number(fromTime)) / 1000;
+                let sPoint = new iFaces_1.SavePoints();
+                //Υπολογισμός μεγιστης ΚΛ
+                let hr = points[i].heartRateBpm;
+                if (meters === 0 && diff === 1) {
+                    //απλά έγραψε τις ίδιες συνετεταγμένες προσθέτω μόνο την ώρα και προχωρώ.        
+                    temp.points[temp.points.length - 1].time = temp.totalTime;
                 }
                 else {
-                    let diff;
-                    diff = (Number(toTime) - Number(fromTime)) / 1000;
-                    if (diff > 5 && points[i - 1].speed === 0) {
+                    tempSpeed = meters / diff;
+                    if (tempSpeed > temp.maxSpeed) {
+                        temp.maxSpeed = tempSpeed;
+                    }
+                    if (diff > 4 && tempSpeed < 1) {
+                        temp.totalTime = temp.totalTime - diff + 1;
+                        removeTime += diff;
+                        isChangingPoint = true;
+                        //  console.log(diff);
                     }
                     else {
-                        //Υπολογισμός αρχικού υψομέτρου
-                        if (temp.minAlt === consts.ERROR_NUMBER_VALUE) {
-                            temp.minAlt = from.altitudeMeters;
-                            temp.maxAlt = from.altitudeMeters;
+                        isChangingPoint = true;
+                        temp.distance += meters;
+                    }
+                    //Υπολογισμός μεγιστης cdence 
+                    temp.maxCadence = self.getSportMaxCadence(points[i], temp);
+                    //Υπολογισμός μεγιστης ταχύτητας
+                    //Υπολογισμός χρόνου σε ζώνες
+                    if (hr > temp.maxHR) {
+                        temp.maxHR = hr;
+                    }
+                    //Υπολογισμός αρχικού υψομέτρου
+                    if (temp.minAlt === consts.ERROR_NUMBER_VALUE) {
+                        temp.minAlt = from.altitudeMeters;
+                        temp.maxAlt = from.altitudeMeters;
+                    }
+                    if (to.altitudeMeters < temp.minAlt) {
+                        temp.minAlt = to.altitudeMeters;
+                    }
+                    if (to.altitudeMeters > temp.maxAlt) {
+                        temp.maxAlt = to.altitudeMeters;
+                    }
+                    if (to.altitudeMeters >= from.altitudeMeters) {
+                        ++previous;
+                        if (previous >= 1) {
+                            temp.totalUp += (to.altitudeMeters - from.altitudeMeters);
+                            previous = 0;
                         }
-                        if (to.altitudeMeters < temp.minAlt) {
-                            temp.minAlt = to.altitudeMeters;
+                    }
+                    else {
+                        --previous;
+                        if (previous <= -1) {
+                            temp.totalDown += (from.altitudeMeters - to.altitudeMeters);
+                            previous = 0;
                         }
-                        if (to.altitudeMeters > temp.maxAlt) {
-                            temp.maxAlt = to.altitudeMeters;
-                        }
-                        if (to.altitudeMeters >= from.altitudeMeters) {
-                            ++previous;
-                            if (previous >= 1) {
-                                temp.totalUp += (to.altitudeMeters - from.altitudeMeters);
-                                previous = 0;
-                            }
+                    }
+                    if (hr !== consts.ERROR_NUMBER_VALUE && bpmZones !== null && bpmZones !== undefined) {
+                        if (hr < bpmZones[0]) {
+                            temp.zones[0].time += diff;
                         }
                         else {
-                            --previous;
-                            if (previous <= -1) {
-                                temp.totalDown += (from.altitudeMeters - to.altitudeMeters);
-                                previous = 0;
-                            }
-                        }
-                        let meters = functions_1.apostasi(from, to);
-                        temp.distance += meters;
-                        switch (this.sport) {
-                            case 2 /* Biking */:
-                                temp.maxCadence = this.getMaxCadence(points[i].cadence, temp.maxCadence);
-                                break;
-                            case 1 /* Running */:
-                                temp.maxCadence = this.getMaxCadence(points[i].runCadence, temp.maxCadence);
-                                break;
-                            default:
-                                temp.maxCadence = consts.ERROR_NUMBER_VALUE;
-                        }
-                        let tempSpeed = temp.maxSpeed;
-                        if (diff > 0) {
-                            tempSpeed = meters / diff;
-                            if (tempSpeed > temp.maxSpeed) {
-                                temp.maxSpeed = tempSpeed;
-                            }
-                        }
-                        let hr = points[i].heartRateBpm;
-                        if (hr > temp.maxHR) {
-                            temp.maxHR = hr;
-                        }
-                        if (hr !== consts.ERROR_NUMBER_VALUE && bpmZones !== null && bpmZones !== undefined) {
-                            if (hr < bpmZones[0]) {
-                                temp.zones[0].time += diff;
+                            if (hr < bpmZones[1]) {
+                                temp.zones[1].time += diff;
                             }
                             else {
-                                if (hr < bpmZones[1]) {
-                                    temp.zones[1].time += diff;
+                                if (hr < bpmZones[2]) {
+                                    temp.zones[2].time += diff;
                                 }
                                 else {
-                                    if (hr < bpmZones[2]) {
-                                        temp.zones[2].time += diff;
+                                    if (hr < bpmZones[3]) {
+                                        temp.zones[3].time += diff;
                                     }
                                     else {
-                                        if (hr < bpmZones[3]) {
-                                            temp.zones[3].time += diff;
-                                        }
-                                        else {
-                                            temp.zones[4].time += diff;
-                                        }
+                                        temp.zones[4].time += diff;
                                     }
                                 }
                             }
                         }
-                        temp.totalTime += (toTime.valueOf() - fromTime.valueOf()) / 1000;
                     }
+                    //αποθήκευση του σημείου
+                    sPoint.assignPoint(points[i], temp.distance, temp.totalTime, this, isChangingPoint);
+                    temp.points.push(sPoint);
                 }
-                fromTime = toTime;
-                from.longitudeDegrees = to.longitudeDegrees;
-                from.latitudeDegrees = to.latitudeDegrees;
-                from.altitudeMeters = to.altitudeMeters;
-                oldDistance = points[i].distanceMeters;
-                let sPoint = new iFaces_1.SavePoints();
-                sPoint.assignPoint(points[i], oldDistance, temp.totalTime, this);
-                temp.points.push(sPoint);
                 let cur = 100 * i / pointsCount;
                 if ((cur) > counter) {
                     counter++;
                     self.sendEmit({ type: 'Υπολογισμός σημείων', value: cur });
                 }
+                fromTime = toTime;
+                from = this.assignGpsPoint(points[i]);
             }
         }
         this.zones = temp.zones;
-        this.distanceDromPoints = temp.distance;
+        this.distanceFromPoints = temp.distance;
+        //console.log('Pace =' + secsToTime(temp.totalTime / (temp.distance / 1000)));
+        // temp.totalTime -= removeTime;
         return temp;
     }
 }

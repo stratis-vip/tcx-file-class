@@ -11,7 +11,7 @@
             "name": "Debug",
             "program": "${workspaceFolder}/test.js",
             "args": [
-                "dist/spec/g1.tcx"
+                "/home/stratis/Downloads/activity_2736760963.tcx"
             ]
         },
         {
