@@ -117,7 +117,8 @@ export declare const enum ActivitiesTypes {
     Walking = 6,
     Sedentary = 8,
     All = 254,
-    Invalid = 255
+    Invalid = 255,
+    Waiting = -1,
 }
 export declare class SavePoints {
     time: number;

@@ -126,7 +126,8 @@ export const enum ActivitiesTypes {
     Walking = 6,
     Sedentary = 8,
     All = 254,
-    Invalid = 0xFF
+    Invalid = 0xFF,
+    Waiting = -1
 }
 
 export class SavePoints {

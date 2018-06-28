@@ -27,7 +27,11 @@ function read(alfa: string) {
                     console.log(secsToTime(act.timeFromPoints));
                     console.log(secsToTime(act.timeFromLaps) +' <-Laps');
                     console.log('Pace =' +act.timeFromPoints +' '+secsToTime(act.timeFromPoints / (act.distanceFromPoints/1000)));
-
+                    t.save('save.json',1,null,(err)=>{
+                        if (err){
+                            console.error(err);
+                        }
+                    })
                     
                     
                     
